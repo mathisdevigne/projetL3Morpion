@@ -25,6 +25,10 @@ public class Game {
         this.gameboard = new GameBoard(height, width);
     }
     
+    public GameBoard getGameboard(){
+        return this.gameboard;
+    }
+    
     
     public static int getIntInput(String text) throws IOException{
          BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -45,7 +49,7 @@ public class Game {
         return value;
     }
     
-    // A finir
+    
     public void playOneRound(){
         
     }
