@@ -21,6 +21,11 @@ public class GameBoard {
         this.width = width;
         
         board = new Box[height][width];
+        for(int i = 0 ; i < height ; i++){
+            for(int j = 0; j < width ; j++){
+                board[i][j] = new Box();
+            }
+        }
     }
     
     public GameBoard(){
@@ -36,8 +41,14 @@ public class GameBoard {
     }
     
     public void print(){
-        for(int i = 0; i < this.getHeight(); i++){
+        System.out.print(" ");
+        for(int k = 0; k < this.getHeight(); k++){
+            System.out.print( " " + k);
             
+        }
+        System.out.println();
+        for(int i = 0; i < this.getHeight(); i++){
+            System.out.print(i);
             for(int j = 0; j < this.getWidth(); j++){
                 System.out.print("|");
                 this.board[i][j].print();
@@ -46,5 +57,13 @@ public class GameBoard {
             
             System.out.println("|");
         }
+    }
+    
+    //A finir
+    public String[] getQuintuplets(int x, int y){
+        // 20 * 5 car au maximum 20 quintuplets
+        //On met les quintuplets les un a la suite des autres
+        String[] quintupletList = new String[20*5];
+        return quintupletList;
     }
 }

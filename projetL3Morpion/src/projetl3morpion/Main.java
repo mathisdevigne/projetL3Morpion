@@ -4,7 +4,9 @@
  */
 package projetl3morpion;
 
-/**
+import java.io.IOException;
+
+/*
  *
  * @author fetiveau
  */
@@ -13,8 +15,10 @@ public class Main {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        // TODO code application logic here
+    public static void main(String[] args) throws IOException{
+        Game monJeu = new Game();
+        
+        monJeu.gameboard.print();
     }
     
 }
