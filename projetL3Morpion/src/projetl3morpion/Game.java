@@ -29,7 +29,7 @@ public class Game {
         return this.gameboard;
     }
     
-    
+    // Renvoie un entier entrer par l'utilisateur
     public static int getIntInput(String text) throws IOException{
          BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
          
@@ -49,7 +49,7 @@ public class Game {
         return value;
     }
     
-    
+    // Simule un tour de jeu, renvoie true si un joueur a gagné
     public boolean playOneRound(int nbJoueur) throws IOException{
         int tab[] = new int[2];
         // Si la case est libre alors on place sinon on redemande
@@ -65,6 +65,7 @@ public class Game {
         return this.hasWin(tab[0], tab[1]);
     }
     
+    //Insere une valeur en fonction du joueur dans la case du plateau de jeu que ce joueur à décider de jouer
     public void insertValue(int nbJoueur, int x, int y){
         if(nbJoueur == 1){
             this.getGameboard().getBoxBoard(x, y).setValue("X");
@@ -74,7 +75,7 @@ public class Game {
         }
     }
     
-    //Va regarder le dernier coup jouer et renvoyé true si ce coup permet de gagner
+    //Regarde si au moins un quintuplet gagnant se situe dans la case x y, si oui renvoie true sinon false
     public boolean hasWin(int x, int y){
         boolean hasWin = false;
         Box[][] quintuplets = this.getGameboard().getQuintuplets(x, y);
@@ -91,6 +92,7 @@ public class Game {
         return hasWin;
     }
     
+    // Simule le jeu complet: initialisation du plateau, affichage, coup joué et victoire.
     public void play() throws IOException{
         boolean ended = false;
         int joueur = 1;
