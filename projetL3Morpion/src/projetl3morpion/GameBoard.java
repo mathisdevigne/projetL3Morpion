@@ -32,22 +32,28 @@ public class GameBoard {
         this(GameBoard.DEFAULT_HEIGHT, GameBoard.DEFAULT_WIDTH);
     }
     
+    //Accesseur de height
     public int getHeight(){
         return this.height;
     }
     
+    //Accesseur de board
     public Box[][] getBoard(){
         return this.board;
     }
     
+    //Accesseur d'une case de board
     public Box getBoxBoard(int i, int j){
         return this.board[i][j];
     }
     
+    //Accesseur de width
     public int getWidth(){
         return this.width;
     }
     
+    
+    // Affichage du jeu (plateau) besoin d'ajustement
     public void print(){
         System.out.print(" ");
         for(int k = 0; k < this.getHeight(); k++){
@@ -67,12 +73,14 @@ public class GameBoard {
         }
     }
     
+    // Permet l'insertion d'une valeur dans une case de board
     public void putVal(String val, int x, int y){
         if(" ".equals(this.getBoxBoard(x,y).getValue())){
             this.getBoxBoard(x, y).setValue(val);
         }
     }
     
+    // Permet d'avoir le nombre de quintuplet formable au max sur une case (donc exclue les quintuplets partiellement en dehors du plateau de jeu)
     public int getNbQuintuplets(int x, int y){
         int nbQuintuplets = 0;
         if(x >= 0 && x < this.getHeight() && y >= 0 && y < this.getWidth()){
@@ -91,12 +99,12 @@ public class GameBoard {
                     
                 for(int j = 0; j > -5; j--){
                     
-                    //la diagonale haut-droit / bas-gauche
+                    //les diagonales haut-droit / bas-gauche
                     if(j+i == 2*i && x + i >= 0 && x + i + 4 < this.getHeight() && y - j < this.getWidth() && y - j - 4 >= 0){
                         nbQuintuplets++;
                     }
 
-                    //la diagonale bas-droit / haut-gauche
+                    //les diagonales bas-droit / haut-gauche
                     if(j+i == 2*i && x + i >= 0 && x + i + 4 < this.getHeight() && y + j >= 0 && y + j + 4 < this.getWidth()){
                         nbQuintuplets++;
                             
@@ -108,8 +116,8 @@ public class GameBoard {
         return nbQuintuplets;
     }
     
-    //// A debug
-    //Renvoie tout les quintuplet possible sur une case de coordonnées x y
+    
+    //Renvoie tout les quintuplet (avec les valeurs) d'une case de coordonnées x y (ne prends que les quintuplets dans le plateau de jeu)
     public Box[][] getQuintuplets(int x, int y){
         //La case doit être dans le plateau de jeu
         int nbQuint = this.getNbQuintuplets(x,y);
@@ -142,7 +150,7 @@ public class GameBoard {
 
                 for(int j = 0; j > -5; j--){
                     
-                    //la diagonale haut-droit / bas-gauche
+                    //les 5 diagonales haut-droit / bas-gauche
                     if(j+i == 2*i && x + i >= 0 && x + i + 4 < this.getHeight() && y - j < this.getWidth() && y - j - 4 >= 0){
 
                         for(int k = 0; k < 5; k++){
@@ -152,7 +160,7 @@ public class GameBoard {
                         indiceList++;
                     }
 
-                    //la diagonale bas-droit / haut-gauche
+                    //les 5 diagonales bas-droit / haut-gauche
                     if(j+i == 2*i && x + i >= 0 && x + i + 4 < this.getHeight() && y + j >= 0 && y + j + 4 < this.getWidth()){
                         for(int k = 0; k < 5; k++){
                             quintupletList[indiceList][k] = this.getBoxBoard(x+i+k, y+j+k);
