@@ -55,21 +55,30 @@ public class GameBoard {
     
     // Affichage du jeu (plateau) besoin d'ajustement
     public void print(){
-        System.out.print(" ");
+        System.out.print("  ");
         for(int k = 0; k < this.getHeight(); k++){
-            System.out.print( " " + k);
-            
+            System.out.print( "  " + k + " ");     
         }
+        System.out.println();
+        System.out.print("  +");
+        for(int k = 0; k < this.getHeight(); k++){
+            System.out.print( "---+");     
+        }
+        
         System.out.println();
         for(int i = 0; i < this.getHeight(); i++){
             System.out.print(i);
+            System.out.print(" | ");
             for(int j = 0; j < this.getWidth(); j++){
-                System.out.print("|");
                 this.getBoxBoard(i,j).print();
+                System.out.print(" | ");
             }
-            
-            
-            System.out.println("|");
+            System.out.println();
+            System.out.print("  +");
+            for(int k = 0; k < this.getHeight(); k++){
+                System.out.print( "---+");     
+            }
+            System.out.println();
         }
     }
     
