@@ -13,6 +13,17 @@ import java.io.InputStreamReader;
 public class Game {
     public GameBoard gameboard;
     
+    private final static int EMPTY_WEIGHT = 1;
+    private final static int ONE_CROSS = EMPTY_WEIGHT*3;
+    private final static int ONE_CIRCLE = ONE_CROSS*3;
+    private final static int TWO_CROSS = ONE_CIRCLE*3;
+    private final static int TWO_CIRCLE = TWO_CROSS*3;
+    private final static int THREE_CROSS = TWO_CIRCLE*3;
+    private final static int THREE_CIRCLE = THREE_CROSS*3;
+    private final static int FOUR_CROSS = THREE_CIRCLE*3;
+    private final static int FOUR_CIRCLE = FOUR_CROSS*3;
+    
+    
     public Game() throws IOException{
         int height = -1, width = -1;
         
@@ -49,7 +60,7 @@ public class Game {
         return value;
     }
     
-    // Simule un tour de jeu, renvoie true si un joueur a gagné
+    // Simule un tour de jeu d'un joueur humain, renvoie true si un joueur a gagné
     public boolean playOneRound(int nbJoueur) throws IOException{
         int tab[] = new int[2];
         // Si la case est libre alors on place sinon on redemande
