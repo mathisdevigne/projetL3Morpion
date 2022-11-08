@@ -83,11 +83,38 @@ public class GameBoard {
     }
     
     // Permet l'insertion d'une valeur dans une case de board
-    public void putVal(String val, int x, int y){
-        if(" ".equals(this.getBoxBoard(x,y).getValue())){
+    public void putVal(int val, int x, int y){
+        if(this.getBoxBoard(x,y).getValue() == 0){
             this.getBoxBoard(x, y).setValue(val);
         }
     }
+    /*
+    public boolean existeQuintu(int x, int y, int dirHorizon, int dirVertical){
+        return ((0 <= x+5*dirVertical) && (x+5*dirVertical < this.getHeight()) && (0 <= x) && (x < this.getHeight()) && (0 <= y+5*dirHorizon) && (y+5*dirHorizon < this.getWidth()) && (0 <= y) && (y < this.getWidth())); 
+    }
+    
+    public Box[] getQuintuplet(int x, int y, int dirHorizon, int dirVertical){
+        Box[] monQuintuplet = new Box[5];
+        if(existeQuintu(x,y,dirHorizon,dirVertical)){
+            for(int i = 0; i < 5; i++){
+                monQuintuplet[i] = this.getBoxBoard(x+(i*dirVertical), y+(i*dirHorizon));
+            }
+        }
+        return monQuintuplet;
+    }
+    
+    public int noteQuintu(int x, int y, int dirHorizon, int dirVertical){
+        int somme = 0;
+        if(existeQuintu(x,y,dirHorizon,dirVertical)){
+            Box[] leQuintuplet = getQuintuplet(x,y,dirHorizon,dirVertical);
+            for(int i = 0; i < 5; i++){
+                somme += leQuintuplet[i].getValue();
+            }
+        }
+        return somme;
+    }
+    
+    */
     
     // Permet d'avoir le nombre de quintuplet formable au max sur une case (donc exclue les quintuplets partiellement en dehors du plateau de jeu)
     public int getNbQuintuplets(int x, int y){
@@ -135,7 +162,7 @@ public class GameBoard {
             
             int indiceList = 0;
             for(int i = 0; i > -5; i--){
-                // Les 5 quintuplets horizontaux
+                // Les 5 quintuplets verticaux
                 //On vérifie que les quintuplets se trouve dans le plateau de jeu, sinon on ne le rajoute pas
                 if(x + i >= 0 && x + i + 4 < this.getHeight()){
 
@@ -147,7 +174,7 @@ public class GameBoard {
 
                 }
                 
-                 // Les 5 quintuplets verticaux
+                 // Les 5 quintuplets horizontaux
                 if(y + i >= 0 && y + i + 4 < this.getWidth()){
 
                     for(int k = 0; k < 5 ; k++){

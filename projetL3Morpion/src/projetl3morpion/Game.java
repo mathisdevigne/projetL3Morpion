@@ -62,40 +62,43 @@ public class Game {
     
     // Simule un tour de jeu d'un joueur humain, renvoie true si un joueur a gagné
     public boolean playOneRound(int nbJoueur) throws IOException{
-        int tab[] = new int[2];
+        int playerInput[] = new int[2];
         // Si la case est libre alors on place sinon on redemande
         do{
             
-        tab[0] = getIntInput("Joueur "+ nbJoueur +", à vous de jouer: ");
-        tab[1] = getIntInput("");
+        playerInput[0] = getIntInput("Joueur "+ nbJoueur +", à vous de jouer: ");
+        playerInput[1] = getIntInput("");
         
-        }while(!(" ".equals(this.getGameboard().getBoxBoard(tab[0], tab[1]).getValue()) && tab[0] >= 0 && tab[1] >= 0 && tab[0] < this.getGameboard().getHeight() && tab[1] < this.getGameboard().getWidth()));
+        }while(!(this.getGameboard().getBoxBoard(playerInput[0], playerInput[1]).getValue()) == 0 && playerInput[0] >= 0 && playerInput[1] >= 0 && playerInput[0] < this.getGameboard().getHeight() && playerInput[1] < this.getGameboard().getWidth()));
         
-        this.insertValue(nbJoueur, tab[0], tab[1]);
+        this.insertValue(nbJoueur, playerInput[0], playerInput[1]);
         this.getGameboard().print();
-        return this.hasWin(tab[0], tab[1]);
+        return this.hasWin(playerInput[0], playerInput[1]);
     }
     
     //Insere une valeur en fonction du joueur dans la case du plateau de jeu que ce joueur à décider de jouer
     public void insertValue(int nbJoueur, int x, int y){
         if(nbJoueur == 1){
-            this.getGameboard().getBoxBoard(x, y).setValue("X");
+            this.getGameboard().getBoxBoard(x, y).setValue(1);
         }
         else{
-            this.getGameboard().getBoxBoard(x, y).setValue("O");
+            this.getGameboard().getBoxBoard(x, y).setValue(6);
         }
     }
     
     //Regarde si au moins un quintuplet gagnant se situe dans la case x y, si oui renvoie true sinon false
     public boolean hasWin(int x, int y){
         boolean hasWin = false;
+        int noteQuintuplet = 0;
         Box[][] quintuplets = this.getGameboard().getQuintuplets(x, y);
         for(int i = 0; i < this.getGameboard().getNbQuintuplets(x, y) ; i++ ){
-            if("X".equals(quintuplets[i][0].getValue()) && "X".equals(quintuplets[i][1].getValue()) && "X".equals(quintuplets[i][2].getValue()) && "X".equals(quintuplets[i][3].getValue()) && "X".equals(quintuplets[i][4].getValue())){
+            noteQuintuplet = 5;
+            
+            if(noteQuintuplet == 5){
                 System.out.println("Joueur 1 a gagné");
                 hasWin = true;
             }
-            else if("O".equals(quintuplets[i][0].getValue()) && "O".equals(quintuplets[i][1].getValue()) && "O".equals(quintuplets[i][2].getValue()) && "O".equals(quintuplets[i][3].getValue()) && "O".equals(quintuplets[i][4].getValue())){
+            else if(noteQuintuplet == 30){
                 System.out.println("Joueur 2 a gagné");
                 hasWin = true;
             }

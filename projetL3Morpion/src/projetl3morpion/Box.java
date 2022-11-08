@@ -9,16 +9,16 @@ package projetl3morpion;
  * @author fetiveau
  */
 public class Box {
-    private String value;
+    private int value; //1 pour le joueur et 6 pour l'adversaire (IA)
     private int weight;
     
     public Box(){
-        this.value = " ";
+        this.value = 0;
         this.weight = 0;
     }
     
     //Accesseur de value
-    public String getValue(){
+    public int getValue(){
         return this.value;
     }
     
@@ -28,7 +28,7 @@ public class Box {
     }
     
     //Setter de value
-    public void setValue(String newVal){
+    public void setValue(int newVal){
         this.value = newVal;
     }
     
@@ -39,6 +39,18 @@ public class Box {
     
     //Affiche la value de box
     public void print(){
-        System.out.print(this.getValue());
+        switch (this.value) {
+            case 0:
+                System.out.print(" ");
+                break;
+            case 1:
+                System.out.print("O");
+                break;
+            case 6:
+                System.out.print("X");
+                break;
+            default:
+                break;
+        }
     }
 }
