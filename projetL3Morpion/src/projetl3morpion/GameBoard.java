@@ -152,6 +152,14 @@ public class GameBoard {
         return nbQuintuplets;
     }
     
+    //Retourne la somme des valeurs d'un quintuplet
+    public static int noteQuintu(Box[] monQuintu){
+        int somme = 0;
+        for(int i = 0 ; i < 5 ; i++){
+            somme += monQuintu[i].getValue();
+        }
+        return somme;
+    }
     
     //Renvoie tout les quintuplet (avec les valeurs) d'une case de coordonnées x y (ne prends que les quintuplets dans le plateau de jeu)
     public Box[][] getQuintuplets(int x, int y){
@@ -167,7 +175,7 @@ public class GameBoard {
                 if(x + i >= 0 && x + i + 4 < this.getHeight()){
 
                     for(int k = 0; k < 5 ; k++){
-                        quintupletList[indiceList][k] = this.getBoxBoard(x+i+k, 0);
+                        quintupletList[indiceList][k] = this.getBoxBoard(x+i+k, y);
                         
                     }
                     indiceList++;
@@ -178,7 +186,7 @@ public class GameBoard {
                 if(y + i >= 0 && y + i + 4 < this.getWidth()){
 
                     for(int k = 0; k < 5 ; k++){
-                        quintupletList[indiceList][k] = this.getBoxBoard(0,y+i+k);
+                        quintupletList[indiceList][k] = this.getBoxBoard(x,y+i+k);
                             
                     }
                     indiceList++;
@@ -190,7 +198,7 @@ public class GameBoard {
                     if(j+i == 2*i && x + i >= 0 && x + i + 4 < this.getHeight() && y - j < this.getWidth() && y - j - 4 >= 0){
 
                         for(int k = 0; k < 5; k++){
-                            quintupletList[indiceList][k] = this.getBoxBoard(x+i+k, y-j-k);
+                            quintupletList[indiceList][k] = this.getBoxBoard( y-j-k, x+i+k);
                             
                         }
                         indiceList++;
@@ -199,7 +207,7 @@ public class GameBoard {
                     //les 5 diagonales bas-droit / haut-gauche
                     if(j+i == 2*i && x + i >= 0 && x + i + 4 < this.getHeight() && y + j >= 0 && y + j + 4 < this.getWidth()){
                         for(int k = 0; k < 5; k++){
-                            quintupletList[indiceList][k] = this.getBoxBoard(x+i+k, y+j+k);
+                            quintupletList[indiceList][k] = this.getBoxBoard(y+j+k, x+i+k);
                             
                         }
                         indiceList++;
