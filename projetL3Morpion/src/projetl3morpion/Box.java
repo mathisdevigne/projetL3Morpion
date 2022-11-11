@@ -10,11 +10,11 @@ package projetl3morpion;
  */
 public class Box {
     private int value; //1 pour le joueur et 6 pour l'adversaire (IA)
-    private float weight;
+    private int weight;
     
     public Box(){
         this.value = 0;
-        this.weight = 0f;
+        this.weight = 0;
     }
     
     //Accesseur de value
@@ -23,7 +23,7 @@ public class Box {
     }
     
     //Accesseur de weight
-    public float getWeight(){
+    public int getWeight(){
         return this.weight;
     }
     
@@ -33,7 +33,7 @@ public class Box {
     }
     
     //Setter de weight
-    public void setWeight(float newWeight){
+    public void setWeight(int newWeight){
         this.weight = newWeight;
     }
     
@@ -43,11 +43,7 @@ public class Box {
             case 0 -> System.out.print(" ");
             case 1 -> System.out.print("O");
             case 6 -> System.out.print("X");
-            default -> {
-            }
-        
-        
+            default -> {}
         }
-    //System.out.print(this.getWeight());
     }
 }

@@ -53,12 +53,12 @@ public class GameBoard {
     }
     
     //Accesseur de weight
-    public float getBoxWeight(int x, int y){
+    public int getBoxWeight(int x, int y){
         return this.getBoxBoard(x,y).getWeight();
     }
     
     //Setter de weight
-    public void setBoxWeight(int x, int y, float val){
+    public void setBoxWeight(int x, int y, int val){
         this.getBoxBoard(x,y).setWeight(val);
     }
     
@@ -150,7 +150,7 @@ public class GameBoard {
         return somme;
     }
     
-    public static void updateWeightQuintu(Box[] monQuintu, float newWeight){
+    public static void updateWeightQuintu(Box[] monQuintu, int newWeight){
         for(int k = 0; k < 5; k++){
             monQuintu[k].setWeight(monQuintu[k].getWeight() + newWeight);
         }
