@@ -14,14 +14,14 @@ public class Game {
     public GameBoard gameboard;
     
     private final static float EMPTY_WEIGHT = 1f;
-    private final static float ONE_CROSS = EMPTY_WEIGHT*3f;
-    private final static float ONE_CIRCLE = ONE_CROSS*3f;
-    private final static float TWO_CROSS = ONE_CIRCLE*3f;
-    private final static float TWO_CIRCLE = TWO_CROSS*3f;
-    private final static float THREE_CROSS = TWO_CIRCLE*3f;
-    private final static float THREE_CIRCLE = THREE_CROSS*3f;
-    private final static float FOUR_CROSS = THREE_CIRCLE*3f;
-    private final static float FOUR_CIRCLE = FOUR_CROSS*3f;
+    private final static float ONE_PLAYER = EMPTY_WEIGHT*3f;
+    private final static float ONE_IA = ONE_PLAYER*3f;
+    private final static float TWO_PLAYER = ONE_IA*3f;
+    private final static float TWO_IA = TWO_PLAYER*3f;
+    private final static float THREE_PLAYER = TWO_IA*3f;
+    private final static float THREE_IA = THREE_PLAYER*3f;
+    private final static float FOUR_PLAYER = THREE_IA*3f;
+    private final static float FOUR_IA = FOUR_PLAYER*3f;
     
     
     public Game() throws IOException{
@@ -79,6 +79,7 @@ public class Game {
         }while(!(isEmpty && isInside ));
         
         this.insertValue(nbJoueur, playerInput[0], playerInput[1]);
+        this.updateWeight(playerInput[0], playerInput[1]);
         this.getGameboard().print();
         return this.hasWin(playerInput[0], playerInput[1]);
     }
@@ -145,4 +146,33 @@ public class Game {
             }
         }
     }
+    
+    public void updateWeight(int x, int y){
+        int nbUpdateQuintu = this.getGameboard().getNbQuintuplets(x, y);
+        Box[][] UpdateQuintu = this.getGameboard().getQuintuplets(x, y);
+        int noteQuintu;
+        
+        for(int i = 0; i < nbUpdateQuintu; i++){
+            noteQuintu = GameBoard.noteQuintu(UpdateQuintu[i]);
+            
+            switch (noteQuintu) {
+            case 1 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], Game.ONE_PLAYER - Game.EMPTY_WEIGHT);
+            case 2 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], Game.TWO_PLAYER - Game.ONE_PLAYER);
+            case 3 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], Game.THREE_PLAYER - Game.TWO_PLAYER);
+            case 4 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], Game.FOUR_PLAYER - Game.THREE_PLAYER);
+            
+            case 6 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], Game.ONE_IA - Game.EMPTY_WEIGHT);
+            case 12 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], Game.TWO_IA - Game.ONE_IA);
+            case 18 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], Game.THREE_IA - Game.TWO_IA);
+            case 24 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], Game.FOUR_IA - Game.THREE_IA);
+            
+            default -> GameBoard.updateWeightQuintu(UpdateQuintu[i], 0f);
+            }
+            
+        this.getGameboard().setBoxWeight(x, y, 0f);
+        }
+            
+        
+    }
+    
 }

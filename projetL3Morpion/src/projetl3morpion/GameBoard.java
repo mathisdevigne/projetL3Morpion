@@ -150,6 +150,12 @@ public class GameBoard {
         return somme;
     }
     
+    public static void updateWeightQuintu(Box[] monQuintu, float newWeight){
+        for(int k = 0; k < 5; k++){
+            monQuintu[k].setWeight(monQuintu[k].getWeight() + newWeight);
+        }
+    }
+    
     //Renvoie tout les quintuplet (avec les valeurs) d'une case de coordonnées x y (ne prends que les quintuplets dans le plateau de jeu)
     public Box[][] getQuintuplets(int x, int y){
         //La case doit être dans le plateau de jeu
