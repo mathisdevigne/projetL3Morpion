@@ -52,6 +52,15 @@ public class GameBoard {
         return this.width;
     }
     
+    //Accesseur de weight
+    public float getBoxWeight(int x, int y){
+        return this.getBoxBoard(x,y).getWeight();
+    }
+    
+    //Setter de weight
+    public void setBoxWeight(int x, int y, float val){
+        this.getBoxBoard(x,y).setWeight(val);
+    }
     
     // Affichage du jeu (plateau) besoin d'ajustement
     public void print(){
@@ -94,33 +103,7 @@ public class GameBoard {
             this.getBoxBoard(x, y).setValue(val);
         }
     }
-    /*
-    public boolean existeQuintu(int x, int y, int dirHorizon, int dirVertical){
-        return ((0 <= x+5*dirVertical) && (x+5*dirVertical < this.getHeight()) && (0 <= x) && (x < this.getHeight()) && (0 <= y+5*dirHorizon) && (y+5*dirHorizon < this.getWidth()) && (0 <= y) && (y < this.getWidth())); 
-    }
     
-    public Box[] getQuintuplet(int x, int y, int dirHorizon, int dirVertical){
-        Box[] monQuintuplet = new Box[5];
-        if(existeQuintu(x,y,dirHorizon,dirVertical)){
-            for(int i = 0; i < 5; i++){
-                monQuintuplet[i] = this.getBoxBoard(x+(i*dirVertical), y+(i*dirHorizon));
-            }
-        }
-        return monQuintuplet;
-    }
-    
-    public int noteQuintu(int x, int y, int dirHorizon, int dirVertical){
-        int somme = 0;
-        if(existeQuintu(x,y,dirHorizon,dirVertical)){
-            Box[] leQuintuplet = getQuintuplet(x,y,dirHorizon,dirVertical);
-            for(int i = 0; i < 5; i++){
-                somme += leQuintuplet[i].getValue();
-            }
-        }
-        return somme;
-    }
-    
-    */
     
     // Permet d'avoir le nombre de quintuplet formable au max sur une case (donc exclue les quintuplets partiellement en dehors du plateau de jeu)
     public int getNbQuintuplets(int x, int y){
