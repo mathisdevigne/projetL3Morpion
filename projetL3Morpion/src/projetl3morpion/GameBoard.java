@@ -59,12 +59,12 @@ public class GameBoard {
         for(int k = 0; k < this.getHeight(); k++){
             if(k <= 9){
                 System.out.print(" ");
-            }
-            System.out.print( " " + k + " ");     
+                System.out.print( " " + k + " "); 
+            }         
         }
         System.out.println();
         System.out.print("  +");
-        for(int k = 0; k < this.getHeight(); k++){
+        for(int k = 0; k < this.getWidth(); k++){
             System.out.print( "---+");     
         }
         
@@ -81,7 +81,7 @@ public class GameBoard {
             }
             System.out.println();
             System.out.print("  +");
-            for(int k = 0; k < this.getHeight(); k++){
+            for(int k = 0; k < this.getWidth(); k++){
                 System.out.print( "---+");     
             }
             System.out.println();
