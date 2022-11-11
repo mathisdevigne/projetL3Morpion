@@ -39,7 +39,7 @@ public class Box {
     
     //Affiche la value de box
     public void print(){
-        /*switch (this.value) {
+        switch (this.value) {
             case 0 -> System.out.print(" ");
             case 1 -> System.out.print("O");
             case 6 -> System.out.print("X");
@@ -47,7 +47,7 @@ public class Box {
             }
         
         
-        }*/
-    System.out.print(this.getWeight());
+        }
+    //System.out.print(this.getWeight());
     }
 }

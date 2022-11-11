@@ -65,11 +65,11 @@ public class GameBoard {
     // Affichage du jeu (plateau) besoin d'ajustement
     public void print(){
         System.out.print("  ");
-        for(int k = 0; k < this.getHeight(); k++){
+        for(int k = 0; k < this.getWidth(); k++){
             if(k <= 9){
                 System.out.print(" ");
-                System.out.print( " " + k + " "); 
             }         
+            System.out.print( " " + k + " ");
         }
         System.out.println();
         System.out.print("  +");
