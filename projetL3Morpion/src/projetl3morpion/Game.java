@@ -60,7 +60,26 @@ public class Game {
         return value;
     }
     
-    // Simule un tour de jeu d'un joueur humain, renvoie true si un joueur a gagné
+    
+        // Simule le jeu complet: initialisation du plateau, affichage, coup joué et victoire.
+    public void play() throws IOException{
+        boolean ended = false;
+        boolean humanTurn;
+        
+        int joueur = getIntInput("Voulez-vous jouer en 1er (1) ou en 2e (2): ");
+        humanTurn = joueur == 1;
+        
+        this.initWeight();
+        this.getGameboard().print();
+        while(!(ended)){
+            ended = playOneRound(humanTurn);
+            humanTurn = !humanTurn;
+        }
+        
+        
+    }
+    
+    //Simule un tour de jeu
     public boolean playOneRound(boolean isHuman) throws IOException{
         if(isHuman){
             return this.humanTurn();
@@ -68,6 +87,51 @@ public class Game {
         else{
             return this.iaTurn();
         }
+    }
+    
+    //Simule le tour de jeu de l'IA (recherche de la première case avec le plus grand poids(weight)
+    public boolean iaTurn(){
+        //0 -> coord x ; 1 -> coord y
+        int[] bestBox = {0,0};
+        float bestWeight = -1f;
+
+        for(int i = 0; i < this.getGameboard().getHeight(); i++){
+            for(int j = 0 ; j < this.getGameboard().getWidth() ; j++){
+                if(this.getGameboard().getBoxWeight(i, j) > bestWeight){
+                    bestBox[0] = i;
+                    bestBox[1] = j;
+                    bestWeight = this.getGameboard().getBoxWeight(i, j);
+                }
+            }
+        }
+
+        this.insertValue(false, bestBox[0], bestBox[1]);
+        this.updateWeight(bestBox[0], bestBox[1]);
+        this.getGameboard().print();
+        return this.hasWin(bestBox[0], bestBox[1]);
+    }
+    
+    //Simule le tour du joueur humain (demande des coordonnées à l'utilisateur et joue 
+    public boolean humanTurn() throws IOException{
+        int playerInput[] = new int[2];
+        boolean isInside, isEmpty;
+        // Si la case est libre et dans le plateau de jeu alors on la place sinon on redemande
+        do{
+            isEmpty = false;
+
+            playerInput[0] = getIntInput("C'est à votre tour de jouer: ");
+            playerInput[1] = getIntInput("");
+            isInside = playerInput[0] >= 0 && playerInput[1] >= 0 && playerInput[0] < this.getGameboard().getHeight() && playerInput[1] < this.getGameboard().getWidth();
+            if(isInside){
+                isEmpty = this.getGameboard().getBoxBoard(playerInput[0], playerInput[1]).getValue() == 0;
+            }
+
+        }while(!(isEmpty && isInside ));
+
+        this.insertValue(true, playerInput[0], playerInput[1]);
+        this.updateWeight(playerInput[0], playerInput[1]);
+        this.getGameboard().print();
+        return this.hasWin(playerInput[0], playerInput[1]);
     }
     
     //Insere une valeur en fonction du joueur dans la case du plateau de jeu que ce joueur à décider de jouer
@@ -100,27 +164,11 @@ public class Game {
         return hasWin;
     }
     
-    // Simule le jeu complet: initialisation du plateau, affichage, coup joué et victoire.
-    public void play() throws IOException{
-        boolean ended = false;
-        boolean humanTurn;
-        
-        int joueur = getIntInput("Voulez-vous jouer en 1er (1) ou en 2e (2): ");
-        humanTurn = joueur == 1;
-        
-        this.initWeight();
-        this.getGameboard().print();
-        while(!(ended)){
-            ended = playOneRound(humanTurn);
-            humanTurn = !humanTurn;
-        }
-        
-        
-    }
+
     
-    
-    /* Fonction IA*/
-    
+    /********************************************************
+                    Fonctions de gestion de weight
+    ************************************************************/
     
     //Initialise les weights du plateau de jeu
     public void initWeight(){
@@ -174,47 +222,4 @@ public class Game {
         }
     }
     
-    
-    public boolean iaTurn(){
-        //0 -> coord x ; 1 -> coord y
-        int[] bestBox = {0,0};
-        float bestWeight = -1f;
-        
-        for(int i = 0; i < this.getGameboard().getHeight(); i++){
-            for(int j = 0 ; j < this.getGameboard().getWidth() ; j++){
-                if(this.getGameboard().getBoxWeight(i, j) > bestWeight){
-                    bestBox[0] = i;
-                    bestBox[1] = j;
-                    bestWeight = this.getGameboard().getBoxWeight(i, j);
-                }
-            }
-        }
-        
-        this.insertValue(false, bestBox[0], bestBox[1]);
-        this.updateWeight(bestBox[0], bestBox[1]);
-        this.getGameboard().print();
-        return this.hasWin(bestBox[0], bestBox[1]);
-    }
-    
-    public boolean humanTurn() throws IOException{
-        int playerInput[] = new int[2];
-        boolean isInside, isEmpty;
-        // Si la case est libre et dans le plateau de jeu alors on la place sinon on redemande
-        do{
-            isEmpty = false;
-
-            playerInput[0] = getIntInput("C'est à votre tour de jouer: ");
-            playerInput[1] = getIntInput("");
-            isInside = playerInput[0] >= 0 && playerInput[1] >= 0 && playerInput[0] < this.getGameboard().getHeight() && playerInput[1] < this.getGameboard().getWidth();
-            if(isInside){
-                isEmpty = this.getGameboard().getBoxBoard(playerInput[0], playerInput[1]).getValue() == 0;
-            }
-
-        }while(!(isEmpty && isInside ));
-
-        this.insertValue(true, playerInput[0], playerInput[1]);
-        this.updateWeight(playerInput[0], playerInput[1]);
-        this.getGameboard().print();
-        return this.hasWin(playerInput[0], playerInput[1]);
-    }
 }

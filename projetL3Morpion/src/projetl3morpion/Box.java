@@ -40,8 +40,11 @@ public class Box {
     //Affiche la value de box
     public void print(){
         switch (this.value) {
+            // Case vide
             case 0 -> System.out.print(" ");
+            //Case Joueur
             case 1 -> System.out.print("O");
+            //Case IA
             case 6 -> System.out.print("X");
             default -> {}
         }

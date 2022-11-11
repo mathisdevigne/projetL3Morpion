@@ -37,19 +37,14 @@ public class GameBoard {
         return this.height;
     }
     
-    //Accesseur de board
-    public Box[][] getBoard(){
-        return this.board;
+    //Accesseur de width
+    public int getWidth(){
+        return this.width;
     }
     
     //Accesseur d'une case de board
     public Box getBoxBoard(int i, int j){
         return this.board[i][j];
-    }
-    
-    //Accesseur de width
-    public int getWidth(){
-        return this.width;
     }
     
     //Accesseur de weight
@@ -105,6 +100,11 @@ public class GameBoard {
     }
     
     
+    /* ************************************************************
+                            FONCTION QUINTUPLETS
+    *****************************************************************/
+    
+    
     // Permet d'avoir le nombre de quintuplet formable au max sur une case (donc exclue les quintuplets partiellement en dehors du plateau de jeu)
     public int getNbQuintuplets(int x, int y){
         int nbQuintuplets = 0;
@@ -140,23 +140,8 @@ public class GameBoard {
         }
         return nbQuintuplets;
     }
-    
-    //Retourne la somme des valeurs d'un quintuplet
-    public static int noteQuintu(Box[] monQuintu){
-        int somme = 0;
-        for(int i = 0 ; i < 5 ; i++){
-            somme += monQuintu[i].getValue();
-        }
-        return somme;
-    }
-    
-    public static void updateWeightQuintu(Box[] monQuintu, int newWeight){
-        for(int k = 0; k < 5; k++){
-            monQuintu[k].setWeight(monQuintu[k].getWeight() + newWeight);
-        }
-    }
-    
-    //Renvoie tout les quintuplet (avec les valeurs) d'une case de coordonnées x y (ne prends que les quintuplets dans le plateau de jeu)
+
+    //Renvoie tout les quintuplet dans un tableau de Box d'une case de coordonnées x y (ne prends que les quintuplets compris dans le plateau de jeu)
     public Box[][] getQuintuplets(int x, int y){
         //La case doit être dans le plateau de jeu
         int nbQuint = this.getNbQuintuplets(x,y);
@@ -213,4 +198,22 @@ public class GameBoard {
         return quintupletList;
     }
         
+    
+        
+    //Retourne la somme des valeurs d'un quintuplet
+    public static int noteQuintu(Box[] monQuintu){
+        int somme = 0;
+        for(int i = 0 ; i < 5 ; i++){
+            somme += monQuintu[i].getValue();
+        }
+        return somme;
+    }
+    
+    //Change le poids des cases contenu dans le quintuplet
+    public static void updateWeightQuintu(Box[] monQuintu, int newWeight){
+        for(int k = 0; k < 5; k++){
+            monQuintu[k].setWeight(monQuintu[k].getWeight() + newWeight);
+        }
+    }
+    
 }
