@@ -193,7 +193,7 @@ public class GameBoard {
                     if(j+i == 2*i && x + i >= 0 && x + i + 4 < this.getHeight() && y - j < this.getWidth() && y - j - 4 >= 0){
 
                         for(int k = 0; k < 5; k++){
-                            quintupletList[indiceList][k] = this.getBoxBoard( y-j-k, x+i+k);
+                            quintupletList[indiceList][k] = this.getBoxBoard(x+i+k, y-j-k);
                             
                         }
                         indiceList++;
@@ -202,7 +202,7 @@ public class GameBoard {
                     //les 5 diagonales bas-droit / haut-gauche
                     if(j+i == 2*i && x + i >= 0 && x + i + 4 < this.getHeight() && y + j >= 0 && y + j + 4 < this.getWidth()){
                         for(int k = 0; k < 5; k++){
-                            quintupletList[indiceList][k] = this.getBoxBoard(y+j+k, x+i+k);
+                            quintupletList[indiceList][k] = this.getBoxBoard(x+i+k, y+j+k);
                             
                         }
                         indiceList++;
