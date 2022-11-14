@@ -70,7 +70,6 @@ public class Game {
         humanTurn = joueur == 1;
         
         this.initWeight();
-        this.getGameboard().print();
         while(!(ended)){
             ended = playOneRound(humanTurn);
             humanTurn = !humanTurn;
@@ -107,7 +106,6 @@ public class Game {
 
         this.insertValue(false, bestBox[0], bestBox[1]);
         this.updateWeight(bestBox[0], bestBox[1]);
-        this.getGameboard().print();
         return this.hasWin(bestBox[0], bestBox[1]);
     }
     
@@ -115,6 +113,7 @@ public class Game {
     public boolean humanTurn() throws IOException{
         int playerInput[] = new int[2];
         boolean isInside, isEmpty;
+        this.getGameboard().print();
         // Si la case est libre et dans le plateau de jeu alors on la place sinon on redemande
         do{
             isEmpty = false;
@@ -130,7 +129,6 @@ public class Game {
 
         this.insertValue(true, playerInput[0], playerInput[1]);
         this.updateWeight(playerInput[0], playerInput[1]);
-        this.getGameboard().print();
         return this.hasWin(playerInput[0], playerInput[1]);
     }
     
@@ -140,6 +138,7 @@ public class Game {
             this.getGameboard().getBoxBoard(x, y).setValue(1);
         }
         else{
+            this.getGameboard().getBoxBoard(x, y).setLast(true);
             this.getGameboard().getBoxBoard(x, y).setValue(6);
         }
     }
