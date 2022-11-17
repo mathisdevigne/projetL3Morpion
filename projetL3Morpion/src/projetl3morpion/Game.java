@@ -20,8 +20,8 @@ public class Game {
     private final static int TWO_IA = TWO_PLAYER*2;
     private final static int THREE_PLAYER = TWO_IA*3;
     private final static int THREE_IA = THREE_PLAYER*3;
-    private final static int FOUR_PLAYER = THREE_IA*4;
-    private final static int FOUR_IA = FOUR_PLAYER*4;
+    private final static int FOUR_PLAYER = THREE_IA*6;
+    private final static int FOUR_IA = FOUR_PLAYER*6;
     
     
     public Game() throws IOException{
@@ -75,6 +75,7 @@ public class Game {
             humanTurn = !humanTurn;
         }
         
+        this.getGameboard().print();
         
     }
     
