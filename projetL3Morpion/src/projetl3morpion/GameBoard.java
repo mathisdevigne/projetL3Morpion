@@ -203,8 +203,15 @@ public class GameBoard {
     //Retourne la somme des valeurs d'un quintuplet
     public static int noteQuintu(Box[] monQuintu){
         int somme = 0;
+        int quintuUsed = 0;
         for(int i = 0 ; i < 5 ; i++){
-            somme += monQuintu[i].getValue();
+            if(monQuintu[i].isUsed()){
+                quintuUsed += 2;
+            }
+            if(quintuUsed < 3){
+                somme += monQuintu[i].getValue();
+                quintuUsed--;
+            }
         }
         return somme;
     }

@@ -12,11 +12,13 @@ public class Box {
     private int value; //1 pour le joueur et 6 pour l'adversaire (IA)
     private int weight;
     private boolean last;
+    private boolean used;
     
     public Box(){
         this.value = 0;
         this.weight = 0;
         this.last = false;
+        this.used = false;
     }
     
     //Accesseur de value
@@ -27,6 +29,11 @@ public class Box {
     //Accesseur de weight
     public int getWeight(){
         return this.weight;
+    }
+    
+    //Accesseur de used
+    public boolean isUsed(){
+        return this.used;
     }
     
     //Setter de last
@@ -42,6 +49,11 @@ public class Box {
     //Setter de weight
     public void setWeight(int newWeight){
         this.weight = newWeight;
+    }
+    
+    //Setter de used
+    public void setUsed(){
+        this.used = true;
     }
     
     //Affiche la value de box
