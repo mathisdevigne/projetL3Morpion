@@ -221,9 +221,19 @@ public class Game {
     
     public void updateQuintu(Box[] quintus){
         int[] test = {-1, -1};
+        
         for(int i = 0; i < 5; i++){
             int[] coords = this.gameboard.getQuintuCoord(quintus[i].getId());
             if(!Arrays.equals(this.bestBox(), test)){
+                int nbUpdateQuintu = this.getGameboard().getNbQuintuplets(coords[0], coords[1]);
+                Box[][] UpdateQuintu = this.getGameboard().getQuintuplets(coords[0], coords[1]);
+                for(int j = 0; j < nbUpdateQuintu; j++){
+                    for(int k = 0; k < 5; k++){
+                        if(UpdateQuintu[j][k].getWeight() > 0){
+                            UpdateQuintu[j][k].setWeight(0);
+                        }
+                    }
+                }
                 this.updateWeight(coords[0], coords[1]);
             }
         }

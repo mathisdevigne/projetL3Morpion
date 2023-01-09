@@ -71,7 +71,6 @@ public class Box {
             this.last = false;
         }
            
-        
                 
         switch (this.value) {
             // Case vide
