@@ -21,9 +21,11 @@ public class GameBoard {
         this.width = width;
         
         board = new Box[height][width];
+        int id = 1;
         for(int i = 0 ; i < height ; i++){
             for(int j = 0; j < width ; j++){
-                board[i][j] = new Box();
+                board[i][j] = new Box(id);
+                id++;
             }
         }
     }
@@ -104,6 +106,18 @@ public class GameBoard {
                             FONCTION QUINTUPLETS
     *****************************************************************/
     
+    public int[] getQuintuCoord(int quintuId){
+        int id = 1;
+        for(int i = 0 ; i < height ; i++){
+            for(int j = 0; j < width ; j++){
+                if(id == quintuId){
+                    return new int[] {i,j};
+                }
+                id++;
+            }
+        }
+        return new int[] {-1, -1};
+    }
     
     // Permet d'avoir le nombre de quintuplet formable au max sur une case (donc exclue les quintuplets partiellement en dehors du plateau de jeu)
     public int getNbQuintuplets(int x, int y){
@@ -205,13 +219,10 @@ public class GameBoard {
         int somme = 0;
         int quintuUsed = 0;
         for(int i = 0 ; i < 5 ; i++){
-            if(monQuintu[i].isUsed()){
-                quintuUsed += 2;
-            }
-            if(quintuUsed < 3){
+            if(monQuintu[i].getUsed() == 0 || monQuintu[i].getUsed() != quintuUsed){
                 somme += monQuintu[i].getValue();
-                quintuUsed--;
             }
+            quintuUsed = monQuintu[i].getUsed();
         }
         return somme;
     }

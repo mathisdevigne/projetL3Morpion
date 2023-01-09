@@ -16,6 +16,8 @@ public class Game {
     public int score1 = 0;
     public int score2 = 0;
     
+    private static int usedValue = 1;
+    
     private final static int EMPTY_WEIGHT = 1;
     private final static int ONE_PLAYER = EMPTY_WEIGHT*2;
     private final static int ONE_IA = ONE_PLAYER*2;
@@ -114,7 +116,7 @@ public class Game {
     }
     
     public int[] bestBox(){
-        int[] bestBox = {0,0};
+        int[] bestBox = {-1,-1};
         float bestWeight = -1f;
         
         for(int i = 0; i < this.getGameboard().getHeight(); i++){
@@ -130,7 +132,7 @@ public class Game {
     }
     
     public boolean canPlay(){
-        int[] test = {0,0};
+        int[] test = {-1,-1};
         return !Arrays.equals(this.bestBox(), test);
     }
     
@@ -179,15 +181,19 @@ public class Game {
             if(noteQuintuplet == 5){
                 System.out.println("Vous avez gagné un point");
                 for(int j = 0; j < 5; j++){
-                    quintuplets[i][j].setUsed();
+                    quintuplets[i][j].setUsed(Game.usedValue);
                 }
+                this.updateQuintu(quintuplets[i]);
+                Game.usedValue++;
                 hasWin = true;
             }
             else if(noteQuintuplet == 30){
                 System.out.println("Votre adversaire à gagné un point");
                 for(int j = 0; j < 5; j++){
-                    quintuplets[i][j].setUsed();
+                    quintuplets[i][j].setUsed(Game.usedValue);
                 }
+                this.updateQuintu(quintuplets[i]);
+                Game.usedValue++;
                 hasWin = true;
             }
         }
@@ -213,6 +219,15 @@ public class Game {
         }
     }
     
+    public void updateQuintu(Box[] quintus){
+        int[] test = {-1, -1};
+        for(int i = 0; i < 5; i++){
+            int[] coords = this.gameboard.getQuintuCoord(quintus[i].getId());
+            if(!Arrays.equals(this.bestBox(), test)){
+                this.updateWeight(coords[0], coords[1]);
+            }
+        }
+    }
     
     // Met à jour les poids du plateau en fonction de l'emplacement joué
     public void updateWeight(int x, int y){

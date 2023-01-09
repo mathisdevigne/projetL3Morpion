@@ -9,16 +9,18 @@ package projetl3morpion;
  * @author fetiveau
  */
 public class Box {
+    private int id;
     private int value; //1 pour le joueur et 6 pour l'adversaire (IA)
     private int weight;
     private boolean last;
-    private boolean used;
+    private int used;
     
-    public Box(){
+    public Box(int id){
+        this.id = id;
         this.value = 0;
         this.weight = 0;
         this.last = false;
-        this.used = false;
+        this.used = 0;
     }
     
     //Accesseur de value
@@ -32,8 +34,13 @@ public class Box {
     }
     
     //Accesseur de used
-    public boolean isUsed(){
+    public int getUsed(){
         return this.used;
+    }
+    
+    //Accesseur de id
+    public int getId(){
+        return this.id;
     }
     
     //Setter de last
@@ -52,8 +59,8 @@ public class Box {
     }
     
     //Setter de used
-    public void setUsed(){
-        this.used = true;
+    public void setUsed(int v){
+        this.used = v;
     }
     
     //Affiche la value de box
