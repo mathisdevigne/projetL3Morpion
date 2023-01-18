@@ -23,10 +23,10 @@ public class Game {
     private final static int ONE_IA = ONE_PLAYER*2;
     private final static int TWO_PLAYER = ONE_IA*2;
     private final static int TWO_IA = TWO_PLAYER*2;
-    private final static int THREE_PLAYER = TWO_IA*3;
-    private final static int THREE_IA = THREE_PLAYER*3;
-    private final static int FOUR_PLAYER = THREE_IA*6;
-    private final static int FOUR_IA = FOUR_PLAYER*6;
+    private final static int THREE_PLAYER = TWO_IA*5;
+    private final static int THREE_IA = THREE_PLAYER*5;
+    private final static int FOUR_PLAYER = THREE_IA*10;
+    private final static int FOUR_IA = FOUR_PLAYER*10;
     
     
     public Game() throws IOException{
@@ -116,7 +116,7 @@ public class Game {
     }
     
     public int[] bestBox(){
-        int[] bestBox = {-1,-1};
+        int[] bestBox = {0,0};
         float bestWeight = -1f;
         
         for(int i = 0; i < this.getGameboard().getHeight(); i++){
@@ -133,13 +133,29 @@ public class Game {
     
     public boolean canPlay(){
         int[] test = {-1,-1};
-        return !Arrays.equals(this.bestBox(), test);
+        int[] bestBox = {-1,-1};
+        float bestWeight = -1f;
+        
+        for(int i = 0; i < this.getGameboard().getHeight(); i++){
+            for(int j = 0 ; j < this.getGameboard().getWidth() ; j++){
+                if(this.getGameboard().getBoxWeight(i, j) > bestWeight){
+                    bestBox[0] = i;
+                    bestBox[1] = j;
+                    bestWeight = this.getGameboard().getBoxWeight(i, j);
+                }
+            }
+        }
+        if(bestWeight == 0){
+            return false;
+        }
+        return !Arrays.equals(bestBox, test);
     }
     
     //Simule le tour du joueur humain (demande des coordonnées à l'utilisateur et joue 
     public boolean humanTurn() throws IOException{
         int playerInput[] = new int[2];
         boolean isInside, isEmpty;
+                this.gameboard.printW();
         this.print();
         // Si la case est libre et dans le plateau de jeu alors on la place sinon on redemande
         do{
@@ -183,7 +199,7 @@ public class Game {
                 for(int j = 0; j < 5; j++){
                     quintuplets[i][j].setUsed(Game.usedValue);
                 }
-                this.updateQuintu(quintuplets[i]);
+                this.updateBoard();
                 Game.usedValue++;
                 hasWin = true;
             }
@@ -192,7 +208,7 @@ public class Game {
                 for(int j = 0; j < 5; j++){
                     quintuplets[i][j].setUsed(Game.usedValue);
                 }
-                this.updateQuintu(quintuplets[i]);
+                this.updateBoard();
                 Game.usedValue++;
                 hasWin = true;
             }
@@ -219,23 +235,24 @@ public class Game {
         }
     }
     
-    public void updateQuintu(Box[] quintus){
-        int[] test = {-1, -1};
-        
-        for(int i = 0; i < 5; i++){
-            int[] coords = this.gameboard.getQuintuCoord(quintus[i].getId());
-            if(!Arrays.equals(this.bestBox(), test)){
-                int nbUpdateQuintu = this.getGameboard().getNbQuintuplets(coords[0], coords[1]);
-                Box[][] UpdateQuintu = this.getGameboard().getQuintuplets(coords[0], coords[1]);
-                for(int j = 0; j < nbUpdateQuintu; j++){
-                    for(int k = 0; k < 5; k++){
-                        if(UpdateQuintu[j][k].getWeight() > 0){
-                            UpdateQuintu[j][k].setWeight(0);
-                        }
+    public void updateBoard(){
+        for(int i = 0; i < this.gameboard.getHeight(); i++){
+            for(int j = 0; j < this.gameboard.getWidth(); j++){
+                if(this.gameboard.getBoxBoard(i, j).getWeight() > -10000){
+                    this.gameboard.getBoxBoard(i, j).setWeight(Game.EMPTY_WEIGHT * this.getGameboard().getNbQuintuplets(i, j));
+                }
+            }
+        }
+        this.gameboard.printW();
+        for(int i = 0; i < this.gameboard.getHeight(); i++){
+            for(int j = 0; j < this.gameboard.getWidth(); j++){
+                for(int k = 0; k < 5; k++){
+                    if(this.gameboard.getBoxBoard(i, j).isUsed()){
+                        this.updateWeightT(i, j);
                     }
                 }
-                this.updateWeight(coords[0], coords[1]);
             }
+            
         }
     }
     
@@ -280,4 +297,29 @@ public class Game {
         }
     }
     
+    
+    public void updateWeightT(int x, int y){
+        int nbUpdateQuintu = this.getGameboard().getNbQuintuplets(x, y);
+        Box[][] UpdateQuintu = this.getGameboard().getQuintuplets(x, y);
+        int noteQuintu;
+        
+        for(int i = 0; i < nbUpdateQuintu; i++){
+            noteQuintu = GameBoard.noteQuintu(UpdateQuintu[i]);
+            // On envoie la différence de poids du quintuplet avant et après qu'on es joué, qu'on ajoute au poids précédent de la case
+            switch (noteQuintu) {
+                case 1 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], Game.ONE_PLAYER - Game.EMPTY_WEIGHT);
+                case 2 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], Game.TWO_PLAYER - Game.ONE_PLAYER);
+                case 3 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], Game.THREE_PLAYER - Game.TWO_PLAYER);
+                case 4 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], Game.FOUR_PLAYER - Game.THREE_PLAYER);
+
+                case 6 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], Game.ONE_IA - Game.EMPTY_WEIGHT);
+                case 12 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], Game.TWO_IA - Game.ONE_IA);
+                case 18 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], Game.THREE_IA - Game.TWO_IA);
+                case 24 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], Game.FOUR_IA - Game.THREE_IA);
+
+            }
+        //Poids négatif dans les case déjà joué pour que l'ia n'y joue pas    
+        this.getGameboard().setBoxWeight(x, y, -1000000);
+        }
+    }
 }

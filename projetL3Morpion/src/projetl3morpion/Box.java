@@ -13,14 +13,14 @@ public class Box {
     private int value; //1 pour le joueur et 6 pour l'adversaire (IA)
     private int weight;
     private boolean last;
-    private int used;
+    private int[] used;
     
     public Box(int id){
         this.id = id;
         this.value = 0;
         this.weight = 0;
         this.last = false;
-        this.used = 0;
+        this.used = new int[8];
     }
     
     //Accesseur de value
@@ -34,7 +34,25 @@ public class Box {
     }
     
     //Accesseur de used
-    public int getUsed(){
+    public boolean isUsed(int[] ids){
+        for(int i = 0; i < this.used.length; i++){
+            for(int j = 0; j < ids.length; j++){
+                if(this.used[i] == ids[j])
+                    return true;
+            }  
+        }
+        return false;
+    }
+    
+    public boolean isUsed(){
+        for(int i = 0; i < this.used.length; i++){
+            if(this.used[i] != 0)
+                return true;
+        }
+        return false;
+    }
+    
+    public int[] getUsed(){
         return this.used;
     }
     
@@ -60,7 +78,12 @@ public class Box {
     
     //Setter de used
     public void setUsed(int v){
-        this.used = v;
+        for(int i = 0; i < this.used.length; i++){
+            if(this.used[i] == 0){
+                this.used[i] = v;
+                break;
+            }
+        }
     }
     
     //Affiche la value de box

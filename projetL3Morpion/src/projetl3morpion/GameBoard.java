@@ -94,6 +94,39 @@ public class GameBoard {
         }
     }
     
+    public void printW(){
+        System.out.print("  ");
+        for(int k = 0; k < this.getWidth(); k++){
+            if(k <= 9){
+                System.out.print(" ");
+            }         
+            System.out.print( "    " + k + "    ");
+        }
+        System.out.println();
+        System.out.print("  +");
+        for(int k = 0; k < this.getWidth(); k++){
+            System.out.print( "----------+");     
+        }
+        
+        System.out.println();
+        for(int i = 0; i < this.getHeight(); i++){
+            System.out.print(i);
+            if(i <= 9){
+                System.out.print(" ");
+            }
+            System.out.print("| ");
+            for(int j = 0; j < this.getWidth(); j++){
+                System.out.print(this.getBoxBoard(i,j).getWeight() + " | ");
+            }
+            System.out.println();
+            System.out.print("  +");
+            for(int k = 0; k < this.getWidth(); k++){
+                System.out.print( "----------+");     
+            }
+            System.out.println();
+        }
+    }
+    
     // Permet l'insertion d'une valeur dans une case de board
     public void putVal(int val, int x, int y){
         if(this.getBoxBoard(x,y).getValue() == 0){
@@ -217,9 +250,9 @@ public class GameBoard {
     //Retourne la somme des valeurs d'un quintuplet
     public static int noteQuintu(Box[] monQuintu){
         int somme = 0;
-        int quintuUsed = 0;
+        int[] quintuUsed = {0};
         for(int i = 0 ; i < 5 ; i++){
-            if(monQuintu[i].getUsed() == 0 || monQuintu[i].getUsed() != quintuUsed){
+            if(!monQuintu[i].isUsed() || !monQuintu[i].isUsed(quintuUsed)){
                 somme += monQuintu[i].getValue();
             }
             quintuUsed = monQuintu[i].getUsed();
