@@ -21,6 +21,10 @@ public class Box {
         this.weight = 0;
         this.last = false;
         this.used = new int[8];
+        for(int i = 0; i < 8; i++){
+           this.used[i] = -1; 
+        }
+        
     }
     
     //Accesseur de value
@@ -37,7 +41,7 @@ public class Box {
     public boolean isUsed(int[] ids){
         for(int i = 0; i < this.used.length; i++){
             for(int j = 0; j < ids.length; j++){
-                if(this.used[i] == ids[j])
+                if(this.used[i] == ids[j] && this.used[i] != -1)
                     return true;
             }  
         }
@@ -46,7 +50,7 @@ public class Box {
     
     public boolean isUsed(){
         for(int i = 0; i < this.used.length; i++){
-            if(this.used[i] != 0)
+            if(this.used[i] != -1)
                 return true;
         }
         return false;
@@ -79,7 +83,7 @@ public class Box {
     //Setter de used
     public void setUsed(int v){
         for(int i = 0; i < this.used.length; i++){
-            if(this.used[i] == 0){
+            if(this.used[i] == -1){
                 this.used[i] = v;
                 break;
             }

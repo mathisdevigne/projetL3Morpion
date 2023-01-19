@@ -116,7 +116,10 @@ public class GameBoard {
             }
             System.out.print("| ");
             for(int j = 0; j < this.getWidth(); j++){
-                System.out.print(this.getBoxBoard(i,j).getWeight() + " | ");
+                for(int k = 0; k < 8; k++){
+                    System.out.print(this.getBoxBoard(i,j).getUsed()[k]);
+                }
+                System.out.print(" | ");
             }
             System.out.println();
             System.out.print("  +");

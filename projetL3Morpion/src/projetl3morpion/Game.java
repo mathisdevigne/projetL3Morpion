@@ -155,7 +155,7 @@ public class Game {
     public boolean humanTurn() throws IOException{
         int playerInput[] = new int[2];
         boolean isInside, isEmpty;
-                this.gameboard.printW();
+        //this.gameboard.printW();
         this.print();
         // Si la case est libre et dans le plateau de jeu alors on la place sinon on redemande
         do{
@@ -243,13 +243,12 @@ public class Game {
                 }
             }
         }
-        this.gameboard.printW();
+        //this.gameboard.printW();
         for(int i = 0; i < this.gameboard.getHeight(); i++){
             for(int j = 0; j < this.gameboard.getWidth(); j++){
-                for(int k = 0; k < 5; k++){
-                    if(this.gameboard.getBoxBoard(i, j).isUsed()){
-                        this.updateWeightT(i, j);
-                    }
+                if(this.gameboard.getBoxBoard(i, j).getWeight() < -100000){
+                    this.updateWeightT(i, j);
+
                 }
             }
             
@@ -307,15 +306,15 @@ public class Game {
             noteQuintu = GameBoard.noteQuintu(UpdateQuintu[i]);
             // On envoie la différence de poids du quintuplet avant et après qu'on es joué, qu'on ajoute au poids précédent de la case
             switch (noteQuintu) {
-                case 1 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], Game.ONE_PLAYER - Game.EMPTY_WEIGHT);
-                case 2 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], Game.TWO_PLAYER - Game.ONE_PLAYER);
-                case 3 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], Game.THREE_PLAYER - Game.TWO_PLAYER);
-                case 4 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], Game.FOUR_PLAYER - Game.THREE_PLAYER);
+                case 1 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], Game.ONE_PLAYER);
+                case 2 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], Game.TWO_PLAYER);
+                case 3 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], Game.THREE_PLAYER);
+                case 4 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], Game.FOUR_PLAYER);
 
-                case 6 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], Game.ONE_IA - Game.EMPTY_WEIGHT);
-                case 12 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], Game.TWO_IA - Game.ONE_IA);
-                case 18 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], Game.THREE_IA - Game.TWO_IA);
-                case 24 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], Game.FOUR_IA - Game.THREE_IA);
+                case 6 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], Game.ONE_IA);
+                case 12 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], Game.TWO_IA);
+                case 18 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], Game.THREE_IA);
+                case 24 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], Game.FOUR_IA);
 
             }
         //Poids négatif dans les case déjà joué pour que l'ia n'y joue pas    
