@@ -11,20 +11,23 @@ package projetl3morpion;
 public class ShapeBoard extends GameBoard {
     
     
-    public ShapeBoard(String link){
-        super(10 ,10);
-        int[][] tab = new int[10][10];
+    public ShapeBoard(){
+        super(10 ,12);
+        
+    }
+    
+    public void setShape(String link){
+           int[][] tab = new int[10][12];
         
         for(int i = 0; i <this.getHeight(); i++){
             for(int j = 0; j <this.getWidth(); j++){
-                tab[i][j] = (int) (Math.random()*2);
+                tab[i][j] = (int) (Math.random()*7);
             }
         }
         for(int i = 0; i <this.getHeight(); i++){
             for(int j = 0; j <this.getWidth(); j++){
-                if(tab[i][j]!=0){
+                if(tab[i][j]==0){
                     this.getBoxBoard(i, j).setValue(50);
-                    this.getBoxBoard(i, j).setWeight(-10000);
                 }
             }
         }

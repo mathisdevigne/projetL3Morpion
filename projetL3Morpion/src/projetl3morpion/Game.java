@@ -12,6 +12,7 @@ import java.io.InputStreamReader;
  */
 public class Game {
     public GameBoard gameboard;
+    public String imageLink = null;
     
     private final static int EMPTY_WEIGHT = 1;
     private final static int ONE_PLAYER = EMPTY_WEIGHT*2;
@@ -37,11 +38,17 @@ public class Game {
     }
     
     public Game(String link){
-        this.gameboard = new ShapeBoard(link);
+        this.gameboard = new ShapeBoard();
+        this.imageLink = link;
     }
     
     public GameBoard getGameboard(){
         return this.gameboard;
+    }
+    
+    
+    public ShapeBoard getShapeboard(){
+        return (ShapeBoard) this.gameboard;
     }
     
     // Renvoie un entier entrer par l'utilisateur
@@ -74,6 +81,10 @@ public class Game {
         humanTurn = joueur == 1;
         
         this.initWeight();
+        if(this.imageLink != null){
+            this.getShapeboard().setShape(imageLink);
+            this.updateAllWeight();
+        }
         while(!(ended)){
             ended = playOneRound(humanTurn);
             humanTurn = !humanTurn;
@@ -111,6 +122,7 @@ public class Game {
 
         this.insertValue(false, bestBox[0], bestBox[1]);
         this.updateWeight(bestBox[0], bestBox[1]);
+        
         return this.hasWin(bestBox[0], bestBox[1]);
     }
     
@@ -209,9 +221,12 @@ public class Game {
                 case 18 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], Game.THREE_IA - Game.TWO_IA);
                 case 24 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], Game.FOUR_IA - Game.THREE_IA);
 
-                //Cas du quintuplet fermé et complet
+                //Cas du quintuplet fermé et complet + CAS VAL = 50
                 default ->  {
                     noteQuintu -= this.getGameboard().getBoxBoard(x, y).getValue();
+                    if(this.getGameboard().getBoxBoard(x, y).getValue() == 50){
+                        noteQuintu = 50;
+                    }
                     switch (noteQuintu) {
                         case 1 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], -Game.ONE_PLAYER);
                         case 2 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], -Game.TWO_PLAYER);
@@ -222,11 +237,26 @@ public class Game {
                         case 12 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], -Game.TWO_IA);
                         case 18 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], -Game.THREE_IA);
                         case 24 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], -Game.FOUR_IA);
+                        
+                        //Cas -= 50
+                        default -> GameBoard.updateWeightQuintu(UpdateQuintu[i], -Game.EMPTY_WEIGHT);
                     }
                 }
             }
         //Poids négatif dans les case déjà joué pour que l'ia n'y joue pas    
         this.getGameboard().setBoxWeight(x, y, -1000000);
+        }
+    }
+    
+
+    // Met à jour les poids du plateau en fonction de l'emplacement joué
+    public void updateAllWeight(){
+        for(int x = 0; x < this.getGameboard().getHeight(); x++){
+            for(int y = 0; y < this.getGameboard().getWidth(); y++){
+                if(this.getGameboard().getBoxBoard(x, y).getValue() == 50){
+                    this.updateWeight(x, y);
+                }
+            }
         }
     }
     
