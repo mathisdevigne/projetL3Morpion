@@ -59,13 +59,13 @@ public class Box { //Rajouter un cas pour les cases prises mais non joueur
                 
         switch (this.value) {
             // Case vide
-            //case 0 -> System.out.print(" ");
+            case 0 -> System.out.print(this.weight > 9 ? "+" : (this.weight < 0 ? "N" :this.weight));
             //Case Joueur
             case 1 -> System.out.print("O");
             //Case IA
             case 6 -> System.out.print("X" + ConsoleColors.RESET);
             //Case pas util
-            case 50 -> System.out.print(this.weight < 0 ? ConsoleColors.RED+"N"+ConsoleColors.RESET : this.weight);
+            case 50 -> System.out.print(this.weight < 0 ? ConsoleColors.RED+"N"+ConsoleColors.RESET : this.weight );
             default -> System.out.print("N");
         }
         

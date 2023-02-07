@@ -4,6 +4,13 @@
  */
 package projetl3morpion;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+
 /**
  *
  * @author mathi
@@ -11,23 +18,30 @@ package projetl3morpion;
 public class ShapeBoard extends GameBoard {
     
     
-    public ShapeBoard(){
-        super(10 ,12);
+    public ShapeBoard(int height, int width){
+        super(height ,width);
         
     }
     
-    public void setShape(String link){
-           int[][] tab = new int[10][12];
-        
-        for(int i = 0; i <this.getHeight(); i++){
-            for(int j = 0; j <this.getWidth(); j++){
-                tab[i][j] = (int) (Math.random()*7);
-            }
-        }
-        for(int i = 0; i <this.getHeight(); i++){
-            for(int j = 0; j <this.getWidth(); j++){
-                if(tab[i][j]==0){
-                    this.getBoxBoard(i, j).setValue(50);
+    public void setShape(BufferedImage bi){
+        for(int x = 0;x<this.getWidth();x++){
+            for(int y = 0;y<this.getHeight();y++){
+                int color = bi.getRGB(y, x);
+
+                // extract each color component
+                int red   = (color >>> 16) & 0xFF;
+                int green = (color >>>  8) & 0xFF;
+                int blue  = (color) & 0xFF;
+
+                // calc luminance in range 0.0 to 1.0; using SRGB luminance constants
+                float luminance = (red * 0.2126f + green * 0.7152f + blue * 0.0722f) / 255;
+
+                // choose brightness threshold as appropriate:
+                if (luminance <= 0.5f) {
+                    // dark color
+                    this.getBoxBoard(y, x).setValue(50);
+                } else {
+                    // bright color
                 }
             }
         }

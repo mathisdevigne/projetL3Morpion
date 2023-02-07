@@ -3,16 +3,22 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package projetl3morpion;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferByte;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 /**
  *
  * @author fetiveau
  */
 public class Game {
     public GameBoard gameboard;
-    public String imageLink = null;
+    public BufferedImage bi = null;
     
     private final static int EMPTY_WEIGHT = 1;
     private final static int ONE_PLAYER = EMPTY_WEIGHT*2;
@@ -38,8 +44,15 @@ public class Game {
     }
     
     public Game(String link){
-        this.gameboard = new ShapeBoard();
-        this.imageLink = link;
+        try {
+            bi = ImageIO.read(new File(link));
+        } catch (IOException ex) {
+            Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        bi = Game.rotateClockwise90(bi);
+        bi = Game.rotateClockwise90(bi);
+        bi = Game.rotateClockwise90(bi);
+        this.gameboard = new ShapeBoard(bi.getHeight(), bi.getWidth());
     }
     
     public GameBoard getGameboard(){
@@ -81,8 +94,8 @@ public class Game {
         humanTurn = joueur == 1;
         
         this.initWeight();
-        if(this.imageLink != null){
-            this.getShapeboard().setShape(imageLink);
+        if(this.bi != null){
+            this.getShapeboard().setShape(bi);
             this.updateAllWeight();
         }
         while(!(ended)){
@@ -206,6 +219,7 @@ public class Game {
         int nbUpdateQuintu = this.getGameboard().getNbQuintuplets(x, y);
         Box[][] UpdateQuintu = this.getGameboard().getQuintuplets(x, y);
         int noteQuintu;
+        System.out.println("LESGO " + UpdateQuintu.length);
         
         for(int i = 0; i < nbUpdateQuintu; i++){
             noteQuintu = GameBoard.noteQuintu(UpdateQuintu[i]);
@@ -239,7 +253,7 @@ public class Game {
                         case 24 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], -Game.FOUR_IA);
                         
                         //Cas -= 50
-                        default -> GameBoard.updateWeightQuintu(UpdateQuintu[i], -Game.EMPTY_WEIGHT);
+                        default -> {System.out.println("lesgo");GameBoard.updateWeightQuintu(UpdateQuintu[i], -Game.EMPTY_WEIGHT);break;}
                     }
                 }
             }
@@ -258,6 +272,42 @@ public class Game {
                 }
             }
         }
+    }
+    
+    
+    //Rien tqt
+    public static BufferedImage rotateClockwise90(BufferedImage src) {
+
+        int srcWidth = src.getWidth();
+        int srcHeight = src.getHeight();
+        boolean hasAlphaChannel = src.getAlphaRaster() != null;
+        int pixelLength = hasAlphaChannel ? 4 : 3;
+        byte[] srcPixels = ((DataBufferByte)src.getRaster().getDataBuffer()).getData();
+
+        // Create the destination buffered image
+        BufferedImage dest = new BufferedImage(srcHeight, srcWidth, src.getType());
+        byte[] destPixels = ((DataBufferByte)dest.getRaster().getDataBuffer()).getData();
+        int destWidth = dest.getWidth();
+
+        int srcPos = 0; // We can just increment this since the data pack order matches our loop traversal: left to right, top to bottom. (Just like reading a book.)   
+        for(int srcY = 0; srcY < srcHeight; srcY++) {
+            for(int srcX = 0; srcX < srcWidth; srcX++) {
+
+                int destX = ((srcHeight - 1) - srcY);
+                int destY = srcX;
+
+                int destPos = (((destY * destWidth) + destX) * pixelLength);
+
+                if(hasAlphaChannel) {
+                    destPixels[destPos++] = srcPixels[srcPos++];    // alpha
+                }
+                destPixels[destPos++] = srcPixels[srcPos++];        // blue
+                destPixels[destPos++] = srcPixels[srcPos++];        // green
+                destPixels[destPos++] = srcPixels[srcPos++];        // red
+            }
+        }
+
+        return dest;
     }
     
 }
