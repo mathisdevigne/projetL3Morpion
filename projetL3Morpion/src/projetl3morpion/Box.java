@@ -8,7 +8,10 @@ package projetl3morpion;
  *
  * @author fetiveau
  */
-public class Box {
+public class Box { //Rajouter un cas pour les cases prises mais non joueur
+    // Affichage
+    // Constructeur avec un tab de bool
+    // Prise en compte d'une image
     private int value; //1 pour le joueur et 6 pour l'adversaire (IA)
     private int weight;
     private boolean last;
@@ -61,7 +64,10 @@ public class Box {
             case 1 -> System.out.print("O");
             //Case IA
             case 6 -> System.out.print("X" + ConsoleColors.RESET);
+            //Case pas util
+            //case 50 -> System.out.print(ConsoleColors.RED_BACKGROUND+" "+ConsoleColors.RESET);
             default -> {}
         }
+        System.out.print(this.weight < 0 ? ConsoleColors.RED+"N"+ConsoleColors.RESET : this.weight);
     }
 }

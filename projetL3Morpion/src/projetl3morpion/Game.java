@@ -36,6 +36,10 @@ public class Game {
         this.gameboard = new GameBoard(height, width);
     }
     
+    public Game(String link){
+        this.gameboard = new ShapeBoard(link);
+    }
+    
     public GameBoard getGameboard(){
         return this.gameboard;
     }
@@ -174,8 +178,12 @@ public class Game {
     public void initWeight(){
         for(int i = 0; i < this.getGameboard().getHeight() ; i++){
             for(int j = 0; j < this.getGameboard().getWidth() ;  j++){
-                
-                this.getGameboard().setBoxWeight(i,j, Game.EMPTY_WEIGHT * this.getGameboard().getNbQuintuplets(i, j));
+                if(this.getGameboard().getBoxBoard(i, j).getValue() == 50){ //Si case barré
+                    this.getGameboard().setBoxWeight(i,j, -10000);
+                }
+                else{
+                    this.getGameboard().setBoxWeight(i,j, Game.EMPTY_WEIGHT * this.getGameboard().getNbQuintuplets(i, j));
+                }
             }
         }
     }

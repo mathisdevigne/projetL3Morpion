@@ -14,9 +14,12 @@ public class Main {
 
     /**
      * @param args the command line arguments
+     * @throws java.io.IOException
      */
     public static void main(String[] args) throws IOException{
-        Game monJeu = new Game();
-        monJeu.play();
+        //Game monJeu = new Game();
+        //monJeu.play();
+        Game game = new Game("j");
+        game.play();
     }
 }
