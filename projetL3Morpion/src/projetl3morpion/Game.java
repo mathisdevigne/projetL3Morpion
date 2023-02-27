@@ -40,7 +40,21 @@ public class Game {
         while(width < 10){
             width = Game.getIntInput("Veuillez rentrez la largeur du plateau de jeu (minimun 10): ");
         }
-        this.gameboard = new GameBoard(height, width);
+        this.gameboard = new ShapeBoard(height, width);
+    }
+    
+    
+    public Game(boolean choix) throws IOException{
+        int height = -1, width = -1;
+        
+        while(height < 10){
+            height = Game.getIntInput("Veuillez rentrez la hauteur du plateau de jeu (minimun 10): ");
+        }
+        while(width < 10){
+            width = Game.getIntInput("Veuillez rentrez la largeur du plateau de jeu (minimun 10): ");
+        }
+        this.gameboard = new ShapeBoard(height, width);
+        ((ShapeBoard)this.gameboard).setShapeChoice();
     }
     
     public Game(String link){
@@ -96,8 +110,8 @@ public class Game {
         this.initWeight();
         if(this.bi != null){
             this.getShapeboard().setShape(bi);
-            this.updateAllWeight();
         }
+        this.updateAllWeight();
         while(!(ended)){
             ended = playOneRound(humanTurn);
             humanTurn = !humanTurn;
@@ -219,7 +233,6 @@ public class Game {
         int nbUpdateQuintu = this.getGameboard().getNbQuintuplets(x, y);
         Box[][] UpdateQuintu = this.getGameboard().getQuintuplets(x, y);
         int noteQuintu;
-        System.out.println("LESGO " + UpdateQuintu.length);
         
         for(int i = 0; i < nbUpdateQuintu; i++){
             noteQuintu = GameBoard.noteQuintu(UpdateQuintu[i]);
@@ -253,7 +266,7 @@ public class Game {
                         case 24 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], -Game.FOUR_IA);
                         
                         //Cas -= 50
-                        default -> {System.out.println("lesgo");GameBoard.updateWeightQuintu(UpdateQuintu[i], -Game.EMPTY_WEIGHT);break;}
+                        default -> {GameBoard.updateWeightQuintu(UpdateQuintu[i], -Game.EMPTY_WEIGHT);break;}
                     }
                 }
             }

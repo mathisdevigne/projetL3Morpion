@@ -47,6 +47,20 @@ public class ShapeBoard extends GameBoard {
         }
     }
     
+    public void setShapeChoice() throws IOException{
+        int height, width;
+        do{
+            height = -2; width = -2;
+            while(height > getHeight()|| height <-1){
+                height = Game.getIntInput("Veuillez rentrez le x de la case, (-1) pour arreter : ");
+            }
+            while(width > getWidth()||width <-1){
+                width = Game.getIntInput("Veuillez rentrez le y de la case, (-1) pour arreter : ");
+            }
+            if(height != -1 && width != -1)this.getBoxBoard(width, height).setValue(50);
+        }while(height != -1 && width != -1);
+    }
+    
     @Override
     public int getNbQuintuplets(int x, int y){
         int nbQuintuplets = 0;
