@@ -65,7 +65,7 @@ public class Box { //Rajouter un cas pour les cases prises mais non joueur
             //Case IA
             case 6 -> System.out.print("X" + ConsoleColors.RESET);
             //Case pas util
-            case 50 -> System.out.print(this.weight < 0 ? ConsoleColors.RED+"X"+ConsoleColors.RESET : this.weight );
+            case 50 -> System.out.print(ConsoleColors.RED+"X"+ConsoleColors.RESET);
             default -> System.out.print("N");
         }
         
