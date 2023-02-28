@@ -96,12 +96,12 @@ public class Game {
     public void playOneRound(boolean isHuman) throws IOException{
         if(isHuman){
             if(this.humanTurn()){
-                this.score1++;
+                //this.score1++;
             }
         }
         else{
             if(this.iaTurn()){
-                this.score2++;
+               //this.score2++;
             }
         }
     }
@@ -202,6 +202,7 @@ public class Game {
                 this.updateBoard();
                 Game.usedValue++;
                 hasWin = true;
+                this.score1++;
             }
             else if(noteQuintuplet == 30){
                 System.out.println("Votre adversaire à gagné un point");
@@ -211,6 +212,7 @@ public class Game {
                 this.updateBoard();
                 Game.usedValue++;
                 hasWin = true;
+                this.score2++;
             }
         }
         return hasWin;
