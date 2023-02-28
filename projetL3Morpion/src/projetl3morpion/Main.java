@@ -21,7 +21,7 @@ public class Main {
         //Game monJeu = new Game();
         //monJeu.play();
         Game game;
-        int choix = getIntInput("Voulez vous jouez normalement(0), avec un dessin (bonhomme : 1, logo univ : 2), ou choisir les cases a enlever (3) :");
+        int choix = getIntInput("Voulez vous jouez normalement(0), avec un dessin (bonhomme : 1, logo univ : 2), ou choisir les cases a enlever (3), ou mystere (4) :");
         switch (choix) {
             case 0:
                 game = new Game();
@@ -34,6 +34,9 @@ public class Main {
                 break;
             case 3:
                 game = new Game(true);
+                break;
+            case 4:
+                game = new Game("yb3.png");
                 break;
             default:
                 throw new AssertionError();

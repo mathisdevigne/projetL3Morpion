@@ -26,7 +26,7 @@ public class ShapeBoard extends GameBoard {
     public void setShape(BufferedImage bi){
         for(int x = 0;x<this.getWidth();x++){
             for(int y = 0;y<this.getHeight();y++){
-                int color = bi.getRGB(y, x);
+                int color = bi.getRGB(x, y);
 
                 // extract each color component
                 int red   = (color >>> 16) & 0xFF;
@@ -37,7 +37,7 @@ public class ShapeBoard extends GameBoard {
                 float luminance = (red * 0.2126f + green * 0.7152f + blue * 0.0722f) / 255;
 
                 // choose brightness threshold as appropriate:
-                if (luminance <= 0.5f) {
+                if (luminance <= 0.3f) {
                     // dark color
                     this.getBoxBoard(y, x).setValue(50);
                 } else {

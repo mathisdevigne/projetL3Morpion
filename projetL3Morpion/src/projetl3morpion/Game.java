@@ -63,9 +63,6 @@ public class Game {
         } catch (IOException ex) {
             Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
         }
-        bi = Game.rotateClockwise90(bi);
-        bi = Game.rotateClockwise90(bi);
-        bi = Game.rotateClockwise90(bi);
         this.gameboard = new ShapeBoard(bi.getHeight(), bi.getWidth());
     }
     
