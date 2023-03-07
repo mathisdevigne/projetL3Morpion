@@ -45,12 +45,14 @@ public class Menu extends BorderPane{
         header.setPadding(new Insets(20,20,20,20));
         
         //=====================
-        //SLIDERS + RADIOBUTTON
+        //SLIDERS + RADIOBUTTON 
         //=====================
         
         VBox infos = new VBox();
         heightSlider = new SliderBetter("Height", 10, 50, 10);
+        heightSlider.setAlignment(Pos.CENTER);
         widthSlider = new SliderBetter("Width", 10, 50, 10);
+        widthSlider.setAlignment(Pos.CENTER);
         
         HBox rb = new HBox();
         Label whoBegin = new Label("Qui commence : ");

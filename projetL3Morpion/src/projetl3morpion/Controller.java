@@ -47,7 +47,7 @@ public class Controller extends Application{
         
         primaryStage.setTitle("Menu");
         primaryStage.setScene(scene);
-        primaryStage.setResizable(true);
+        primaryStage.setResizable(false);
         // On ouvre la fenetre. 
                 
         primaryStage.show();
