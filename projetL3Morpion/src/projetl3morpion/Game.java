@@ -6,12 +6,21 @@ package projetl3morpion;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 /**
  *
  * @author fetiveau
  */
 public class Game {
     public GameBoard gameboard;
+    private boolean isHumanTurn;
+    private boolean isFinish;
+    
+    private Data datas;
+    
+    private int scoreJoueur = 0;
+    private int scoreIA = 0;
     
     private final static int EMPTY_WEIGHT = 1;
     private final static int ONE_PLAYER = EMPTY_WEIGHT*2;
@@ -34,10 +43,45 @@ public class Game {
             width = Game.getIntInput("Veuillez rentrez la largeur du plateau de jeu (minimun 10): ");
         }
         this.gameboard = new GameBoard(height, width);
+        this.initWeight();
+        
+        int joueur = getIntInput("Voulez-vous jouer en 1er (1) ou en 2e (2): ");
+        if(joueur == 2){
+            this.iaTurn();
+        } 
+        
+    }
+    
+    public Game(int width, int height){
+        
+        datas = Data.getInstance();
+        
+        this.gameboard = new GameBoard(height, width);
+        this.initWeight();
+        
+        boolean joueur = datas.getIsHumanBegin();
+        if(!joueur){
+            this.iaTurn();
+        } 
+    }
+    
+    public void resetBoard(){
+        this.initWeight();
+        this.gameboard.resetBoard();;
+        this.gameboard.print();
+        this.isFinish = false;
     }
     
     public GameBoard getGameboard(){
         return this.gameboard;
+    }
+    
+    public int getScoreJoueur(){
+        return scoreJoueur;
+    }
+    
+    public int getScoreIA(){
+        return scoreIA;
     }
     
     // Renvoie un entier entrer par l'utilisateur
@@ -62,20 +106,14 @@ public class Game {
     
     
         // Simule le jeu complet: initialisation du plateau, affichage, coup joué et victoire.
-    public void play() throws IOException{
-        boolean ended = false;
-        boolean humanTurn;
+    public void play(int x, int y){
         
-        int joueur = getIntInput("Voulez-vous jouer en 1er (1) ou en 2e (2): ");
-        humanTurn = joueur == 1;
-        
-        this.initWeight();
-        while(!(ended)){
-            ended = playOneRound(humanTurn);
-            humanTurn = !humanTurn;
+        if(!isFinish){
+            
+            if(this.humanTurn(x, y)){
+                this.iaTurn();
+            }
         }
-        
-        this.getGameboard().print();
         
     }
     
@@ -83,6 +121,7 @@ public class Game {
     public boolean playOneRound(boolean isHuman) throws IOException{
         if(isHuman){
             return this.humanTurn();
+            
         }
         else{
             return this.iaTurn();
@@ -95,8 +134,8 @@ public class Game {
         int[] bestBox = {0,0};
         float bestWeight = -1f;
 
-        for(int i = 0; i < this.getGameboard().getHeight(); i++){
-            for(int j = 0 ; j < this.getGameboard().getWidth() ; j++){
+        for(int i = 0; i < this.getGameboard().getBoardHeight(); i++){
+            for(int j = 0 ; j < this.getGameboard().getBoardWidth() ; j++){
                 if(this.getGameboard().getBoxWeight(i, j) > bestWeight){
                     bestBox[0] = i;
                     bestBox[1] = j;
@@ -121,7 +160,7 @@ public class Game {
 
             playerInput[0] = getIntInput("C'est à votre tour de jouer: ");
             playerInput[1] = getIntInput("");
-            isInside = playerInput[0] >= 0 && playerInput[1] >= 0 && playerInput[0] < this.getGameboard().getHeight() && playerInput[1] < this.getGameboard().getWidth();
+            isInside = playerInput[0] >= 0 && playerInput[1] >= 0 && playerInput[0] < this.getGameboard().getBoardHeight() && playerInput[1] < this.getGameboard().getBoardWidth();
             if(isInside){
                 isEmpty = this.getGameboard().getBoxBoard(playerInput[0], playerInput[1]).getValue() == 0;
             }
@@ -133,6 +172,21 @@ public class Game {
         return this.hasWin(playerInput[0], playerInput[1]);
     }
     
+    public boolean humanTurn(int x, int y){
+        
+        boolean verif = false;
+        
+        if(this.getGameboard().getBoxBoard(y, x).getValue() == 0){
+            
+            this.insertValue(true, y, x);
+            this.updateWeight(y, x);
+            verif = true;
+        }
+        
+        return verif && !this.hasWin(y, x);
+        
+    }
+    
     //Insere une valeur en fonction du joueur dans la case du plateau de jeu que ce joueur à décider de jouer
     public void insertValue(boolean isHuman, int x, int y){
         if(isHuman){
@@ -142,11 +196,15 @@ public class Game {
             this.getGameboard().getBoxBoard(x, y).setLast(true);
             this.getGameboard().getBoxBoard(x, y).setValue(6);
         }
+        
+        this.getGameboard().print();
     }
     
     //Regarde si au moins un quintuplet gagnant se situe dans la case x y, si oui renvoie true sinon false
     public boolean hasWin(int x, int y){
         boolean hasWin = false;
+        String messages[] = new String[2];
+        
         int noteQuintuplet;
         Box[][] quintuplets = this.getGameboard().getQuintuplets(x, y);
         for(int i = 0; i < this.getGameboard().getNbQuintuplets(x, y) ; i++ ){
@@ -155,11 +213,25 @@ public class Game {
             if(noteQuintuplet == 5){
                 System.out.println("Vous avez gagné");
                 hasWin = true;
+                scoreJoueur += 1;
+                messages[0] = "Vous avez gagné";
+                messages[1] = "Félicitation, vous avez réussi à vaincre la féroce IA. Vous méritez une médaille !";
             }
             else if(noteQuintuplet == 30){
                 System.out.println("Vous avez perdu");
                 hasWin = true;
+                scoreIA += 1;
+                messages[0] = "Vous avez perdu";
+                messages[1] = "Dommage, vous vous êtes fait démolir ^^";
             }
+        }
+        isFinish = hasWin;
+        if(isFinish){
+            Alert a = new Alert(AlertType.INFORMATION);
+            a.setTitle("Partie terminée");
+            a.setContentText(messages[1]);
+            a.setHeaderText(messages[0]);
+            a.show();
         }
         return hasWin;
     }
@@ -172,8 +244,8 @@ public class Game {
     
     //Initialise les weights du plateau de jeu
     public void initWeight(){
-        for(int i = 0; i < this.getGameboard().getHeight() ; i++){
-            for(int j = 0; j < this.getGameboard().getWidth() ;  j++){
+        for(int i = 0; i < this.getGameboard().getBoardHeight() ; i++){
+            for(int j = 0; j < this.getGameboard().getBoardWidth() ;  j++){
                 
                 this.getGameboard().setBoxWeight(i,j, Game.EMPTY_WEIGHT * this.getGameboard().getNbQuintuplets(i, j));
             }

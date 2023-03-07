@@ -4,16 +4,38 @@
  */
 package projetl3morpion;
 
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Color;
+
 /**
  *
  * @author fetiveau
  */
-public class Box {
+public class Box extends Label {
     private int value; //1 pour le joueur et 6 pour l'adversaire (IA)
     private int weight;
     private boolean last;
+    private BorderStroke bs = new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(0), BorderWidths.DEFAULT);
+
     
     public Box(){
+        this.value = 0;
+        this.weight = 0;
+        this.last = false;
+        this.setBorder(new Border(bs));
+        this.setMinSize(40, 40);
+        this.setMaxSize(40, 40);
+        this.setText("");
+        this.setAlignment(Pos.CENTER);
+    }
+    
+    public void resetBox(){
         this.value = 0;
         this.weight = 0;
         this.last = false;
@@ -49,7 +71,11 @@ public class Box {
         
         if(this.last){
             System.out.print(ConsoleColors.GREEN);
+            this.setStyle("-fx-text-fill: lime; -fx-font-size: 20px;");
             this.last = false;
+        }
+        else{
+            this.setStyle("-fx-text-fill: black; -fx-font-size: 20px;");
         }
            
         
@@ -58,9 +84,17 @@ public class Box {
             // Case vide
             case 0 -> System.out.print(" ");
             //Case Joueur
-            case 1 -> System.out.print("O");
+            case 1 -> 
+            {
+                System.out.print("O");
+                this.setText("O");
+            }
             //Case IA
-            case 6 -> System.out.print("X" + ConsoleColors.RESET);
+            case 6 -> 
+            {
+                System.out.print("X" + ConsoleColors.RESET);
+                this.setText("X");
+            }
             default -> {}
         }
     }

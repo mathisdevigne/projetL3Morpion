@@ -4,26 +4,40 @@
  */
 package projetl3morpion;
 
+import javafx.geometry.Pos;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
+
 /**
  *
  * @author fetiveau
  */
-public class GameBoard {
+public class GameBoard extends GridPane{
     private final static int DEFAULT_HEIGHT = 10;
     private final static int DEFAULT_WIDTH = 10;
     private final int height;
     private final int width;
+    private BorderStroke bs = new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(0), BorderWidths.DEFAULT);
     
     private Box[][] board;
     
     public GameBoard(int height, int width){
         this.height = height;
         this.width = width;
+        this.setBorder(new Border(bs));
+        this.setMaxSize(width*40, height*40);
         
         board = new Box[height][width];
         for(int i = 0 ; i < height ; i++){
             for(int j = 0; j < width ; j++){
-                board[i][j] = new Box();
+                Box b = new Box();
+                board[i][j] = b;
+                this.add(b, j, i);
             }
         }
     }
@@ -32,13 +46,22 @@ public class GameBoard {
         this(GameBoard.DEFAULT_HEIGHT, GameBoard.DEFAULT_WIDTH);
     }
     
+    public void resetBoard(){
+        for(int i = 0; i < height; i++){
+            for(int j = 0; j < width; j++){
+                this.board[i][j].setText("");
+                this.board[i][j].resetBox();
+            }
+        }
+    }
+    
     //Accesseur de height
-    public int getHeight(){
+    public int getBoardHeight(){
         return this.height;
     }
     
     //Accesseur de width
-    public int getWidth(){
+    public int getBoardWidth(){
         return this.width;
     }
     
@@ -60,7 +83,7 @@ public class GameBoard {
     // Affichage du jeu (plateau) besoin d'ajustement
     public void print(){
         System.out.print("  ");
-        for(int k = 0; k < this.getWidth(); k++){
+        for(int k = 0; k < this.getBoardWidth(); k++){
             if(k <= 9){
                 System.out.print(" ");
             }         
@@ -68,24 +91,24 @@ public class GameBoard {
         }
         System.out.println();
         System.out.print("  +");
-        for(int k = 0; k < this.getWidth(); k++){
+        for(int k = 0; k < this.getBoardWidth(); k++){
             System.out.print( "---+");     
         }
         
         System.out.println();
-        for(int i = 0; i < this.getHeight(); i++){
+        for(int i = 0; i < this.getBoardHeight(); i++){
             System.out.print(i);
             if(i <= 9){
                 System.out.print(" ");
             }
             System.out.print("| ");
-            for(int j = 0; j < this.getWidth(); j++){
+            for(int j = 0; j < this.getBoardWidth(); j++){
                 this.getBoxBoard(i,j).print();
                 System.out.print(" | ");
             }
             System.out.println();
             System.out.print("  +");
-            for(int k = 0; k < this.getWidth(); k++){
+            for(int k = 0; k < this.getBoardWidth(); k++){
                 System.out.print( "---+");     
             }
             System.out.println();
@@ -108,29 +131,29 @@ public class GameBoard {
     // Permet d'avoir le nombre de quintuplet formable au max sur une case (donc exclue les quintuplets partiellement en dehors du plateau de jeu)
     public int getNbQuintuplets(int x, int y){
         int nbQuintuplets = 0;
-        if(x >= 0 && x < this.getHeight() && y >= 0 && y < this.getWidth()){
+        if(x >= 0 && x < this.getBoardHeight() && y >= 0 && y < this.getBoardWidth()){
             
             for(int i = 0; i > -5; i--){
                 //Les 5 quintuplets horizontaux
                 //On vérifie que les quintuplets se trouve dans le plateau de jeu, sinon on ne le rajoute pas
-                if(x + i >= 0 && x + i + 4 < this.getHeight()){
+                if(x + i >= 0 && x + i + 4 < this.getBoardHeight()){
                     nbQuintuplets++;
                 }
                 
                  // Les 5 quintuplets verticaux
-                if(y + i >= 0 && y + i + 4 < this.getWidth()){
+                if(y + i >= 0 && y + i + 4 < this.getBoardWidth()){
                     nbQuintuplets++;
                 }
                     
                 for(int j = 0; j > -5; j--){
                     
                     //les diagonales haut-droit / bas-gauche
-                    if(j+i == 2*i && x + i >= 0 && x + i + 4 < this.getHeight() && y - j < this.getWidth() && y - j - 4 >= 0){
+                    if(j+i == 2*i && x + i >= 0 && x + i + 4 < this.getBoardHeight() && y - j < this.getBoardWidth() && y - j - 4 >= 0){
                         nbQuintuplets++;
                     }
 
                     //les diagonales bas-droit / haut-gauche
-                    if(j+i == 2*i && x + i >= 0 && x + i + 4 < this.getHeight() && y + j >= 0 && y + j + 4 < this.getWidth()){
+                    if(j+i == 2*i && x + i >= 0 && x + i + 4 < this.getBoardHeight() && y + j >= 0 && y + j + 4 < this.getBoardWidth()){
                         nbQuintuplets++;
                             
                         
@@ -146,13 +169,13 @@ public class GameBoard {
         //La case doit être dans le plateau de jeu
         int nbQuint = this.getNbQuintuplets(x,y);
         Box[][] quintupletList = new Box[nbQuint][5];
-        if(x >= 0 && x < this.getHeight() && y >= 0 && y < this.getWidth()){
+        if(x >= 0 && x < this.getBoardHeight() && y >= 0 && y < this.getBoardWidth()){
             
             int indiceList = 0;
             for(int i = 0; i > -5; i--){
                 // Les 5 quintuplets verticaux
                 //On vérifie que les quintuplets se trouve dans le plateau de jeu, sinon on ne le rajoute pas
-                if(x + i >= 0 && x + i + 4 < this.getHeight()){
+                if(x + i >= 0 && x + i + 4 < this.getBoardHeight()){
 
                     for(int k = 0; k < 5 ; k++){
                         quintupletList[indiceList][k] = this.getBoxBoard(x+i+k, y);
@@ -163,7 +186,7 @@ public class GameBoard {
                 }
                 
                  // Les 5 quintuplets horizontaux
-                if(y + i >= 0 && y + i + 4 < this.getWidth()){
+                if(y + i >= 0 && y + i + 4 < this.getBoardWidth()){
 
                     for(int k = 0; k < 5 ; k++){
                         quintupletList[indiceList][k] = this.getBoxBoard(x,y+i+k);
@@ -175,7 +198,7 @@ public class GameBoard {
                 for(int j = 0; j > -5; j--){
                     
                     //les 5 diagonales haut-droit / bas-gauche
-                    if(j+i == 2*i && x + i >= 0 && x + i + 4 < this.getHeight() && y - j < this.getWidth() && y - j - 4 >= 0){
+                    if(j+i == 2*i && x + i >= 0 && x + i + 4 < this.getBoardHeight() && y - j < this.getBoardWidth() && y - j - 4 >= 0){
 
                         for(int k = 0; k < 5; k++){
                             quintupletList[indiceList][k] = this.getBoxBoard(x+i+k, y-j-k);
@@ -185,7 +208,7 @@ public class GameBoard {
                     }
 
                     //les 5 diagonales bas-droit / haut-gauche
-                    if(j+i == 2*i && x + i >= 0 && x + i + 4 < this.getHeight() && y + j >= 0 && y + j + 4 < this.getWidth()){
+                    if(j+i == 2*i && x + i >= 0 && x + i + 4 < this.getBoardHeight() && y + j >= 0 && y + j + 4 < this.getBoardWidth()){
                         for(int k = 0; k < 5; k++){
                             quintupletList[indiceList][k] = this.getBoxBoard(x+i+k, y+j+k);
                             
