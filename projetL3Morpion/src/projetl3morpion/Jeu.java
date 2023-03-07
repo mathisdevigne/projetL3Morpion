@@ -9,20 +9,25 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Slider;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.stage.Screen;
 
 /**
  *
  * @author theodusehu
  */
-public class Jeu extends BorderPane{
+public class Jeu extends ScrollPane{
     
     private Button escape;
     private Data datas;
@@ -88,15 +93,21 @@ public class Jeu extends BorderPane{
         board.setAlignment(Pos.CENTER);
         board.setMaxWidth(monJeu.getGameboard().getWidth());
         board.setSpacing(20);
-
+        
         //=============
         //AJOUT AU ROOT
         //=============
-        this.setCenter(board);
-        this.setTop(header);
-        this.setPadding(new Insets(0,20,20,20));
+        
+        BorderPane root = new BorderPane();
+        
+        root.setCenter(board);
+        root.setTop(header);
+        root.setPadding(new Insets(0,20,20,20));
         BorderPane.setAlignment(header, Pos.CENTER);
-
+        
+        this.setContent(root);
+        this.setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
+        this.setHbarPolicy(ScrollBarPolicy.AS_NEEDED);
 
         monJeu.getGameboard().setOnMouseClicked(g->
         {

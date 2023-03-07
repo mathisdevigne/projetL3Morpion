@@ -49,8 +49,8 @@ public class Menu extends BorderPane{
         //=====================
         
         VBox infos = new VBox();
-        heightSlider = new SliderBetter("Height", 10, 20, 10);
-        widthSlider = new SliderBetter("Width", 10, 20, 10);
+        heightSlider = new SliderBetter("Height", 10, 50, 10);
+        widthSlider = new SliderBetter("Width", 10, 50, 10);
         
         HBox rb = new HBox();
         Label whoBegin = new Label("Qui commence : ");
