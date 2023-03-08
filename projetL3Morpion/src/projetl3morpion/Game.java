@@ -59,17 +59,20 @@ public class Game {
         this.gameboard = new GameBoard(height, width);
         this.initWeight();
         
-        boolean joueur = datas.getIsHumanBegin();
-        if(!joueur){
+        boolean isHumanTurn = datas.getIsHumanBegin();
+        if(!isHumanTurn){
             this.iaTurn();
         } 
     }
     
     public void resetBoard(){
-        this.initWeight();
-        this.gameboard.resetBoard();;
+        this.gameboard.resetBoard();
         this.gameboard.print();
+        this.initWeight();
         this.isFinish = false;
+        if(!isHumanTurn){
+            this.iaTurn();
+        }
     }
     
     public GameBoard getGameboard(){
