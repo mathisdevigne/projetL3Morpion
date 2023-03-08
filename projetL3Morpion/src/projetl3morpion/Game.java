@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import java.util.Arrays; 
 /**
  *
  * @author fetiveau
@@ -22,15 +23,17 @@ public class Game {
     private int scoreJoueur = 0;
     private int scoreIA = 0;
     
+    private static int usedValue = 1;
+    
     private final static int EMPTY_WEIGHT = 1;
     private final static int ONE_PLAYER = EMPTY_WEIGHT*2;
     private final static int ONE_IA = ONE_PLAYER*2;
     private final static int TWO_PLAYER = ONE_IA*2;
     private final static int TWO_IA = TWO_PLAYER*2;
-    private final static int THREE_PLAYER = TWO_IA*3;
-    private final static int THREE_IA = THREE_PLAYER*3;
-    private final static int FOUR_PLAYER = THREE_IA*6;
-    private final static int FOUR_IA = FOUR_PLAYER*6;
+    private final static int THREE_PLAYER = TWO_IA*5;
+    private final static int THREE_IA = THREE_PLAYER*5;
+    private final static int FOUR_PLAYER = THREE_IA*10;
+    private final static int FOUR_IA = FOUR_PLAYER*10;
     
     
     public Game() throws IOException{
@@ -109,6 +112,7 @@ public class Game {
     
     
         // Simule le jeu complet: initialisation du plateau, affichage, coup joué et victoire.
+
     public void play(int x, int y){
         
         if(!isFinish){
@@ -117,23 +121,58 @@ public class Game {
                 this.iaTurn();
             }
         }
+    } 
+
+    public void play() throws IOException{
+        boolean humanTurn;
         
+        int joueur = getIntInput("Voulez-vous jouer en 1er (1) ou en 2e (2): ");
+        humanTurn = joueur == 1;
+        
+        this.initWeight();
+        while(this.canPlay()){
+            playOneRound(humanTurn);
+            humanTurn = !humanTurn;
+        }
+        
+        this.print();
+        
+        if(this.scoreJoueur > this.scoreIA){
+            System.out.println("Vous avez gagné");
+        }
+        else if(this.scoreJoueur < this.scoreIA){
+            System.out.println("Vous avez perdu");
+        }
+        else{
+            System.out.println("Vous avez fait une égalité");
+        }
     }
     
     //Simule un tour de jeu
-    public boolean playOneRound(boolean isHuman) throws IOException{
+    public void playOneRound(boolean isHuman) throws IOException{
         if(isHuman){
-            return this.humanTurn();
             
+            if(this.humanTurn()){
+                //this.scoreJoueur++;
+            }
         }
         else{
-            return this.iaTurn();
+            if(this.iaTurn()){
+               //this.scoreIA++;
+            }
         }
     }
     
     //Simule le tour de jeu de l'IA (recherche de la première case avec le plus grand poids(weight)
     public boolean iaTurn(){
         //0 -> coord x ; 1 -> coord y
+        int[] bestBox = this.bestBox();
+        this.insertValue(false, bestBox[0], bestBox[1]);
+        this.updateWeight(bestBox[0], bestBox[1]);
+        return this.hasWin(bestBox[0], bestBox[1]);
+    }
+    
+    public int[] bestBox(){
         int[] bestBox = {0,0};
         float bestWeight = -1f;
 
@@ -146,17 +185,35 @@ public class Game {
                 }
             }
         }
-
-        this.insertValue(false, bestBox[0], bestBox[1]);
-        this.updateWeight(bestBox[0], bestBox[1]);
-        return this.hasWin(bestBox[0], bestBox[1]);
+        return bestBox;
+    }
+    
+    public boolean canPlay(){
+        int[] test = {-1,-1};
+        int[] bestBox = {-1,-1};
+        float bestWeight = -1f;
+        
+        for(int i = 0; i < this.getGameboard().getHeight(); i++){
+            for(int j = 0 ; j < this.getGameboard().getWidth() ; j++){
+                if(this.getGameboard().getBoxWeight(i, j) > bestWeight){
+                    bestBox[0] = i;
+                    bestBox[1] = j;
+                    bestWeight = this.getGameboard().getBoxWeight(i, j);
+                }
+            }
+        }
+        if(bestWeight == 0){
+            return false;
+        }
+        return !Arrays.equals(bestBox, test);
     }
     
     //Simule le tour du joueur humain (demande des coordonnées à l'utilisateur et joue 
     public boolean humanTurn() throws IOException{
         int playerInput[] = new int[2];
         boolean isInside, isEmpty;
-        this.getGameboard().print();
+        //this.gameboard.printW();
+        this.print();
         // Si la case est libre et dans le plateau de jeu alors on la place sinon on redemande
         do{
             isEmpty = false;
@@ -214,14 +271,24 @@ public class Game {
             noteQuintuplet = GameBoard.noteQuintu(quintuplets[i]);
             
             if(noteQuintuplet == 5){
-                System.out.println("Vous avez gagné");
+                System.out.println("Vous avez gagné un point");
+                for(int j = 0; j < 5; j++){
+                    quintuplets[i][j].setUsed(Game.usedValue);
+                }
+                this.updateBoard();
+                Game.usedValue++;
                 hasWin = true;
                 scoreJoueur += 1;
                 messages[0] = "Vous avez gagné";
                 messages[1] = "Félicitation, vous avez réussi à vaincre la féroce IA. Vous méritez une médaille !";
             }
             else if(noteQuintuplet == 30){
-                System.out.println("Vous avez perdu");
+                System.out.println("Votre adversaire à gagné un point");
+                for(int j = 0; j < 5; j++){
+                    quintuplets[i][j].setUsed(Game.usedValue);
+                }
+                this.updateBoard();
+                Game.usedValue++;
                 hasWin = true;
                 scoreIA += 1;
                 messages[0] = "Vous avez perdu";
@@ -239,7 +306,10 @@ public class Game {
         return hasWin;
     }
     
-
+    public void print(){
+        System.out.println("Player : " + this.scoreJoueur + "\t IA : " + this.scoreIA);
+        this.gameboard.print();
+    }
     
     /********************************************************
                     Fonctions de gestion de weight
@@ -255,6 +325,25 @@ public class Game {
         }
     }
     
+    public void updateBoard(){
+        for(int i = 0; i < this.gameboard.getHeight(); i++){
+            for(int j = 0; j < this.gameboard.getWidth(); j++){
+                if(this.gameboard.getBoxBoard(i, j).getWeight() > -10000){
+                    this.gameboard.getBoxBoard(i, j).setWeight(Game.EMPTY_WEIGHT * this.getGameboard().getNbQuintuplets(i, j));
+                }
+            }
+        }
+        //this.gameboard.printW();
+        for(int i = 0; i < this.gameboard.getHeight(); i++){
+            for(int j = 0; j < this.gameboard.getWidth(); j++){
+                if(this.gameboard.getBoxBoard(i, j).getWeight() < -100000){
+                    this.updateWeightT(i, j);
+
+                }
+            }
+            
+        }
+    }
     
     // Met à jour les poids du plateau en fonction de l'emplacement joué
     public void updateWeight(int x, int y){
@@ -297,4 +386,29 @@ public class Game {
         }
     }
     
+    
+    public void updateWeightT(int x, int y){
+        int nbUpdateQuintu = this.getGameboard().getNbQuintuplets(x, y);
+        Box[][] UpdateQuintu = this.getGameboard().getQuintuplets(x, y);
+        int noteQuintu;
+        
+        for(int i = 0; i < nbUpdateQuintu; i++){
+            noteQuintu = GameBoard.noteQuintu(UpdateQuintu[i]);
+            // On envoie la différence de poids du quintuplet avant et après qu'on es joué, qu'on ajoute au poids précédent de la case
+            switch (noteQuintu) {
+                case 1 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], Game.ONE_PLAYER);
+                case 2 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], Game.TWO_PLAYER);
+                case 3 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], Game.THREE_PLAYER);
+                case 4 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], Game.FOUR_PLAYER);
+
+                case 6 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], Game.ONE_IA);
+                case 12 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], Game.TWO_IA);
+                case 18 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], Game.THREE_IA);
+                case 24 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], Game.FOUR_IA);
+
+            }
+        //Poids négatif dans les case déjà joué pour que l'ia n'y joue pas    
+        this.getGameboard().setBoxWeight(x, y, -1000000);
+        }
+    }
 }

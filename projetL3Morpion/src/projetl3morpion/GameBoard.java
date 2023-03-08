@@ -33,11 +33,13 @@ public class GameBoard extends GridPane{
         this.setMaxSize(width*40, height*40);
         
         board = new Box[height][width];
+        int id = 1;
         for(int i = 0 ; i < height ; i++){
             for(int j = 0; j < width ; j++){
-                Box b = new Box();
+                Box b = new Box(id);
                 board[i][j] = b;
                 this.add(b, j, i);
+                id++;
             }
         }
     }
@@ -115,6 +117,42 @@ public class GameBoard extends GridPane{
         }
     }
     
+    public void printW(){
+        System.out.print("  ");
+        for(int k = 0; k < this.getWidth(); k++){
+            if(k <= 9){
+                System.out.print(" ");
+            }         
+            System.out.print( "    " + k + "    ");
+        }
+        System.out.println();
+        System.out.print("  +");
+        for(int k = 0; k < this.getWidth(); k++){
+            System.out.print( "----------+");     
+        }
+        
+        System.out.println();
+        for(int i = 0; i < this.getHeight(); i++){
+            System.out.print(i);
+            if(i <= 9){
+                System.out.print(" ");
+            }
+            System.out.print("| ");
+            for(int j = 0; j < this.getWidth(); j++){
+                for(int k = 0; k < 8; k++){
+                    System.out.print(this.getBoxBoard(i,j).getUsed()[k]);
+                }
+                System.out.print(" | ");
+            }
+            System.out.println();
+            System.out.print("  +");
+            for(int k = 0; k < this.getWidth(); k++){
+                System.out.print( "----------+");     
+            }
+            System.out.println();
+        }
+    }
+    
     // Permet l'insertion d'une valeur dans une case de board
     public void putVal(int val, int x, int y){
         if(this.getBoxBoard(x,y).getValue() == 0){
@@ -127,6 +165,18 @@ public class GameBoard extends GridPane{
                             FONCTION QUINTUPLETS
     *****************************************************************/
     
+    public int[] getQuintuCoord(int quintuId){
+        int id = 1;
+        for(int i = 0 ; i < height ; i++){
+            for(int j = 0; j < width ; j++){
+                if(id == quintuId){
+                    return new int[] {i,j};
+                }
+                id++;
+            }
+        }
+        return new int[] {-1, -1};
+    }
     
     // Permet d'avoir le nombre de quintuplet formable au max sur une case (donc exclue les quintuplets partiellement en dehors du plateau de jeu)
     public int getNbQuintuplets(int x, int y){
@@ -226,8 +276,12 @@ public class GameBoard extends GridPane{
     //Retourne la somme des valeurs d'un quintuplet
     public static int noteQuintu(Box[] monQuintu){
         int somme = 0;
+        int[] quintuUsed = {0};
         for(int i = 0 ; i < 5 ; i++){
-            somme += monQuintu[i].getValue();
+            if(!monQuintu[i].isUsed() || !monQuintu[i].isUsed(quintuUsed)){
+                somme += monQuintu[i].getValue();
+            }
+            quintuUsed = monQuintu[i].getUsed();
         }
         return somme;
     }

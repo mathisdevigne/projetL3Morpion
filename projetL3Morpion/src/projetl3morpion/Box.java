@@ -18,16 +18,20 @@ import javafx.scene.paint.Color;
  * @author fetiveau
  */
 public class Box extends Label {
+    private int id;
     private int value; //1 pour le joueur et 6 pour l'adversaire (IA)
     private int weight;
     private boolean last;
-    private BorderStroke bs = new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(0), BorderWidths.DEFAULT);
-
+    private int[] used;
     
-    public Box(){
+    private BorderStroke bs = new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(0), BorderWidths.DEFAULT); 
+    
+    public Box(int id){
+        this.id = id;
         this.value = 0;
         this.weight = 0;
         this.last = false;
+        this.used = new int[8];
         this.setBorder(new Border(bs));
         this.setMinSize(40, 40);
         this.setMaxSize(40, 40);
@@ -39,6 +43,11 @@ public class Box extends Label {
         this.value = 0;
         this.weight = 0;
         this.last = false;
+        this.used = new int[8];
+        for(int i = 0; i < 8; i++){
+           this.used[i] = -1; 
+        }
+        
     }
     
     //Accesseur de value
@@ -49,6 +58,34 @@ public class Box extends Label {
     //Accesseur de weight
     public int getWeight(){
         return this.weight;
+    }
+    
+    //Accesseur de used
+    public boolean isUsed(int[] ids){
+        for(int i = 0; i < this.used.length; i++){
+            for(int j = 0; j < ids.length; j++){
+                if(this.used[i] == ids[j] && this.used[i] != -1)
+                    return true;
+            }  
+        }
+        return false;
+    }
+    
+    public boolean isUsed(){
+        for(int i = 0; i < this.used.length; i++){
+            if(this.used[i] != -1)
+                return true;
+        }
+        return false;
+    }
+    
+    public int[] getUsed(){
+        return this.used;
+    }
+    
+    //Accesseur de id
+    public int getBoxId(){
+        return this.id;
     }
     
     //Setter de last
@@ -66,6 +103,16 @@ public class Box extends Label {
         this.weight = newWeight;
     }
     
+    //Setter de used
+    public void setUsed(int v){
+        for(int i = 0; i < this.used.length; i++){
+            if(this.used[i] == -1){
+                this.used[i] = v;
+                break;
+            }
+        }
+    }
+    
     //Affiche la value de box
     public void print(){
         
@@ -78,7 +125,6 @@ public class Box extends Label {
             this.setStyle("-fx-text-fill: black; -fx-font-size: 20px;");
         }
            
-        
                 
         switch (this.value) {
             // Case vide
