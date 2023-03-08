@@ -19,11 +19,6 @@ import javafx.scene.paint.Color;
  */
 public class Box extends Label {
     private int id;
-
-    // Affichage
-    // Constructeur avec un tab de bool
-    // Prise en compte d'une image
-
     private int value; //1 pour le joueur et 6 pour l'adversaire (IA)
     private int weight;
     private boolean last;
@@ -138,7 +133,7 @@ public class Box extends Label {
         
         switch (this.value) {
             // Case vide
-            case 0 -> System.out.print(" ");//this.weight > 9 ? "+" : (this.weight < 0 ? ConsoleColors.RED+this.weight*-1+ConsoleColors.RESET :this.weight));
+            case 0 -> System.out.print(" ");
             //Case Joueur
             case 1 -> 
             {
@@ -151,10 +146,7 @@ public class Box extends Label {
                 //System.out.print("X" + ConsoleColors.RESET);
                 this.setText("X");
             }
-            //Case pas util
-            case 50 -> System.out.print(ConsoleColors.RED+"X"+ConsoleColors.RESET);
-            default -> System.out.print("N");
+            default -> {}
         }
-        
     }
 }

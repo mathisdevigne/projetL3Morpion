@@ -3,28 +3,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package projetl3morpion;
-import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferByte;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-<<<<<<< HEAD
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import java.util.Arrays; 
-=======
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
->>>>>>> Extension4-Temp
 /**
  *
  * @author fetiveau
  */
 public class Game {
     public GameBoard gameboard;
-<<<<<<< HEAD
     private boolean isHumanTurn;
     private boolean isFinish;
     private boolean isGameWin = false;
@@ -38,9 +28,6 @@ public class Game {
    
     
     private static int usedValue = 1;
-=======
-    public BufferedImage bi = null;
->>>>>>> Extension4-Temp
     
     private final static int EMPTY_WEIGHT = 1;
     private final static int ONE_PLAYER = EMPTY_WEIGHT*2;
@@ -62,7 +49,6 @@ public class Game {
         while(width < 10){
             width = Game.getIntInput("Veuillez rentrez la largeur du plateau de jeu (minimun 10): ");
         }
-<<<<<<< HEAD
         this.gameboard = new GameBoard(height, width);
         this.initWeight();
         
@@ -100,50 +86,18 @@ public class Game {
         if(!isHumanTurn){
             this.iaTurn();
         }
-=======
-        this.gameboard = new ShapeBoard(height, width);
-    }
-    
-    
-    public Game(boolean choix) throws IOException{
-        int height = -1, width = -1;
-        
-        while(height < 10){
-            height = Game.getIntInput("Veuillez rentrez la hauteur du plateau de jeu (minimun 10): ");
-        }
-        while(width < 10){
-            width = Game.getIntInput("Veuillez rentrez la largeur du plateau de jeu (minimun 10): ");
-        }
-        this.gameboard = new ShapeBoard(height, width);
-        ((ShapeBoard)this.gameboard).setShapeChoice();
-    }
-    
-    public Game(String link){
-        try {
-            bi = ImageIO.read(new File(link));
-        } catch (IOException ex) {
-            Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        this.gameboard = new ShapeBoard(bi.getHeight(), bi.getWidth());
->>>>>>> Extension4-Temp
     }
     
     public GameBoard getGameboard(){
         return this.gameboard;
     }
     
-<<<<<<< HEAD
     public int getScoreJoueur(){
         return scoreJoueurTotal;
     }
     
     public int getScoreIA(){
         return scoreIATotal;
-=======
-    
-    public ShapeBoard getShapeboard(){
-        return (ShapeBoard) this.gameboard;
->>>>>>> Extension4-Temp
     }
     
     // Renvoie un entier entrer par l'utilisateur
@@ -186,17 +140,8 @@ public class Game {
         humanTurn = joueur == 1;
         
         this.initWeight();
-<<<<<<< HEAD
         while(this.canPlay()){
             playOneRound(humanTurn);
-=======
-        if(this.bi != null){
-            this.getShapeboard().setShape(bi);
-        }
-        this.updateAllWeight();
-        while(!(ended)){
-            ended = playOneRound(humanTurn);
->>>>>>> Extension4-Temp
             humanTurn = !humanTurn;
         }
         
@@ -250,7 +195,6 @@ public class Game {
                 }
             }
         }
-<<<<<<< HEAD
         return bestBox;
     }
     
@@ -272,13 +216,6 @@ public class Game {
             return false;
         }
         return !Arrays.equals(bestBox, test);
-=======
-
-        this.insertValue(false, bestBox[0], bestBox[1]);
-        this.updateWeight(bestBox[0], bestBox[1]);
-        
-        return this.hasWin(bestBox[0], bestBox[1]);
->>>>>>> Extension4-Temp
     }
     
     //Simule le tour du joueur humain (demande des coordonnées à l'utilisateur et joue 
@@ -428,21 +365,10 @@ public class Game {
     
     //Initialise les weights du plateau de jeu
     public void initWeight(){
-<<<<<<< HEAD
         for(int i = 0; i < this.getGameboard().getBoardHeight() ; i++){
             for(int j = 0; j < this.getGameboard().getBoardWidth() ;  j++){
                 
                 this.getGameboard().setBoxWeight(i,j, Game.EMPTY_WEIGHT * this.getGameboard().getNbQuintuplets(i, j));
-=======
-        for(int i = 0; i < this.getGameboard().getHeight() ; i++){
-            for(int j = 0; j < this.getGameboard().getWidth() ;  j++){
-                if(this.getGameboard().getBoxBoard(i, j).getValue() == 50){ //Si case barré
-                    this.getGameboard().setBoxWeight(i,j, -10000);
-                }
-                else{
-                    this.getGameboard().setBoxWeight(i,j, Game.EMPTY_WEIGHT * this.getGameboard().getNbQuintuplets(i, j));
-                }
->>>>>>> Extension4-Temp
             }
         }
     }
@@ -487,12 +413,9 @@ public class Game {
                 case 18 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], Game.THREE_IA - Game.TWO_IA);
                 case 24 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], Game.FOUR_IA - Game.THREE_IA);
 
-                //Cas du quintuplet fermé et complet + CAS VAL = 50
+                //Cas du quintuplet fermé et complet
                 default ->  {
                     noteQuintu -= this.getGameboard().getBoxBoard(x, y).getValue();
-                    if(this.getGameboard().getBoxBoard(x, y).getValue() == 50){
-                        noteQuintu = 50;
-                    }
                     switch (noteQuintu) {
                         case 1 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], -Game.ONE_PLAYER);
                         case 2 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], -Game.TWO_PLAYER);
@@ -503,9 +426,6 @@ public class Game {
                         case 12 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], -Game.TWO_IA);
                         case 18 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], -Game.THREE_IA);
                         case 24 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], -Game.FOUR_IA);
-                        
-                        //Cas -= 50
-                        default -> {GameBoard.updateWeightQuintu(UpdateQuintu[i], -Game.EMPTY_WEIGHT);break;}
                     }
                 }
             }
@@ -514,7 +434,6 @@ public class Game {
         }
     }
     
-<<<<<<< HEAD
     
     public void updateWeightT(int x, int y){
         int nbUpdateQuintu = this.getGameboard().getNbQuintuplets(x, y);
@@ -540,54 +459,4 @@ public class Game {
         this.getGameboard().setBoxWeight(x, y, -1000000);
         }
     }
-=======
-
-    // Met à jour les poids du plateau en fonction de l'emplacement joué
-    public void updateAllWeight(){
-        for(int x = 0; x < this.getGameboard().getHeight(); x++){
-            for(int y = 0; y < this.getGameboard().getWidth(); y++){
-                if(this.getGameboard().getBoxBoard(x, y).getValue() == 50){
-                    this.updateWeight(x, y);
-                }
-            }
-        }
-    }
-    
-    
-    //Rien tqt
-    public static BufferedImage rotateClockwise90(BufferedImage src) {
-
-        int srcWidth = src.getWidth();
-        int srcHeight = src.getHeight();
-        boolean hasAlphaChannel = src.getAlphaRaster() != null;
-        int pixelLength = hasAlphaChannel ? 4 : 3;
-        byte[] srcPixels = ((DataBufferByte)src.getRaster().getDataBuffer()).getData();
-
-        // Create the destination buffered image
-        BufferedImage dest = new BufferedImage(srcHeight, srcWidth, src.getType());
-        byte[] destPixels = ((DataBufferByte)dest.getRaster().getDataBuffer()).getData();
-        int destWidth = dest.getWidth();
-
-        int srcPos = 0; // We can just increment this since the data pack order matches our loop traversal: left to right, top to bottom. (Just like reading a book.)   
-        for(int srcY = 0; srcY < srcHeight; srcY++) {
-            for(int srcX = 0; srcX < srcWidth; srcX++) {
-
-                int destX = ((srcHeight - 1) - srcY);
-                int destY = srcX;
-
-                int destPos = (((destY * destWidth) + destX) * pixelLength);
-
-                if(hasAlphaChannel) {
-                    destPixels[destPos++] = srcPixels[srcPos++];    // alpha
-                }
-                destPixels[destPos++] = srcPixels[srcPos++];        // blue
-                destPixels[destPos++] = srcPixels[srcPos++];        // green
-                destPixels[destPos++] = srcPixels[srcPos++];        // red
-            }
-        }
-
-        return dest;
-    }
-    
->>>>>>> Extension4-Temp
 }
