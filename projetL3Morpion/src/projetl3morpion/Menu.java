@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
@@ -66,7 +67,19 @@ public class Menu extends BorderPane{
         rb.setAlignment(Pos.CENTER);
         rb.getChildren().addAll(whoBegin,joueur, ia);
         
-        infos.getChildren().addAll(heightSlider, widthSlider, rb);
+        VBox extensions = new VBox();
+        
+        CheckBox canContinue = new CheckBox("Extension 3");
+        CheckBox selectForm = new CheckBox("Extension 4");
+        
+        extensions.setPadding(new Insets(10, 0, 0, 0));
+        extensions.setSpacing(5);
+        extensions.setAlignment(Pos.CENTER);
+        extensions.getChildren().addAll(new Label("Choix d'Extensions"), canContinue, selectForm);
+        
+        infos.getChildren().addAll(heightSlider, widthSlider, rb, extensions);
+        
+        canContinue.setOnAction(e->datas.setExtension3(canContinue.isSelected()));
         
         //======
         //FOOTER

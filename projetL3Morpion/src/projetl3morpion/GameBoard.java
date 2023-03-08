@@ -33,13 +33,11 @@ public class GameBoard extends GridPane{
         this.setMaxSize(width*40, height*40);
         
         board = new Box[height][width];
-        int id = 1;
         for(int i = 0 ; i < height ; i++){
             for(int j = 0; j < width ; j++){
-                Box b = new Box(id);
+                Box b = new Box(i+j);
                 board[i][j] = b;
                 this.add(b, j, i);
-                id++;
             }
         }
     }

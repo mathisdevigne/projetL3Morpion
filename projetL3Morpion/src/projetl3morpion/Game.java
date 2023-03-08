@@ -62,7 +62,7 @@ public class Game {
         this.gameboard = new GameBoard(height, width);
         this.initWeight();
         
-        boolean isHumanTurn = datas.getIsHumanBegin();
+        this.isHumanTurn = datas.getIsHumanBegin();
         if(!isHumanTurn){
             this.iaTurn();
         } 
@@ -73,6 +73,11 @@ public class Game {
         this.gameboard.print();
         this.initWeight();
         this.isFinish = false;
+        
+        if(datas.getExtension3()){
+            this.scoreIA = this.scoreJoueur = 0;
+        }
+        
         if(!isHumanTurn){
             this.iaTurn();
         }
@@ -193,8 +198,8 @@ public class Game {
         int[] bestBox = {-1,-1};
         float bestWeight = -1f;
         
-        for(int i = 0; i < this.getGameboard().getHeight(); i++){
-            for(int j = 0 ; j < this.getGameboard().getWidth() ; j++){
+        for(int i = 0; i < this.getGameboard().getBoardHeight(); i++){
+            for(int j = 0 ; j < this.getGameboard().getBoardWidth() ; j++){
                 if(this.getGameboard().getBoxWeight(i, j) > bestWeight){
                     bestBox[0] = i;
                     bestBox[1] = j;
@@ -295,7 +300,12 @@ public class Game {
                 messages[1] = "Dommage, vous vous êtes fait démolir ^^";
             }
         }
-        isFinish = hasWin;
+        
+        if(datas.getExtension3()){
+            isFinish = !this.canPlay();
+        }else{
+            isFinish = hasWin;
+        }
         if(isFinish){
             Alert a = new Alert(AlertType.INFORMATION);
             a.setTitle("Partie terminée");
@@ -326,16 +336,16 @@ public class Game {
     }
     
     public void updateBoard(){
-        for(int i = 0; i < this.gameboard.getHeight(); i++){
-            for(int j = 0; j < this.gameboard.getWidth(); j++){
+        for(int i = 0; i < this.gameboard.getBoardHeight(); i++){
+            for(int j = 0; j < this.gameboard.getBoardWidth(); j++){
                 if(this.gameboard.getBoxBoard(i, j).getWeight() > -10000){
                     this.gameboard.getBoxBoard(i, j).setWeight(Game.EMPTY_WEIGHT * this.getGameboard().getNbQuintuplets(i, j));
                 }
             }
         }
         //this.gameboard.printW();
-        for(int i = 0; i < this.gameboard.getHeight(); i++){
-            for(int j = 0; j < this.gameboard.getWidth(); j++){
+        for(int i = 0; i < this.gameboard.getBoardHeight(); i++){
+            for(int j = 0; j < this.gameboard.getBoardWidth(); j++){
                 if(this.gameboard.getBoxBoard(i, j).getWeight() < -100000){
                     this.updateWeightT(i, j);
 

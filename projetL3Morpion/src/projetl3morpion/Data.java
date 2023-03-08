@@ -20,6 +20,7 @@ public class Data {
     private boolean isHumanBegin;
     private Scene menu;
     private Stage stage;
+    private boolean extension3;
     
     private Data(){
         height = 0;
@@ -50,6 +51,10 @@ public class Data {
         this.stage = stage;
     }
     
+    public void setExtension3(boolean extension3){
+        this.extension3 = extension3;
+    }
+    
     public double getHeight(){
         return height;
     }
@@ -68,5 +73,9 @@ public class Data {
     
     public Stage getStage(){
         return stage;
+    }
+    
+    public boolean getExtension3(){
+        return extension3;
     }
 }

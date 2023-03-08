@@ -65,6 +65,8 @@ public class Jeu extends ScrollPane{
         restart.setOnAction(e->
         {
             monJeu.resetBoard();
+            labelIA.setText(monJeu.getScoreIA() + " : IA");
+            labelJoueur.setText("Joueur : " + monJeu.getScoreJoueur());
         });
         Button menu = new Button("Menu");
         menu.setOnAction(e->

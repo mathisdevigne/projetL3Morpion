@@ -32,6 +32,7 @@ public class Box extends Label {
         this.weight = 0;
         this.last = false;
         this.used = new int[8];
+        this.initId();
         this.setBorder(new Border(bs));
         this.setMinSize(40, 40);
         this.setMaxSize(40, 40);
@@ -44,10 +45,13 @@ public class Box extends Label {
         this.weight = 0;
         this.last = false;
         this.used = new int[8];
+        this.initId();
+    }
+    
+    private void initId(){
         for(int i = 0; i < 8; i++){
            this.used[i] = -1; 
         }
-        
     }
     
     //Accesseur de value
@@ -125,20 +129,21 @@ public class Box extends Label {
             this.setStyle("-fx-text-fill: black; -fx-font-size: 20px;");
         }
            
-                
+        System.out.print(this.weight);        
+        
         switch (this.value) {
             // Case vide
             case 0 -> System.out.print(" ");
             //Case Joueur
             case 1 -> 
             {
-                System.out.print("O");
+                //System.out.print("O");
                 this.setText("O");
             }
             //Case IA
             case 6 -> 
             {
-                System.out.print("X" + ConsoleColors.RESET);
+                //System.out.print("X" + ConsoleColors.RESET);
                 this.setText("X");
             }
             default -> {}
