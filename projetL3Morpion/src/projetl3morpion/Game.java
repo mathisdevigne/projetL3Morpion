@@ -17,11 +17,15 @@ public class Game {
     public GameBoard gameboard;
     private boolean isHumanTurn;
     private boolean isFinish;
+    private boolean isGameWin = false;
     
     private Data datas;
     
+    private int scoreJoueurTotal = 0;
+    private int scoreIATotal = 0;
     private int scoreJoueur = 0;
     private int scoreIA = 0;
+   
     
     private static int usedValue = 1;
     
@@ -73,9 +77,10 @@ public class Game {
         this.gameboard.print();
         this.initWeight();
         this.isFinish = false;
+        this.scoreIA = this.scoreJoueur = 0;
         
         if(datas.getExtension3()){
-            this.scoreIA = this.scoreJoueur = 0;
+            this.scoreIATotal = this.scoreJoueurTotal = 0;
         }
         
         if(!isHumanTurn){
@@ -88,11 +93,11 @@ public class Game {
     }
     
     public int getScoreJoueur(){
-        return scoreJoueur;
+        return scoreJoueurTotal;
     }
     
     public int getScoreIA(){
-        return scoreIA;
+        return scoreIATotal;
     }
     
     // Renvoie un entier entrer par l'utilisateur
@@ -121,8 +126,8 @@ public class Game {
     public void play(int x, int y){
         
         if(!isFinish){
-            
-            if(this.humanTurn(x, y)){
+            boolean multi = this.humanTurn(x, y);
+            if(multi){
                 this.iaTurn();
             }
         }
@@ -142,10 +147,10 @@ public class Game {
         
         this.print();
         
-        if(this.scoreJoueur > this.scoreIA){
+        if(this.scoreJoueurTotal > this.scoreIATotal){
             System.out.println("Vous avez gagné");
         }
-        else if(this.scoreJoueur < this.scoreIA){
+        else if(this.scoreJoueurTotal < this.scoreIATotal){
             System.out.println("Vous avez perdu");
         }
         else{
@@ -158,12 +163,12 @@ public class Game {
         if(isHuman){
             
             if(this.humanTurn()){
-                //this.scoreJoueur++;
+                //this.scoreJoueurTotal++;
             }
         }
         else{
             if(this.iaTurn()){
-               //this.scoreIA++;
+               //this.scoreIATotal++;
             }
         }
     }
@@ -283,9 +288,12 @@ public class Game {
                 this.updateBoard();
                 Game.usedValue++;
                 hasWin = true;
+                scoreJoueurTotal += 1;
                 scoreJoueur += 1;
-                messages[0] = "Vous avez gagné";
-                messages[1] = "Félicitation, vous avez réussi à vaincre la féroce IA. Vous méritez une médaille !";
+                
+                if(datas.getExtension3()){
+                    this.iaTurn();
+                }
             }
             else if(noteQuintuplet == 30){
                 System.out.println("Votre adversaire à gagné un point");
@@ -295,18 +303,48 @@ public class Game {
                 this.updateBoard();
                 Game.usedValue++;
                 hasWin = true;
+                scoreIATotal += 1;
                 scoreIA += 1;
-                messages[0] = "Vous avez perdu";
-                messages[1] = "Dommage, vous vous êtes fait démolir ^^";
             }
         }
         
         if(datas.getExtension3()){
             isFinish = !this.canPlay();
         }else{
-            isFinish = hasWin;
+            isFinish = hasWin || !this.canPlay();
+            this.isGameWin = true;
         }
         if(isFinish){
+            
+            if(this.isGameWin){
+                if(this.scoreIA > this.scoreJoueur){
+                    messages[0] = "Vous avez perdu";
+                    messages[1] = "Dommage, vous vous êtes fait démolir ^^";
+                }
+                else if(this.scoreIA < this.scoreJoueur){
+                    messages[0] = "Vous avez gagné";
+                    messages[1] = "Félicitation, vous avez réussi à vaincre la féroce IA. Vous méritez une médaille !";
+                }
+                else{
+                    messages[0] = "Egalité";
+                    messages[1] = "Bravo ! Vous avez réussis à tenir bon !";
+                }
+            }
+            else{
+                if(this.scoreIATotal > this.scoreJoueurTotal){
+                    messages[0] = "Vous avez perdu";
+                    messages[1] = "Dommage, vous vous êtes fait démolir ^^";
+                }
+                else if(this.scoreIATotal < this.scoreJoueurTotal){
+                    messages[0] = "Vous avez gagné";
+                    messages[1] = "Félicitation, vous avez réussi à vaincre la féroce IA. Vous méritez une médaille !";
+                }
+                else{
+                    messages[0] = "Egalité";
+                    messages[1] = "Bravo ! Vous avez réussis à tenir bon !";
+                }
+            }
+            
             Alert a = new Alert(AlertType.INFORMATION);
             a.setTitle("Partie terminée");
             a.setContentText(messages[1]);
@@ -317,7 +355,7 @@ public class Game {
     }
     
     public void print(){
-        System.out.println("Player : " + this.scoreJoueur + "\t IA : " + this.scoreIA);
+        System.out.println("Player : " + this.scoreJoueurTotal + "\t IA : " + this.scoreIATotal);
         this.gameboard.print();
     }
     
