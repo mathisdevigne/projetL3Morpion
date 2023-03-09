@@ -32,16 +32,41 @@ public class Controller extends Application{
         datas.setStage(primaryStage);
         menu.getButton().addEventHandler(ActionEvent.ACTION, e->
         {
-            
-            Jeu root = null;
-            try {
-                root = new Jeu();
-            } catch (IOException ex) {
-                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+            if(!datas.getExtension4()){
+                Jeu root = null;
+                try {
+                    root = new Jeu();
+                } catch (IOException ex) {
+                    Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                Scene other = new Scene(root);
+                primaryStage.setTitle("Morpion");
+                primaryStage.setScene(other);
             }
-            Scene other = new Scene(root);
-            primaryStage.setTitle("Morpion");
-            primaryStage.setScene(other);
+            else{
+                MenuImage newMenu = new MenuImage();
+                Scene otherBis = new Scene(newMenu);
+                primaryStage.setTitle("Menu Image");
+                primaryStage.setScene(otherBis);
+                newMenu.getButton().addEventHandler(ActionEvent.ACTION, f->
+                {
+                    switch(datas.getPlayStyle()){
+                        case 0 -> {
+                            choixImage menuImage = new choixImage();
+                            Scene choixImage = new Scene(menuImage);
+                            primaryStage.setTitle("Choix Image");
+                            primaryStage.setScene(choixImage);
+                        }
+                        case 1 -> {
+                            chooseYourBoard menuBoard = new chooseYourBoard();
+                            Scene choixImage = new Scene(menuBoard);
+                            primaryStage.setTitle("Choix Plateau");
+                            primaryStage.setScene(choixImage);
+                        }
+                    }
+                });
+            }
+            
                         
         });
         

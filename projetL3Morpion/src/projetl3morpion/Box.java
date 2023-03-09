@@ -4,8 +4,11 @@
  */
 package projetl3morpion;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
@@ -133,7 +136,11 @@ public class Box extends Label {
         
         switch (this.value) {
             // Case vide
-            case 0 -> System.out.print(" ");
+            case 0 -> 
+            {
+                System.out.print(" ");
+                this.setBackground(new Background(new BackgroundFill(Color.WHITESMOKE, CornerRadii.EMPTY, Insets.EMPTY)));
+            }
             //Case Joueur
             case 1 -> 
             {
@@ -146,7 +153,13 @@ public class Box extends Label {
                 //System.out.print("X" + ConsoleColors.RESET);
                 this.setText("X");
             }
-            default -> {}
+            case 50 -> {
+                System.out.print(ConsoleColors.RED+"X"+ConsoleColors.RESET);
+                this.setStyle("-fx-text-fill: red; -fx-font-size: 20px;");
+                this.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+                //this.setText("X");
+            }
+            default -> System.out.print("N");
         }
     }
 }

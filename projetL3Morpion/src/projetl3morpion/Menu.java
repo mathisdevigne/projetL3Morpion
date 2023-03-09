@@ -15,6 +15,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
 
 /**
  *
@@ -80,6 +81,7 @@ public class Menu extends BorderPane{
         infos.getChildren().addAll(heightSlider, widthSlider, rb, extensions);
         
         canContinue.setOnAction(e->datas.setExtension3(canContinue.isSelected()));
+        selectForm.setOnAction(e->datas.setExtension4(selectForm.isSelected()));
         
         //======
         //FOOTER
@@ -90,7 +92,7 @@ public class Menu extends BorderPane{
         begin = new Button("Commencer");
         footer.setAlignment(Pos.CENTER);
         footer.setPadding(new Insets(10, 0, 10, 0));
-        footer.getChildren().add(begin);
+        footer.getChildren().addAll(begin);
         
         begin.addEventHandler(ActionEvent.ACTION, e-> 
         {

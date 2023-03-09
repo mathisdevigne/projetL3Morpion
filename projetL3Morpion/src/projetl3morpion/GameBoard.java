@@ -4,7 +4,13 @@
  */
 package projetl3morpion;
 
-import javafx.geometry.Pos;
+import javafx.beans.InvalidationListener;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.geometry.Insets;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
@@ -22,6 +28,8 @@ public class GameBoard extends GridPane{
     private final static int DEFAULT_WIDTH = 10;
     private final int height;
     private final int width;
+    private double size = 40;
+            
     private BorderStroke bs = new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(0), BorderWidths.DEFAULT);
     
     private Box[][] board;
@@ -30,7 +38,10 @@ public class GameBoard extends GridPane{
         this.height = height;
         this.width = width;
         this.setBorder(new Border(bs));
-        this.setMaxSize(width*40, height*40);
+        this.setMaxSize(width*size, height*size);
+        this.setMaxHeight(height*size);
+        
+        this.zoom(0.1, 0.03);
         
         board = new Box[height][width];
         for(int i = 0 ; i < height ; i++){
@@ -42,17 +53,59 @@ public class GameBoard extends GridPane{
         }
     }
     
+    
     public GameBoard(){
         this(GameBoard.DEFAULT_HEIGHT, GameBoard.DEFAULT_WIDTH);
     }
     
+    public void zoom(double min, double step){
+        
+        double minValue;
+        if(min < 0.1){minValue = 0.1;}else if(min >= 1){minValue = 0.9;}else{minValue = min;}
+        
+        this.setOnScroll(e-> 
+        {
+            if(e.isControlDown()){
+                if(e.getDeltaY() > 0){
+                    this.setScaleX(this.getScaleX() + step);
+                    this.setScaleY(this.getScaleX() + step);
+                }
+                else{
+                    this.setScaleX(this.getScaleX() - step);
+                    this.setScaleY(this.getScaleX() - step);
+                }
+                
+                if(this.getScaleX() >= 1 && this.getScaleY() >= 1){
+                    this.setScaleX(1);
+                    this.setScaleY(1);
+                }
+                
+                if(this.getScaleX() <= minValue && this.getScaleY() <= minValue){
+                    this.setScaleX(minValue);
+                    this.setScaleY(minValue);
+                }
+                
+            }
+            //this.print();
+            //System.out.println(this.getScaleX() + ", " + this.getScaleY());
+        });
+    }
+    
     public void resetBoard(){
+        
         for(int i = 0; i < height; i++){
             for(int j = 0; j < width; j++){
-                this.board[i][j].setText("");
-                this.board[i][j].resetBox();
+                
+                if(this.board[i][j].getValue() != 50){
+                    this.board[i][j].setText("");
+                    this.board[i][j].resetBox();
+                }
             }
         }
+    }
+    
+    public double getSize(){
+        return this.size;
     }
     
     //Accesseur de height
@@ -151,11 +204,27 @@ public class GameBoard extends GridPane{
         }
     }
     
+    public void printUI(){
+        for(int i = 0; i < this.getBoardWidth(); i++){
+            for(int j = 0; j < this.getBoardHeight(); j++){
+                
+                if(this.board[j][i].getValue() == 50){
+                    this.board[j][i].setStyle("-fx-text-fill: red; -fx-font-size: 20px;");
+                    this.board[j][i].setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+                }
+            }
+        }
+    }
+    
     // Permet l'insertion d'une valeur dans une case de board
     public void putVal(int val, int x, int y){
-        if(this.getBoxBoard(x,y).getValue() == 0){
+        //if(this.getBoxBoard(x,y).getValue() == 0){
             this.getBoxBoard(x, y).setValue(val);
-        }
+        //}
+    }
+    
+    public int getVal(int x, int y){
+        return this.getBoxBoard(x, y).getValue();
     }
     
     

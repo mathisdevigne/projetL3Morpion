@@ -12,10 +12,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 
 /**
  *
@@ -25,14 +30,27 @@ public class Jeu extends ScrollPane{
     
     private Button escape;
     private Data datas;
+    private BorderStroke bs = new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(0), BorderWidths.DEFAULT);
+
     
     public Jeu() throws IOException {
             
         datas = Data.getInstance();
-        
+                
         Game monJeu;
-        monJeu = new Game((int)datas.getWidth(), (int)datas.getHeight());
-
+        if(datas.getExtension4()){
+            if(datas.getPlayStyle() == 0){
+                monJeu = new Game(datas.getLink());
+            }else{
+                monJeu = new Game(datas.getShapeBoard());
+                monJeu.updateAllWeight();
+            }
+            
+        }
+        else{
+            monJeu = new Game((int)datas.getWidth(), (int)datas.getHeight());
+        }
+        
         //======
         //HEADER
         //======
@@ -64,9 +82,15 @@ public class Jeu extends ScrollPane{
         Button restart = new Button("Restart");
         restart.setOnAction(e->
         {
-            monJeu.resetBoard();
-            labelIA.setText(monJeu.getScoreIA() + " : IA");
-            labelJoueur.setText("Joueur : " + monJeu.getScoreJoueur());
+            if(datas.getExtension4()){
+                monJeu.resetBoard();
+                monJeu.setGameBoard(datas.getShapeBoard());
+            }
+            else{
+                monJeu.resetBoard();
+                labelIA.setText(monJeu.getScoreIA() + " : IA");
+                labelJoueur.setText("Joueur : " + monJeu.getScoreJoueur());
+            }
         });
         Button menu = new Button("Menu");
         menu.setOnAction(e->
@@ -86,6 +110,7 @@ public class Jeu extends ScrollPane{
         //=========
         VBox board = new VBox();
         board.getChildren().addAll(monJeu.getGameboard(), footer);
+        monJeu.printUI();
         board.setAlignment(Pos.CENTER);
         board.setMaxWidth(monJeu.getGameboard().getWidth());
         board.setSpacing(20);
@@ -101,17 +126,17 @@ public class Jeu extends ScrollPane{
         root.setPadding(new Insets(0,20,20,20));
         BorderPane.setAlignment(header, Pos.CENTER);
         
+        this.setPannable(true);
         this.setContent(root);
         this.setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
         this.setHbarPolicy(ScrollBarPolicy.AS_NEEDED);
 
         monJeu.getGameboard().setOnMouseClicked(g->
         {
-            monJeu.play((int)(g.getX()/40), (int)(g.getY()/40));
+            monJeu.play((int)(g.getX()/monJeu.getGameboard().getSize()), (int)(g.getY()/monJeu.getGameboard().getSize()));
             labelIA.setText(monJeu.getScoreIA() + " : IA");
             labelJoueur.setText("Joueur : " + monJeu.getScoreJoueur());
         });
-
     }
     
 }

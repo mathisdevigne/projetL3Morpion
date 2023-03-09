@@ -3,18 +3,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package projetl3morpion;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import java.util.Arrays; 
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferByte;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 /**
  *
  * @author fetiveau
  */
 public class Game {
-    public GameBoard gameboard;
+    private GameBoard gameboard;
+    private BufferedImage bi = null;
     private boolean isHumanTurn;
     private boolean isFinish;
     private boolean isGameWin = false;
@@ -25,7 +32,6 @@ public class Game {
     private int scoreIATotal = 0;
     private int scoreJoueur = 0;
     private int scoreIA = 0;
-   
     
     private static int usedValue = 1;
     
@@ -39,7 +45,7 @@ public class Game {
     private final static int FOUR_PLAYER = THREE_IA*10;
     private final static int FOUR_IA = FOUR_PLAYER*10;
     
-    
+    //Vieux constructeur
     public Game() throws IOException{
         int height = -1, width = -1;
         
@@ -59,11 +65,13 @@ public class Game {
         
     }
     
+    //Constructeur de base pour l'UI
     public Game(int width, int height){
         
         datas = Data.getInstance();
         
         this.gameboard = new GameBoard(height, width);
+        
         this.initWeight();
         
         this.isHumanTurn = datas.getIsHumanBegin();
@@ -72,15 +80,57 @@ public class Game {
         } 
     }
     
+    public Game(ShapeBoard board){
+        datas = Data.getInstance();
+        
+        this.gameboard = board;
+        
+        this.initWeight();
+        
+        this.isHumanTurn = datas.getIsHumanBegin();
+        if(!isHumanTurn){
+            this.iaTurn();
+        } 
+    }
+    
+    //Constructeur pour les images
+    public Game(String link){
+        
+        datas = Data.getInstance();
+        
+        try {
+            bi = ImageIO.read(getClass().getResourceAsStream(link));
+        } catch (IOException ex) {
+            Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.gameboard = new ShapeBoard(bi.getHeight(), bi.getWidth());
+        this.initWeight();
+        if(this.bi != null){
+            this.getShapeboard().setShape(bi);
+            datas.setShapeBoard((ShapeBoard) this.gameboard);
+        }
+        this.updateAllWeight();
+        this.isHumanTurn = datas.getIsHumanBegin();
+        if(!isHumanTurn){
+            this.iaTurn();
+        } 
+        
+    }
+    
     public void resetBoard(){
         this.gameboard.resetBoard();
         this.gameboard.print();
+        this.gameboard.printUI();
         this.initWeight();
         this.isFinish = false;
         this.scoreIA = this.scoreJoueur = 0;
         
         if(datas.getExtension3()){
             this.scoreIATotal = this.scoreJoueurTotal = 0;
+        }
+        
+        if(datas.getExtension4()){
+            this.updateAllWeight();
         }
         
         if(!isHumanTurn){
@@ -90,6 +140,14 @@ public class Game {
     
     public GameBoard getGameboard(){
         return this.gameboard;
+    }
+    
+    public void setGameBoard(GameBoard board){
+        this.gameboard = board;
+    }
+    
+    public ShapeBoard getShapeboard(){
+        return (ShapeBoard) this.gameboard;
     }
     
     public int getScoreJoueur(){
@@ -130,31 +188,6 @@ public class Game {
             if(multi){
                 this.iaTurn();
             }
-        }
-    } 
-
-    public void play() throws IOException{
-        boolean humanTurn;
-        
-        int joueur = getIntInput("Voulez-vous jouer en 1er (1) ou en 2e (2): ");
-        humanTurn = joueur == 1;
-        
-        this.initWeight();
-        while(this.canPlay()){
-            playOneRound(humanTurn);
-            humanTurn = !humanTurn;
-        }
-        
-        this.print();
-        
-        if(this.scoreJoueurTotal > this.scoreIATotal){
-            System.out.println("Vous avez gagné");
-        }
-        else if(this.scoreJoueurTotal < this.scoreIATotal){
-            System.out.println("Vous avez perdu");
-        }
-        else{
-            System.out.println("Vous avez fait une égalité");
         }
     }
     
@@ -359,6 +392,10 @@ public class Game {
         this.gameboard.print();
     }
     
+    public void printUI(){
+        this.gameboard.printUI();
+    }
+    
     /********************************************************
                     Fonctions de gestion de weight
     ************************************************************/
@@ -413,9 +450,12 @@ public class Game {
                 case 18 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], Game.THREE_IA - Game.TWO_IA);
                 case 24 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], Game.FOUR_IA - Game.THREE_IA);
 
-                //Cas du quintuplet fermé et complet
+                //Cas du quintuplet fermé et complet + CAS VAL = 50
                 default ->  {
                     noteQuintu -= this.getGameboard().getBoxBoard(x, y).getValue();
+                    if(this.getGameboard().getBoxBoard(x, y).getValue() == 50){
+                        noteQuintu = 50;
+                    }
                     switch (noteQuintu) {
                         case 1 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], -Game.ONE_PLAYER);
                         case 2 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], -Game.TWO_PLAYER);
@@ -426,6 +466,9 @@ public class Game {
                         case 12 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], -Game.TWO_IA);
                         case 18 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], -Game.THREE_IA);
                         case 24 -> GameBoard.updateWeightQuintu(UpdateQuintu[i], -Game.FOUR_IA);
+                        
+                        //Cas -= 50
+                        default -> {GameBoard.updateWeightQuintu(UpdateQuintu[i], -Game.EMPTY_WEIGHT);break;}
                     }
                 }
             }
@@ -458,5 +501,51 @@ public class Game {
         //Poids négatif dans les case déjà joué pour que l'ia n'y joue pas    
         this.getGameboard().setBoxWeight(x, y, -1000000);
         }
+    }
+    
+    // Met à jour les poids du plateau en fonction de l'emplacement joué
+    public void updateAllWeight(){
+        for(int x = 0; x < this.getGameboard().getBoardHeight(); x++){
+            for(int y = 0; y < this.getGameboard().getBoardWidth(); y++){
+                if(this.getGameboard().getBoxBoard(x, y).getValue() == 50){
+                    this.updateWeight(x, y);
+                }
+            }
+        }
+    }
+    
+    //Rien tqt
+    public static BufferedImage rotateClockwise90(BufferedImage src) {
+
+        int srcWidth = src.getWidth();
+        int srcHeight = src.getHeight();
+        boolean hasAlphaChannel = src.getAlphaRaster() != null;
+        int pixelLength = hasAlphaChannel ? 4 : 3;
+        byte[] srcPixels = ((DataBufferByte)src.getRaster().getDataBuffer()).getData();
+
+        // Create the destination buffered image
+        BufferedImage dest = new BufferedImage(srcHeight, srcWidth, src.getType());
+        byte[] destPixels = ((DataBufferByte)dest.getRaster().getDataBuffer()).getData();
+        int destWidth = dest.getWidth();
+
+        int srcPos = 0; // We can just increment this since the data pack order matches our loop traversal: left to right, top to bottom. (Just like reading a book.)   
+        for(int srcY = 0; srcY < srcHeight; srcY++) {
+            for(int srcX = 0; srcX < srcWidth; srcX++) {
+
+                int destX = ((srcHeight - 1) - srcY);
+                int destY = srcX;
+
+                int destPos = (((destY * destWidth) + destX) * pixelLength);
+
+                if(hasAlphaChannel) {
+                    destPixels[destPos++] = srcPixels[srcPos++];    // alpha
+                }
+                destPixels[destPos++] = srcPixels[srcPos++];        // blue
+                destPixels[destPos++] = srcPixels[srcPos++];        // green
+                destPixels[destPos++] = srcPixels[srcPos++];        // red
+            }
+        }
+
+        return dest;
     }
 }
