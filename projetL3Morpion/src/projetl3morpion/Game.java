@@ -189,6 +189,8 @@ public class Game {
                 this.iaTurn();
             }
         }
+        
+        this.getGameboard().print();
     }
     
     //Simule un tour de jeu
@@ -300,7 +302,7 @@ public class Game {
             this.getGameboard().getBoxBoard(x, y).setValue(6);
         }
         
-        this.getGameboard().print();
+        //this.getGameboard().print();
     }
     
     //Regarde si au moins un quintuplet gagnant se situe dans la case x y, si oui renvoie true sinon false

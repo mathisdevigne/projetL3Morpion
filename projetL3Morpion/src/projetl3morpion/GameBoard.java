@@ -4,10 +4,6 @@
  */
 package projetl3morpion;
 
-import javafx.beans.InvalidationListener;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -63,10 +59,10 @@ public class GameBoard extends GridPane{
         double minValue;
         if(min < 0.1){minValue = 0.1;}else if(min >= 1){minValue = 0.9;}else{minValue = min;}
         
-        this.setOnScroll(e-> 
+        this.setOnZoom(e-> 
         {
-            if(e.isControlDown()){
-                if(e.getDeltaY() > 0){
+            
+                if(e.getTotalZoomFactor() > 1){
                     this.setScaleX(this.getScaleX() + step);
                     this.setScaleY(this.getScaleX() + step);
                 }
@@ -85,7 +81,7 @@ public class GameBoard extends GridPane{
                     this.setScaleY(minValue);
                 }
                 
-            }
+            
             //this.print();
             //System.out.println(this.getScaleX() + ", " + this.getScaleY());
         });

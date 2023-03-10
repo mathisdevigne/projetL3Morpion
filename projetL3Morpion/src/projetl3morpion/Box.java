@@ -86,6 +86,15 @@ public class Box extends Label {
         return false;
     }
     
+    public int nbUsed(){
+        int compteur = 0;
+        for(int i = 0; i < this.used.length; i++){
+            if(this.used[i] != -1)
+                compteur++;
+        }
+        return compteur;
+    }
+    
     public int[] getUsed(){
         return this.used;
     }
@@ -132,7 +141,7 @@ public class Box extends Label {
             this.setStyle("-fx-text-fill: black; -fx-font-size: 20px;");
         }
            
-        System.out.print(this.weight);        
+        System.out.print(this.weight);
         
         switch (this.value) {
             // Case vide
@@ -146,12 +155,14 @@ public class Box extends Label {
             {
                 //System.out.print("O");
                 this.setText("O");
+                this.quintuColor(true);
             }
             //Case IA
             case 6 -> 
             {
                 //System.out.print("X" + ConsoleColors.RESET);
                 this.setText("X");
+                this.quintuColor(false);
             }
             case 50 -> {
                 System.out.print(ConsoleColors.RED+"X"+ConsoleColors.RESET);
@@ -161,5 +172,27 @@ public class Box extends Label {
             }
             default -> System.out.print("N");
         }
+    }
+    
+    public void quintuColor(boolean isHuman){
+        
+        int red = 255;
+        int blue = 255;
+        
+        if(isHuman){
+            if(this.nbUsed() != 0){
+               this.setBackground(new Background(new BackgroundFill(Color.rgb(red-((red/8)*this.nbUsed()), 0, 0), CornerRadii.EMPTY, Insets.EMPTY)));
+                this.setStyle("-fx-text-fill: white; -fx-font-size: 20px;"); 
+            }
+            
+        }
+        else{
+            if(this.nbUsed() != 0){
+               this.setBackground(new Background(new BackgroundFill(Color.rgb(0, 0, blue-((blue/8)*this.nbUsed())), CornerRadii.EMPTY, Insets.EMPTY)));
+                this.setStyle("-fx-text-fill: white; -fx-font-size: 20px;"); 
+            }
+        }
+        
+        
     }
 }
