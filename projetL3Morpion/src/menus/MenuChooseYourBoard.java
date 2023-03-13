@@ -40,6 +40,7 @@ public class MenuChooseYourBoard extends ScrollPane{
         //======
         
         VBox header = Layout.createHeader("Choix Plateau");
+        Layout.bindPopUp(header, "Cliquez sur une case pour la bloquer. Cliquez à nouveau pour la débloquer.");
         
         //=====
         //RESTE

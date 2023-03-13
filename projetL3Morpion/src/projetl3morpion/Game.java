@@ -48,26 +48,6 @@ public class Game {
     private final static int FOUR_PLAYER = THREE_IA*10;
     private final static int FOUR_IA = FOUR_PLAYER*10;
     
-    //Vieux constructeur
-    public Game() throws IOException{
-        int height = -1, width = -1;
-        
-        while(height < 10){
-            height = Game.getIntInput("Veuillez rentrez la hauteur du plateau de jeu (minimun 10): ");
-        }
-        while(width < 10){
-            width = Game.getIntInput("Veuillez rentrez la largeur du plateau de jeu (minimun 10): ");
-        }
-        this.gameboard = new GameBoard(height, width);
-        this.initWeight();
-        
-        int joueur = getIntInput("Voulez-vous jouer en 1er (1) ou en 2e (2): ");
-        if(joueur == 2){
-            this.iaTurn();
-        } 
-        
-    }
-    
     //Constructeur de base pour l'UI
     public Game(int width, int height){
         
@@ -77,26 +57,19 @@ public class Game {
         
         this.initWeight();
         
-        this.isHumanTurn = datas.getIsHumanBegin();
-        if(!isHumanTurn){
-            this.iaTurn();
-            this.print();
-        } 
+        isAIFirst();
     }
     
     //Constructeur pour le ShapeBoard
-    public Game(GameBoard board){
+    public Game(ShapeBoard board){
         datas = Data.getInstance();
         
         this.gameboard = board;
         
         this.initWeight();
+        this.updateAllWeight();
         
-        this.isHumanTurn = datas.getIsHumanBegin();
-        if(!isHumanTurn){
-            this.iaTurn();
-            this.print();
-        } 
+        isAIFirst();
     }
     
     //Constructeur pour les images
@@ -116,12 +89,16 @@ public class Game {
             datas.setShapeBoard((ShapeBoard) this.gameboard);
         }
         this.updateAllWeight();
+        isAIFirst();
+        
+    }
+    
+    public final void isAIFirst(){
         this.isHumanTurn = datas.getIsHumanBegin();
         if(!isHumanTurn){
             this.iaTurn();
             this.print();
         } 
-        
     }
     
     public void resetBoard(){
@@ -139,10 +116,6 @@ public class Game {
         if(datas.getExtension4()){
             this.updateAllWeight();
         }
-        
-        if(!isHumanTurn){
-            this.iaTurn();
-        }
     }
     
     public GameBoard getGameboard(){
@@ -153,7 +126,7 @@ public class Game {
         this.gameboard = board;
     }
     
-    public ShapeBoard getShapeboard(){
+    public final ShapeBoard getShapeboard(){
         return (ShapeBoard) this.gameboard;
     }
     
@@ -410,7 +383,7 @@ public class Game {
     ************************************************************/
     
     //Initialise les weights du plateau de jeu
-    public void initWeight(){
+    public final void initWeight(){
         for(int i = 0; i < this.getGameboard().getBoardHeight() ; i++){
             for(int j = 0; j < this.getGameboard().getBoardWidth() ;  j++){
                 
@@ -513,7 +486,7 @@ public class Game {
     }
     
     // Met à jour les poids du plateau en fonction de l'emplacement joué
-    public void updateAllWeight(){
+    public final void updateAllWeight(){
         for(int x = 0; x < this.getGameboard().getBoardHeight(); x++){
             for(int y = 0; y < this.getGameboard().getBoardWidth(); y++){
                 if(this.getGameboard().getBoxBoard(x, y).getValue() == 50){

@@ -15,6 +15,7 @@ import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import projetl3morpion.Data;
 
 /**
  *
@@ -26,6 +27,7 @@ public class GameBoard extends GridPane{
     private final int height;
     private final int width;
     private double size = 40;
+    private Data datas = Data.getInstance();
             
     private BorderStroke bs = new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(0), BorderWidths.DEFAULT);
     

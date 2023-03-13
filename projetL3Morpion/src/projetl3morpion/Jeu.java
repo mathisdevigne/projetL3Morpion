@@ -5,12 +5,20 @@
 package projetl3morpion;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.SelectionMode;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
@@ -30,8 +38,6 @@ public class Jeu extends ScrollPane{
     
     private Button escape;
     private Data datas;
-    private BorderStroke bs = new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(0), BorderWidths.DEFAULT);
-
     
     public Jeu() throws IOException {
             
@@ -68,8 +74,22 @@ public class Jeu extends ScrollPane{
         scoreLabel.getChildren().addAll(labelJoueur, labelVS, labelIA);
         scoreLabel.setAlignment(Pos.CENTER);
         scoreLabel.setSpacing(10);
+        
+        //========
+        //COMBOBOX
+        //========
+        
+        ObservableList<Double> list = FXCollections.observableArrayList(0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9);
+        ComboBox<Double> comboBox = new ComboBox<>(list);
+        comboBox.getSelectionModel().selectFirst();
+        comboBox.setOnAction(e->
+        {
+            monJeu.getGameboard().zoom(comboBox.getValue(), 0.03);
+        });
+        Label zoomLabel = new Label("Puissance du Zoom :");
+        zoomLabel.setPadding(new Insets(5, 5, 5, 5));
 
-        header.getChildren().addAll(titre, scoreLabel);
+        header.getChildren().addAll(titre, scoreLabel, zoomLabel,comboBox);
         header.setAlignment(Pos.CENTER);
         header.setPadding(new Insets(20,20,20,20));
 
@@ -91,6 +111,8 @@ public class Jeu extends ScrollPane{
                 labelIA.setText(monJeu.getScoreIA() + " : IA");
                 labelJoueur.setText("Joueur : " + monJeu.getScoreJoueur());
             }
+            
+            monJeu.isAIFirst();
         });
         Button menu = new Button("Menu");
         menu.setOnAction(e->
@@ -120,7 +142,7 @@ public class Jeu extends ScrollPane{
         //=============
         
         BorderPane root = new BorderPane();
-        
+                
         root.setCenter(board);
         root.setTop(header);
         root.setPadding(new Insets(0,20,20,20));
