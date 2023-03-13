@@ -4,6 +4,10 @@
  */
 package projetl3morpion;
 
+import menus.MenuChooseYourBoard;
+import menus.MenuChoixImage;
+import menus.MenuForme;
+import menus.Menu;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -44,25 +48,26 @@ public class Controller extends Application{
                 primaryStage.setScene(other);
             }
             else{
-                MenuImage newMenu = new MenuImage();
+                MenuForme newMenu = new MenuForme();
                 Scene otherBis = new Scene(newMenu);
-                primaryStage.setTitle("Menu Image");
+                primaryStage.setTitle("Menu Forme");
                 primaryStage.setScene(otherBis);
                 newMenu.getButton().addEventHandler(ActionEvent.ACTION, f->
                 {
                     switch(datas.getPlayStyle()){
                         case 0 -> {
-                            choixImage menuImage = new choixImage();
+                            MenuChoixImage menuImage = new MenuChoixImage();
                             Scene choixImage = new Scene(menuImage);
                             primaryStage.setTitle("Choix Image");
                             primaryStage.setScene(choixImage);
                         }
                         case 1 -> {
-                            chooseYourBoard menuBoard = new chooseYourBoard();
+                            MenuChooseYourBoard menuBoard = new MenuChooseYourBoard();
                             Scene choixImage = new Scene(menuBoard);
                             primaryStage.setTitle("Choix Plateau");
                             primaryStage.setScene(choixImage);
                         }
+
                     }
                 });
             }

@@ -4,6 +4,7 @@
  */
 package projetl3morpion;
 
+import board.ShapeBoard;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 

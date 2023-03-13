@@ -4,6 +4,9 @@
  */
 package projetl3morpion;
 
+import board.ShapeBoard;
+import board.GameBoard;
+import board.Box;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import java.util.Arrays; 
@@ -77,10 +80,12 @@ public class Game {
         this.isHumanTurn = datas.getIsHumanBegin();
         if(!isHumanTurn){
             this.iaTurn();
+            this.print();
         } 
     }
     
-    public Game(ShapeBoard board){
+    //Constructeur pour le ShapeBoard
+    public Game(GameBoard board){
         datas = Data.getInstance();
         
         this.gameboard = board;
@@ -90,6 +95,7 @@ public class Game {
         this.isHumanTurn = datas.getIsHumanBegin();
         if(!isHumanTurn){
             this.iaTurn();
+            this.print();
         } 
     }
     
@@ -113,6 +119,7 @@ public class Game {
         this.isHumanTurn = datas.getIsHumanBegin();
         if(!isHumanTurn){
             this.iaTurn();
+            this.print();
         } 
         
     }

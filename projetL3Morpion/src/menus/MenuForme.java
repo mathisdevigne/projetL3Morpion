@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package projetl3morpion;
+package menus;
 
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -14,18 +14,20 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import layouts.Layout;
+import projetl3morpion.Data;
 
 /**
  *
  * @author theodusehu
  */
-public class MenuImage extends BorderPane{
+public class MenuForme extends BorderPane{
     
     private Data datas;
     private Button begin;
     private ToggleGroup tg;
     
-    public MenuImage(){
+    public MenuForme(){
         
         datas = Data.getInstance();
         
@@ -33,13 +35,7 @@ public class MenuImage extends BorderPane{
         //HEADER
         //======
         
-        VBox header = new VBox();
-        Label titre = new Label("Menu Image");
-        titre.setStyle("-fx-font-size: 40px;");
-        
-        header.getChildren().addAll(titre);
-        header.setAlignment(Pos.CENTER);
-        header.setPadding(new Insets(20,20,20,20));
+        VBox header = Layout.createHeader("Menu Forme");
         
         this.setTop(header);
         
@@ -51,7 +47,9 @@ public class MenuImage extends BorderPane{
         Label whoBegin = new Label("Mode de jeu : ");
         this.tg = new ToggleGroup();
         RadioButton img = new RadioButton("Image");
+        Layout.bindPopUp(img, "Permet de générer un plateau à partir d'un image.");
         RadioButton choice = new RadioButton("Choisir");
+        Layout.bindPopUp(choice, "Permet de définir sois même la forme du plateau.");
         img.setToggleGroup(tg);
         choice.setToggleGroup(tg);
         tg.selectToggle(img);

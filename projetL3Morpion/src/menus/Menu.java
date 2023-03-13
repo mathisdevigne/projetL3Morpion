@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package projetl3morpion;
+package menus;
 
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -15,6 +15,9 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import layouts.Layout;
+import projetl3morpion.Data;
+import layouts.SliderBetter;
 
 /**
  *
@@ -37,26 +40,27 @@ public class Menu extends BorderPane{
         //HEADER
         //======
         
-        VBox header = new VBox();
-        Label titre = new Label("Menu");
-        titre.setStyle("-fx-font-size: 40px;");
+        VBox header = Layout.createHeader("Menu");
         
-        header.getChildren().addAll(titre);
-        header.setAlignment(Pos.CENTER);
-        header.setPadding(new Insets(20,20,20,20));
-        
-        //=====================
-        //SLIDERS + RADIOBUTTON 
-        //=====================
+        //=======
+        //SLIDERS
+        //=======
         
         VBox infos = new VBox();
         heightSlider = new SliderBetter("Height", 10, 50, 10);
         heightSlider.setAlignment(Pos.CENTER);
+        Layout.bindPopUp(heightSlider.getLabel(), "Permet de choisir la hauteur du plateau.");
         widthSlider = new SliderBetter("Width", 10, 50, 10);
         widthSlider.setAlignment(Pos.CENTER);
+        Layout.bindPopUp(widthSlider.getLabel(), "Permet de choisir la largeur du plateau.");
+        
+        //===========
+        //RADIOBUTTON
+        //===========
         
         HBox rb = new HBox();
         Label whoBegin = new Label("Qui commence : ");
+        Layout.bindPopUp(whoBegin, "Permet de choisir quel joueur commence la partie.");
         this.tg = new ToggleGroup();
         RadioButton joueur = new RadioButton("Joueur");
         RadioButton ia = new RadioButton("IA");
@@ -67,10 +71,16 @@ public class Menu extends BorderPane{
         rb.setAlignment(Pos.CENTER);
         rb.getChildren().addAll(whoBegin,joueur, ia);
         
+        //========
+        //CHECKBOX
+        //========
+        
         VBox extensions = new VBox();
         
         CheckBox canContinue = new CheckBox("Extension 3");
+        Layout.bindPopUp(canContinue, "Extension 3 : Permet de continuer à jouer après que le premier quintuplet soit fait.");
         CheckBox selectForm = new CheckBox("Extension 4");
+        Layout.bindPopUp(selectForm, "Extension 4 : Permet de changer la forme du plateau en bloquant des cases.");
         
         extensions.setPadding(new Insets(10, 0, 0, 0));
         extensions.setSpacing(5);

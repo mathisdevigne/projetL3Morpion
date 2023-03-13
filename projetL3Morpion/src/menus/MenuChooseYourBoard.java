@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package projetl3morpion;
+package menus;
 
 import java.io.IOException;
 import java.util.logging.Level;
@@ -11,21 +11,25 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import projetl3morpion.Controller;
+import projetl3morpion.Data;
+import projetl3morpion.Jeu;
+import board.ShapeBoard;
+import layouts.Layout;
 
 /**
  *
  * @author theodusehu
  */
-public class chooseYourBoard extends ScrollPane{
+public class MenuChooseYourBoard extends ScrollPane{
     
     private Data datas;
     
-    public chooseYourBoard(){
+    public MenuChooseYourBoard(){
         
         datas = Data.getInstance();
         
@@ -35,15 +39,11 @@ public class chooseYourBoard extends ScrollPane{
         //HEADER
         //======
         
-        VBox header = new VBox();
-        Label titre = new Label("Choix Plateau");
-        titre.setStyle("-fx-font-size: 40px;");
+        VBox header = Layout.createHeader("Choix Plateau");
         
-        header.getChildren().addAll(titre);
-        header.setAlignment(Pos.CENTER);
-        header.setPadding(new Insets(20,20,20,20));
-        
+        //=====
         //RESTE
+        //=====
         
         VBox jeu = new VBox();
         Button envoie = new Button("Terminer");
