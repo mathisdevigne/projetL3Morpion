@@ -57,7 +57,7 @@ public class GameBoard extends GridPane{
         this(GameBoard.DEFAULT_HEIGHT, GameBoard.DEFAULT_WIDTH);
     }
     
-    public void zoom(double min, double step){
+    public final void zoom(double min, double step){
         
         double minValue;
         if(min < 0.1){minValue = 0.1;}else if(min >= 1){minValue = 0.9;}else{minValue = min;}

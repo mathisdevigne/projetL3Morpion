@@ -18,6 +18,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import layouts.Layout;
 import projetl3morpion.Data;
+import projetl3morpion.FileChooserSample;
 
 /**
  *
@@ -35,8 +36,10 @@ public class MenuChoixImage extends BorderPane{
         //HEADER
         //======
         
-        VBox header = Layout.createHeader("Choix Image");
-        Layout.bindPopUp(header, "Pour rajouter une image, traiter la et mettez la dans le dossier Images");
+        VBox header = new VBox();
+        VBox title = Layout.createHeader("Choix Image");
+        Layout.bindPopUp(title, "Pour rajouter une image, traiter la et mettez la dans le dossier Images");
+        header.getChildren().addAll(title, new FileChooserSample(datas.getStage()));
         this.setTop(header);
         
         //====
