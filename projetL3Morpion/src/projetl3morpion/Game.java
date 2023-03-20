@@ -214,23 +214,20 @@ public class Game {
     }
     
     public boolean canPlay(){
-        int[] test = {-1,-1};
-        int[] bestBox = {-1,-1};
-        float bestWeight = -1f;
+        boolean verif = false;
         
         for(int i = 0; i < this.getGameboard().getBoardHeight(); i++){
             for(int j = 0 ; j < this.getGameboard().getBoardWidth() ; j++){
-                if(this.getGameboard().getBoxWeight(i, j) > bestWeight){
-                    bestBox[0] = i;
-                    bestBox[1] = j;
-                    bestWeight = this.getGameboard().getBoxWeight(i, j);
+                if(this.getGameboard().getVal(i, j) == 0 && this.getGameboard().getBoxWeight(i, j) > 0){
+                    Box[][] quintuplets = this.getGameboard().getQuintuplets(i, j);
+                    for(int k = 0; k < this.getGameboard().getNbQuintuplets(i, j) ; k++ ){
+                        int note = GameBoard.noteQuintu(quintuplets[k]);
+                        verif = verif || ((note >= 0 && note <= 4) || note%6 == 0);
+                    }
                 }
             }
         }
-        if(bestWeight == 0){
-            return false;
-        }
-        return !Arrays.equals(bestBox, test);
+        return verif;
     }
     
     //Simule le tour du joueur humain (demande des coordonnées à l'utilisateur et joue 
