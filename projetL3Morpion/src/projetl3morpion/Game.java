@@ -215,6 +215,8 @@ public class Game {
     
     public boolean canPlay(){
         boolean verif = false;
+        int cptJ = 0;
+        int cptIA = 0;
         
         for(int i = 0; i < this.getGameboard().getBoardHeight(); i++){
             for(int j = 0 ; j < this.getGameboard().getBoardWidth() ; j++){
@@ -223,10 +225,21 @@ public class Game {
                     for(int k = 0; k < this.getGameboard().getNbQuintuplets(i, j) ; k++ ){
                         int note = GameBoard.noteQuintu(quintuplets[k]);
                         verif = verif || ((note >= 0 && note <= 4) || note%6 == 0);
+                        if(note == 0){
+                            cptJ++;
+                            cptIA++;
+                        }
+                        else if ((note >= 1 && note <= 4)){
+                            cptJ++;
+                        }
+                        else if(note%6 == 0){
+                            cptIA++;
+                        }
                     }
                 }
             }
         }
+        System.out.println("Joueur : " + cptJ + " IA : " + cptIA);
         return verif;
     }
     
@@ -328,7 +341,7 @@ public class Game {
         }
         if(isFinish){
             
-            if(this.isGameWin){
+            if(this.isGameWin){ //Score Jeu simple
                 if(this.scoreIA > this.scoreJoueur){
                     messages[0] = "Vous avez perdu";
                     messages[1] = "Dommage, vous vous êtes fait démolir ^^";
@@ -342,7 +355,7 @@ public class Game {
                     messages[1] = "Bravo ! Vous avez réussis à tenir bon !";
                 }
             }
-            else{
+            else{ //Score extension 3
                 if(this.scoreIATotal > this.scoreJoueurTotal){
                     messages[0] = "Vous avez perdu";
                     messages[1] = "Dommage, vous vous êtes fait démolir ^^";
