@@ -23,6 +23,7 @@ public class Data {
     private Stage stage;
     private boolean extension3 = false;
     private boolean extension4 = false;
+    private Game game;
     
     //Resultat du togglegroup du menuImage
     private int playStyle;
@@ -71,6 +72,10 @@ public class Data {
         this.extension4 = extension4;
     }
     
+    public void setGame(Game game){
+        this.game = game;
+    }
+    
     public void setPlayStyle(int playStyle){
         this.playStyle = playStyle;
     }
@@ -113,6 +118,10 @@ public class Data {
     
     public boolean getExtension4(){
         return extension4;
+    }
+    
+    public Game getGame(){
+        return game;
     }
     
     public int getPlayStyle(){

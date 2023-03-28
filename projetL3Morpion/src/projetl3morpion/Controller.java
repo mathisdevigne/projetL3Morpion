@@ -16,6 +16,7 @@ import static javafx.application.Application.launch;
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import projetl3morpion.tournament.ExamplePlayer;
 
 /**
  *
