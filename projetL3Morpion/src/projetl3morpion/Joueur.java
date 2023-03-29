@@ -24,6 +24,7 @@ public class Joueur implements Player{
     @Override
     public void setId(int id) {
             this.id = id;
+            datas.setIsHumanBegin(id != 1);
     }
 
     @Override
@@ -41,8 +42,10 @@ public class Joueur implements Player{
     public void receiveNewStroke(int player_id, int[] stroke) {
         if(isMe){
             monJeu.insertValue(false, id, id);
+            isMe = true;
         }else{
             monJeu.insertValue(true, id, id);
+            isMe = false;
         }
     }
     

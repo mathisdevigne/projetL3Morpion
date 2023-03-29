@@ -7,8 +7,6 @@ package projetl3morpion;
 import board.ShapeBoard;
 import board.GameBoard;
 import board.Box;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import java.util.Arrays; 
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
@@ -104,7 +102,6 @@ public class Game {
     public void resetBoard(){
         this.gameboard.resetBoard();
         this.gameboard.print();
-        this.gameboard.printUI();
         this.initWeight();
         this.isFinish = false;
         this.scoreIA = this.scoreJoueur = 0;
@@ -370,11 +367,7 @@ public class Game {
                 }
             }
             
-            Alert a = new Alert(AlertType.INFORMATION);
-            a.setTitle("Partie terminée");
-            a.setContentText(messages[1]);
-            a.setHeaderText(messages[0]);
-            a.show();
+            
         }
         return hasWin;
     }
@@ -382,10 +375,6 @@ public class Game {
     public void print(){
         System.out.println("Player : " + this.scoreJoueurTotal + "\t IA : " + this.scoreIATotal);
         this.gameboard.print();
-    }
-    
-    public void printUI(){
-        this.gameboard.printUI();
     }
     
     /********************************************************

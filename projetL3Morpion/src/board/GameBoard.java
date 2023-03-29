@@ -5,49 +5,31 @@
 package board;
 
 import board.Box;
-import javafx.geometry.Insets;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.BorderStrokeStyle;
-import javafx.scene.layout.BorderWidths;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
 import projetl3morpion.Data;
 
 /**
  *
  * @author fetiveau
  */
-public class GameBoard extends GridPane{
+public class GameBoard{
     private final static int DEFAULT_HEIGHT = 10;
     private final static int DEFAULT_WIDTH = 10;
     private final int height;
     private final int width;
     private double size = 40;
     private Data datas = Data.getInstance();
-            
-    private BorderStroke bs = new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(0), BorderWidths.DEFAULT);
-    
+                
     private Box[][] board;
     
     public GameBoard(int height, int width){
         this.height = height;
         this.width = width;
-        this.setBorder(new Border(bs));
-        this.setMaxSize(width*size, height*size);
-        this.setMaxHeight(height*size);
-        
-        this.zoom(0.1, 0.03);
         
         board = new Box[height][width];
         for(int i = 0 ; i < height ; i++){
             for(int j = 0; j < width ; j++){
                 Box b = new Box(i+j);
                 board[i][j] = b;
-                this.add(b, j, i);
             }
         }
     }
@@ -57,38 +39,6 @@ public class GameBoard extends GridPane{
         this(GameBoard.DEFAULT_HEIGHT, GameBoard.DEFAULT_WIDTH);
     }
     
-    public final void zoom(double min, double step){
-        
-        double minValue;
-        if(min < 0.1){minValue = 0.1;}else if(min >= 1){minValue = 0.9;}else{minValue = min;}
-        
-        this.setOnZoom(e-> 
-        {
-            
-                if(e.getTotalZoomFactor() > 1){
-                    this.setScaleX(this.getScaleX() + step);
-                    this.setScaleY(this.getScaleX() + step);
-                }
-                else{
-                    this.setScaleX(this.getScaleX() - step);
-                    this.setScaleY(this.getScaleX() - step);
-                }
-                
-                if(this.getScaleX() >= 1 && this.getScaleY() >= 1){
-                    this.setScaleX(1);
-                    this.setScaleY(1);
-                }
-                
-                if(this.getScaleX() <= minValue && this.getScaleY() <= minValue){
-                    this.setScaleX(minValue);
-                    this.setScaleY(minValue);
-                }
-                
-            
-            //this.print();
-            //System.out.println(this.getScaleX() + ", " + this.getScaleY());
-        });
-    }
     
     public void resetBoard(){
         
@@ -96,7 +46,6 @@ public class GameBoard extends GridPane{
             for(int j = 0; j < width; j++){
                 
                 if(this.board[i][j].getValue() != 50){
-                    this.board[i][j].setText("");
                     this.board[i][j].resetBox();
                 }
             }
@@ -167,7 +116,7 @@ public class GameBoard extends GridPane{
         }
     }
     
-    public void printW(){
+    /*public void printW(){
         System.out.print("  ");
         for(int k = 0; k < this.getWidth(); k++){
             if(k <= 9){
@@ -201,19 +150,8 @@ public class GameBoard extends GridPane{
             }
             System.out.println();
         }
-    }
+    }*/
     
-    public void printUI(){
-        for(int i = 0; i < this.getBoardWidth(); i++){
-            for(int j = 0; j < this.getBoardHeight(); j++){
-                
-                if(this.board[j][i].getValue() == 50){
-                    this.board[j][i].setStyle("-fx-text-fill: red; -fx-font-size: 20px;");
-                    this.board[j][i].setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
-                }
-            }
-        }
-    }
     
     // Permet l'insertion d'une valeur dans une case de board
     public void putVal(int val, int x, int y){
