@@ -23,7 +23,7 @@ public class Joueur implements Player{
     @Override
     public void setId(int id) {
             this.id = id;
-            System.out.println(id);
+            System.out.println("Je suis joueur numéro : " + id);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class Joueur implements Player{
     @Override
     public int[] getStroke() {
         int[] stroke = monJeu.bestBox();
-        System.out.println(stroke[0] + "/" + stroke[1]);
+        //System.out.println(stroke[0] + "/" + stroke[1]);
         return stroke;
     }
 

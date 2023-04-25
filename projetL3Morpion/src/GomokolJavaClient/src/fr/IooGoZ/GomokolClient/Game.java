@@ -175,7 +175,7 @@ public class Game {
 		} else if (player_id == -1) {
 			System.out.println("La partie " + id + " s'est terminée sans gagnant.");
 		} else {
-			System.out.println("La partie " + id + "est terminée : le joueur " + player_id + " a gagné.");
+			System.out.println("La partie " + id + " est terminée : le joueur " + player_id + " a gagné.");
 		}
 	}
 

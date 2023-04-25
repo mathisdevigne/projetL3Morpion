@@ -257,7 +257,7 @@ public class Game {
                 }
             }
         }
-        System.out.println("Joueur : " + cptJ + " IA : " + cptIA);
+        //System.out.println("Joueur : " + cptJ + " IA : " + cptIA);
         return verif;
     }
     
@@ -394,7 +394,7 @@ public class Game {
     }
     
     public void print(){
-        System.out.println("Player : " + this.scoreJoueurTotal + "\t IA : " + this.scoreIATotal);
+        //System.out.println("Player : " + this.scoreJoueurTotal + "\t IA : " + this.scoreIATotal);
         this.gameboard.print();
     }
     
