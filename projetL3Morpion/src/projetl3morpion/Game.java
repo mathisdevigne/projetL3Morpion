@@ -13,6 +13,7 @@ import java.awt.image.DataBufferByte;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -193,10 +194,12 @@ public class Game {
         this.updateWeight(bestBox[0], bestBox[1]);
         return this.hasWin(bestBox[0], bestBox[1]);
     }
-    
+        
     public int[] bestBox(){
         int[] bestBox = {-1,-1};
         float bestWeight = -1f;
+
+        Random r = new Random();
         
         for(int i = 0; i < this.getGameboard().getBoardHeight(); i++){
             for(int j = 0 ; j < this.getGameboard().getBoardWidth() ; j++){
@@ -204,6 +207,12 @@ public class Game {
                     bestBox[0] = i;
                     bestBox[1] = j;
                     bestWeight = this.getGameboard().getBoxWeight(i, j);
+                }
+                else if(this.getGameboard().getBoxWeight(i,j) == bestWeight){
+                    if(r.nextInt(0, 1+i*j) == 0){
+                        bestBox[0] = i;
+                        bestBox[1] = j;
+                    }
                 }
             }
         }
@@ -219,7 +228,6 @@ public class Game {
                 }
             }
         }
-        
         return bestBox;
     }
     
