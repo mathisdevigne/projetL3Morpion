@@ -54,17 +54,55 @@ public class MasterOwner implements GameOwner {
 		int y = stroke[1];
 		
 		this.board[x][y] = player_id;
+                //this.print();
 	}
+        
+       // Affichage du jeu (plateau) besoin d'ajustement
+    public void print(){
+        System.out.print("  ");
+        for(int k = 0; k < this.width; k++){
+            if(k <= 9){
+                System.out.print(" ");
+            }         
+            System.out.print( " " + k + " ");
+        }
+        System.out.println();
+        System.out.print("  +");
+        for(int k = 0; k < this.width; k++){
+            System.out.print( "---+");     
+        }
+        
+        System.out.println();
+        for(int i = 0; i < this.height; i++){
+            System.out.print(i);
+            if(i <= 9){
+                System.out.print(" ");
+            }
+            System.out.print("| ");
+            for(int j = 0; j < this.width; j++){
+                System.out.print(this.board[i][j]);
+                System.out.print(" | ");
+            }
+            System.out.println();
+            System.out.print("  +");
+            for(int k = 0; k < this.width; k++){
+                System.out.print( "---+");     
+            }
+            System.out.println();
+        }
+    }
 
 	
 	//Fonction vérifiant la fin d'une partie (non-testée)
 	private Validation checkEnd(int player_id, int x, int y) {
-		if (checkBoardFilling(x, y))
+		if (checkBoardFilling(x, y)){
 			//Cas de fin par partie nulle
-			return Validation.DRAW;
-		else if (checkPlayerEnd(player_id, x, y))
+                        System.out.println("DRAW");
+			return Validation.DRAW;}
+		else if (checkPlayerEnd(player_id, x, y)){
 			//Cas de victoire du joueur courant
-			return Validation.ENDGAME;
+                        System.out.println("END"); 
+			return Validation.ENDGAME;}
 		
 			//Cas classique, la partie continue normalement
 		return Validation.CAVOK;

@@ -55,7 +55,7 @@ public class Game {
         
         this.initWeight();
         
-        isAIFirst();
+        //isAIFirst();
     }
     
     //Constructeur pour le ShapeBoard
@@ -67,7 +67,7 @@ public class Game {
         this.initWeight();
         this.updateAllWeight();
         
-        isAIFirst();
+        //isAIFirst();
     }
     
     //Constructeur pour les images
@@ -195,9 +195,9 @@ public class Game {
     }
     
     public int[] bestBox(){
-        int[] bestBox = {0,0};
+        int[] bestBox = {-1,-1};
         float bestWeight = -1f;
-
+        
         for(int i = 0; i < this.getGameboard().getBoardHeight(); i++){
             for(int j = 0 ; j < this.getGameboard().getBoardWidth() ; j++){
                 if(this.getGameboard().getBoxWeight(i, j) > bestWeight){
@@ -207,6 +207,19 @@ public class Game {
                 }
             }
         }
+        
+        if(!this.canPlay()){
+            for(int i = 0; i < this.getGameboard().getBoardHeight(); i++){
+                for(int j = 0 ; j < this.getGameboard().getBoardWidth() ; j++){
+                    if(this.getGameboard().getVal(i, j) == 0){
+                        bestBox[0] = i;
+                        bestBox[1] = j;
+                        return bestBox;
+                    }
+                }
+            }
+        }
+        
         return bestBox;
     }
     

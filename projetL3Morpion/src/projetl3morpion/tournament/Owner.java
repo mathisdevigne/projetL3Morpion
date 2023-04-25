@@ -8,7 +8,7 @@ import fr.IooGoZ.GomokolClient.interfaces.Group;
 
 public class Owner {
 	
-	private static int WIDTH = 15, HEIGHT = 15, NB_PLAYER = 2, NB_GAMES=10, ORDER=2;
+	private static int WIDTH = 20, HEIGHT = 20, NB_PLAYER = 2, NB_GAMES=10, ORDER=2;
 	
 	//Déclaration du groupe
 	private static Group group = new Group(ORDER) {
@@ -34,7 +34,7 @@ public class Owner {
 	public static void main(String[] args) {
 		try {
 			//Connexion au serveur
-			GamesManager.MANAGER.connect("127.0.0.1", 8000);
+			GamesManager.MANAGER.connect("127.0.0.1", 8080);
 			
 			//Création d'un groupe de jeu
 			int group_id = GamesManager.MANAGER.initGroup(group, NB_PLAYER, NB_GAMES);

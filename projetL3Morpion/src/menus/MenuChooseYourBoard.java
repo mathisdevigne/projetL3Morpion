@@ -48,9 +48,9 @@ public class MenuChooseYourBoard extends ScrollPane{
         
         VBox jeu = new VBox();
         Button envoie = new Button("Terminer");
-        jeu.getChildren().add(board);
+        //jeu.getChildren().add(board);
         
-        board.setOnMouseClicked(g->
+        /*board.setOnMouseClicked(g->
         {
             
             if(board.getVal((int)(g.getY()/board.getSize()),(int)(g.getX()/board.getSize())) == 50){
@@ -62,7 +62,7 @@ public class MenuChooseYourBoard extends ScrollPane{
                 board.print(); 
             }
 
-        });
+        });*/
         
         HBox footer = new HBox();
         
@@ -75,9 +75,9 @@ public class MenuChooseYourBoard extends ScrollPane{
                 } catch (IOException ex) {
                     Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                Scene other = new Scene(root);
+                //Scene other = new Scene(root);
                 datas.getStage().setTitle("Morpion");
-                datas.getStage().setScene(other);
+                //datas.getStage().setScene(other);
         });
         
         footer.getChildren().add(envoie);

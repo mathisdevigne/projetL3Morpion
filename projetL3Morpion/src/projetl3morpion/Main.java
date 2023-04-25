@@ -47,7 +47,7 @@ public class Main {
         String address = "127.0.0.1";
 		
         //On se connecte au serveur
-        GamesManager.MANAGER.connect(address, 8000);
+        GamesManager.MANAGER.connect(address, 8080);
         
         //Récupération de l'id du groupe
         System.out.print("Entrez l'id du groupe : ");

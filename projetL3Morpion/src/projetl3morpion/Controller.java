@@ -44,9 +44,9 @@ public class Controller extends Application{
                 } catch (IOException ex) {
                     Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                Scene other = new Scene(root);
+                //Scene other = new Scene(root);
                 primaryStage.setTitle("Morpion");
-                primaryStage.setScene(other);
+                //primaryStage.setScene(other);
             }
             else{
                 MenuForme newMenu = new MenuForme();
