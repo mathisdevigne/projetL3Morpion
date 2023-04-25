@@ -26,13 +26,13 @@ public class Main {
             public void autoGameSubscriber(int game_id) {
                     try {
                             
-                            Jeu jeu = new Jeu();
+                            Game jeu = new Game(20, 20);
                         
                             //On enregistre la partie
                             fr.IooGoZ.GomokolClient.Game game = GamesManager.MANAGER.registerNewGame(game_id, this.getOrder());
 
                             //On enregistre les joueurs
-                            game.registerNewPlayer(new Joueur());
+                            game.registerNewPlayer(new Joueur(jeu));
 
                     } catch (Exception e) {
                             //Gestion des exceptions
@@ -47,7 +47,7 @@ public class Main {
         String address = "127.0.0.1";
 		
         //On se connecte au serveur
-        GamesManager.MANAGER.connect(address, 8080);
+        GamesManager.MANAGER.connect(address, 8000);
         
         //Récupération de l'id du groupe
         System.out.print("Entrez l'id du groupe : ");

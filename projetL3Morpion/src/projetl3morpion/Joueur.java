@@ -11,20 +11,18 @@ import fr.IooGoZ.GomokolClient.interfaces.Player;
  * @author theodusehu
  */
 public class Joueur implements Player{
-    
-    Data datas = Data.getInstance();
-    
-    boolean isMe = false;
         
-    projetl3morpion.Game monJeu = datas.getGame();
+    Game monJeu;
 	
+    public Joueur(Game jeu){
+        this.monJeu = jeu;
+    }
 
     private int id = -1;
 	
     @Override
     public void setId(int id) {
             this.id = id;
-            datas.setIsHumanBegin(id != 1);
     }
 
     @Override
@@ -34,19 +32,18 @@ public class Joueur implements Player{
 
     @Override
     public int[] getStroke() {
-        isMe = true;
         return monJeu.bestBox();
     }
 
     @Override
     public void receiveNewStroke(int player_id, int[] stroke) {
-        if(isMe){
-            monJeu.insertValue(false, id, id);
-            isMe = true;
+        if(player_id == this.getId()){
+            monJeu.insertValue(true, stroke[0], stroke[1]);
         }else{
-            monJeu.insertValue(true, id, id);
-            isMe = false;
+            monJeu.insertValue(false, stroke[0], stroke[1]);
         }
+        monJeu.updateWeight(stroke[0], stroke[1]);
+        monJeu.getGameboard().print();
     }
     
 }
