@@ -13,7 +13,7 @@ import java.util.Scanner;
  *
  * @author theodusehu
  */
-public class Main {
+public class MainExt3 {
     
     private static final int ORDER = 2;
 
@@ -32,7 +32,7 @@ public class Main {
                             fr.IooGoZ.GomokolClient.Game game = GamesManager.MANAGER.registerNewGame(game_id, this.getOrder());
 
                             //On enregistre les joueurs
-                            game.registerNewPlayer(new Joueur(jeu));
+                            game.registerNewPlayer(new JoueurExt3(jeu));
 
                     } catch (Exception e) {
                             //Gestion des exceptions
