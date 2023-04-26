@@ -11,12 +11,16 @@ import java.util.Arrays;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import java.io.PrintWriter;
+import java.io.File;
+import java.util.Scanner;
 /**
  *
  * @author fetiveau
@@ -90,6 +94,36 @@ public class Game {
         this.updateAllWeight();
         isAIFirst();
         
+    }
+    
+    
+    public void saveImageAsTxt(BufferedImage bi){
+        PrintWriter out = null;
+        try {
+            out = new PrintWriter("image.txt");
+        } catch (FileNotFoundException ex){}
+        out.print(gameboard.getBoardHeight()+" "+gameboard.getBoardWidth());
+        for(int x = 0; x<gameboard.getBoardHeight();x++){
+            for(int y = 0; y < gameboard.getBoardWidth();y++){
+                out.print(gameboard.getBoxBoard(x, y).getValue() == 50 ?"1":"0"+" ");
+            }
+            out.println();
+        }
+    }
+    
+    public void getBoardFromTxt(String name) throws FileNotFoundException{
+        File f = new File(name);
+        Scanner s = new Scanner(f);
+        int height = s.nextInt();
+        int width = s.nextInt();
+        gameboard = new ShapeBoard(height,width);
+        for(int x = 0; x<height;x++){
+            for(int y = 0; y <width;y++){
+                if(s.nextInt() == 1){
+                    gameboard.getBoxBoard(x, y).setValue(50);
+                }    
+            }
+        }
     }
     
     public final void isAIFirst(){
