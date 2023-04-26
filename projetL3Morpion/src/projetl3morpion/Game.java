@@ -319,12 +319,13 @@ public class Game {
     //Regarde si au moins un quintuplet gagnant se situe dans la case x y, si oui renvoie true sinon false
     public boolean hasWin(int x, int y){
         boolean hasWin = false;
-        String messages[] = new String[2];
         
         int noteQuintuplet;
         Box[][] quintuplets = this.getGameboard().getQuintuplets(x, y);
         for(int i = 0; i < this.getGameboard().getNbQuintuplets(x, y) ; i++ ){
             noteQuintuplet = GameBoard.noteQuintu(quintuplets[i]);
+            
+            System.out.println(noteQuintuplet);
             
             if(noteQuintuplet == 5){
                 System.out.println("Vous avez gagné un point");

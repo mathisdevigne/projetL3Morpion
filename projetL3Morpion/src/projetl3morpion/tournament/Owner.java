@@ -8,7 +8,7 @@ import fr.IooGoZ.GomokolClient.interfaces.Group;
 
 public class Owner {
 	
-	private static int WIDTH = 20, HEIGHT = 20, NB_PLAYER = 2, NB_GAMES=30, ORDER=2;
+	private static int WIDTH = 20, HEIGHT = 20, NB_PLAYER = 2, NB_GAMES=100, ORDER=2;
 	
 	//Déclaration du groupe
 	private static Group group = new Group(ORDER) {

@@ -20,9 +20,9 @@ public class MasterOwnerExt3 implements GameOwner {
         private int scoreJ1 = 0;
         private int scoreJ2 = 0;
 	
-	public MasterOwnerExt3(int width, int height) {
+	public MasterOwnerExt3(int width, int height, Game jeu) {
             
-                this.jeu = new Game(width, height);
+                this.jeu = jeu;
 		
 		//Initialisation du plateau
 		this.board = new int[width][height];
@@ -110,22 +110,16 @@ public class MasterOwnerExt3 implements GameOwner {
 		if (this.jeu.hasWin(x, y)){
 			//Cas de victoire du joueur courant
                         //System.out.println("END");
-                        if(player_id == 1){
-                            this.scoreJ1++;
-                        }
-                        else{
-                            this.scoreJ2++;
-                        }
                 }
                 if (!this.jeu.canPlay()){
                     System.out.println("Score J1 : " + this.jeu.getScoreJoueur() + " Score J2 : " + this.jeu.getScoreIA());
 
                     //Cas de fin par partie nulle
-                    if(this.scoreJ1 > this.scoreJ2){
+                    if(this.jeu.getScoreJoueur() > this.jeu.getScoreIA()){
                         System.out.println("Victoire joueur 1.");
                         return Validation.ENDGAME;
                     }
-                    else if(this.scoreJ2 > this.scoreJ1){
+                    else if(this.jeu.getScoreIA() > this.jeu.getScoreJoueur()){
                         System.out.println("Victoire joueur 2.");
                         return Validation.ENDGAME;
                     }
