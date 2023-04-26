@@ -218,17 +218,17 @@ public class Game {
         }
         
         
-            if(!this.canPlay()){
-                for(int i = 0; i < this.getGameboard().getBoardHeight(); i++){
-                    for(int j = 0 ; j < this.getGameboard().getBoardWidth() ; j++){
-                        if(this.getGameboard().getVal(i, j) == 0){
-                            bestBox[0] = i;
-                            bestBox[1] = j;
-                            return bestBox;
-                        }
+        if(!this.canPlay()){
+            for(int i = 0; i < this.getGameboard().getBoardHeight(); i++){
+                for(int j = 0 ; j < this.getGameboard().getBoardWidth() ; j++){
+                    if(this.getGameboard().getVal(i, j) == 0){
+                        bestBox[0] = i;
+                        bestBox[1] = j;
+                        return bestBox;
                     }
                 }
             }
+        }
         
         
         return bestBox;
@@ -325,7 +325,7 @@ public class Game {
         for(int i = 0; i < this.getGameboard().getNbQuintuplets(x, y) ; i++ ){
             noteQuintuplet = GameBoard.noteQuintu(quintuplets[i]);
             
-            System.out.println(noteQuintuplet);
+            //System.out.println(noteQuintuplet);
             
             if(noteQuintuplet == 5){
                 System.out.println("Vous avez gagné un point");

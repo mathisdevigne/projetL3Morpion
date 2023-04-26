@@ -2,6 +2,7 @@ package projetl3morpion.tournament;
 
 import fr.IooGoZ.GomokolClient.interfaces.GameOwner;
 import fr.IooGoZ.GomokolClient.interfaces.Validation;
+import projetl3morpion.Data;
 import projetl3morpion.Game;
 
 
@@ -16,6 +17,7 @@ public class MasterOwnerExt3 implements GameOwner {
 	private int[][] board;
         
         Game jeu;
+        Data data = Data.getInstance();
         
         private int scoreJ1 = 0;
         private int scoreJ2 = 0;
@@ -23,6 +25,7 @@ public class MasterOwnerExt3 implements GameOwner {
 	public MasterOwnerExt3(int width, int height, Game jeu) {
             
                 this.jeu = jeu;
+                data.setExtension3(true);
 		
 		//Initialisation du plateau
 		this.board = new int[width][height];
