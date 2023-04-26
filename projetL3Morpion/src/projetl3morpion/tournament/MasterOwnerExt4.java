@@ -41,7 +41,17 @@ public class MasterOwnerExt4 implements GameOwner {
 		this.width = width;
 		this.height = height;
                 
-                this.print();
+                /*System.out.println("Width : " + this.width + " Height : " + this.height);
+                System.out.println("1 47 : " + this.jeu.getGameboard().getBoxBoard(1, 47).getValue());
+                System.out.println("47 1 : " + this.board[47][1]);*/
+                
+                //====================================
+                //On a une inversion, 1 47 dans Jeu est ouvert alors que 1 47 dans Board est fermé
+                //====================================
+
+                //this.print();
+                //this.print();
+                this.jeu.print();
 	}
 	
 	//Méthode appelée pour récupérer la validation de l'owner

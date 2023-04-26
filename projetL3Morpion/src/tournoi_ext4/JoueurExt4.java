@@ -4,9 +4,7 @@
  */
 package tournoi_ext4;
 
-import tournoi_ext3.*;
 import fr.IooGoZ.GomokolClient.interfaces.Player;
-import projetl3morpion.Data;
 import projetl3morpion.Game;
 
 /**
@@ -16,11 +14,10 @@ import projetl3morpion.Game;
 public class JoueurExt4 implements Player{
         
     Game monJeu;
-    Data data = Data.getInstance();
 	
     public JoueurExt4(Game jeu){
         this.monJeu = jeu;
-        data.setExtension4(true);
+        this.monJeu.print();
     }
 
     private int id = -1;

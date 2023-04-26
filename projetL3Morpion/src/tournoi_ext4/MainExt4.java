@@ -4,8 +4,6 @@
  */
 package tournoi_ext4;
 
-import tournoi_ext3.*;
-import tournoi_ext3.JoueurExt3;
 import fr.IooGoZ.GomokolClient.GamesManager;
 import fr.IooGoZ.GomokolClient.interfaces.Group;
 import java.util.Scanner;
