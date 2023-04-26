@@ -8,14 +8,14 @@ import tournoi_ext3.JoueurIAConne;
 import fr.IooGoZ.GomokolClient.GamesManager;
 import fr.IooGoZ.GomokolClient.interfaces.Group;
 import java.util.Scanner;
-import projetl3morpion.Game1;
+import projetl3morpion.GameForIANul;
 
 
 /**
  *
  * @author theodusehu
  */
-public class IAConne {
+public class MainIAConne {
     
     private static final int ORDER = 2;
 
@@ -28,7 +28,7 @@ public class IAConne {
             public void autoGameSubscriber(int game_id) {
                     try {
                             
-                            Game1 jeu = new Game1(20, 20);
+                            GameForIANul jeu = new GameForIANul(20, 20);
                         
                             //On enregistre la partie
                             fr.IooGoZ.GomokolClient.Game game = GamesManager.MANAGER.registerNewGame(game_id, this.getOrder());

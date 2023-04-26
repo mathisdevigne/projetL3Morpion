@@ -2,24 +2,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package tournoi_ext3;
+package tournoi_ext4;
 
+import tournoi_ext3.*;
 import fr.IooGoZ.GomokolClient.interfaces.Player;
 import projetl3morpion.Data;
-import projetl3morpion.GameForIANul;
+import projetl3morpion.Game;
 
 /**
  *
  * @author theodusehu
  */
-public class JoueurIAConne implements Player{
+public class JoueurExt4 implements Player{
         
-    GameForIANul monJeu;
+    Game monJeu;
     Data data = Data.getInstance();
 	
-    public JoueurIAConne(GameForIANul jeu){
+    public JoueurExt4(Game jeu){
         this.monJeu = jeu;
-        data.setExtension3(true);
+        data.setExtension4(true);
     }
 
     private int id = -1;

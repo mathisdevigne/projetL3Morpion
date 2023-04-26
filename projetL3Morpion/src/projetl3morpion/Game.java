@@ -75,6 +75,14 @@ public class Game {
         //isAIFirst();
     }
     
+    public Game() throws FileNotFoundException{
+        
+        this.getBoardFromTxt("image.txt");
+        this.updateAllWeight();
+        //this.gameboard.print();
+        
+    }
+    
     //Constructeur pour les images
     public Game(String link){
         
@@ -91,24 +99,24 @@ public class Game {
             this.getShapeboard().setShape(bi);
             datas.setShapeBoard((ShapeBoard) this.gameboard);
         }
-        this.updateAllWeight();
-        isAIFirst();
+        this.updateAllWeight();   
+        this.saveImageAsTxt(bi);
         
     }
-    
     
     public void saveImageAsTxt(BufferedImage bi){
         PrintWriter out = null;
         try {
             out = new PrintWriter("image.txt");
         } catch (FileNotFoundException ex){}
-        out.print(gameboard.getBoardHeight()+" "+gameboard.getBoardWidth());
+        out.println(gameboard.getBoardHeight()+" "+gameboard.getBoardWidth());
         for(int x = 0; x<gameboard.getBoardHeight();x++){
             for(int y = 0; y < gameboard.getBoardWidth();y++){
-                out.print(gameboard.getBoxBoard(x, y).getValue() == 50 ?"1":"0"+" ");
+                out.print(gameboard.getBoxBoard(x, y).getValue() == 50 ?"1"+" ":"0"+" ");
             }
             out.println();
         }
+        out.close();
     }
     
     public void getBoardFromTxt(String name) throws FileNotFoundException{
