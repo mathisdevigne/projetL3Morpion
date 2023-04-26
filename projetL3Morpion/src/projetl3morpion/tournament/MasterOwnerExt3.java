@@ -1,5 +1,7 @@
 package projetl3morpion.tournament;
 
+import board.Box;
+import board.GameBoard;
 import fr.IooGoZ.GomokolClient.interfaces.GameOwner;
 import fr.IooGoZ.GomokolClient.interfaces.Validation;
 import projetl3morpion.Data;
@@ -68,6 +70,8 @@ public class MasterOwnerExt3 implements GameOwner {
                 
                 this.jeu.insertValue(player_id == 1, x, y);
                 this.jeu.updateWeight(x, y);
+                this.jeu.updateBoard();
+                //System.out.println("ADDSTROKE");
                 //this.print();
 	}
         
@@ -109,20 +113,22 @@ public class MasterOwnerExt3 implements GameOwner {
 	
 	//Fonction vérifiant la fin d'une partie (non-testée)
 	private Validation checkEnd(int player_id, int x, int y) {
+            
+                //System.out.println("CheckEnd");
 		
-		if (this.jeu.hasWin(x, y)){
+		if (this.hasWin(x, y, player_id)){
 			//Cas de victoire du joueur courant
                         //System.out.println("END");
                 }
-                if (!this.jeu.canPlay()){
-                    System.out.println("Score J1 : " + this.jeu.getScoreJoueur() + " Score J2 : " + this.jeu.getScoreIA());
+                if (!this.canPlay(player_id) ){
+                    System.out.println("Score J1 : " + this.scoreJ1 + " Score J2 : " + this.scoreJ2);
 
                     //Cas de fin par partie nulle
-                    if(this.jeu.getScoreJoueur() > this.jeu.getScoreIA()){
+                    if(this.scoreJ1 > this.scoreJ2){
                         System.out.println("Victoire joueur 1.");
                         return Validation.ENDGAME;
                     }
-                    else if(this.jeu.getScoreIA() > this.jeu.getScoreJoueur()){
+                    else if(this.scoreJ2 > this.scoreJ1){
                         System.out.println("Victoire joueur 2.");
                         return Validation.ENDGAME;
                     }
@@ -136,7 +142,72 @@ public class MasterOwnerExt3 implements GameOwner {
             //Cas classique, la partie continue normalement
             return Validation.CAVOK;
 	}
+        
+        public boolean canPlay(int player_id){
+        boolean verif = false;
+        int cptJ = 0;
+        int cptIA = 0;
+        
+            for(int i = 0; i < this.jeu.getGameboard().getBoardHeight(); i++){
+                for(int j = 0 ; j < this.jeu.getGameboard().getBoardWidth() ; j++){
+                    if(this.jeu.getGameboard().getVal(i, j) == 0 && this.jeu.getGameboard().getBoxWeight(i, j) > 0){
+                        Box[][] quintuplets = this.jeu.getGameboard().getQuintuplets(i, j);
+                        for(int k = 0; k < this.jeu.getGameboard().getNbQuintuplets(i, j) ; k++ ){
+                            int note = GameBoard.noteQuintu(quintuplets[k]) + (player_id == 1 ? 1 : 6);
+                            verif = verif || ((note >= 0 && note <= 4) || note%6 == 0);
+                            if(note == 0){
+                                cptJ++;
+                                cptIA++;
+                            }
+                            else if ((note >= 1 && note <= 4)){
+                                cptJ++;
+                            }
+                            else if(note%6 == 0){
+                                cptIA++;
+                            }
+                        }
+                    }
+                }
+            }
+            //System.out.println("Joueur : " + cptJ + " IA : " + cptIA);
+            return verif;
+        }
 	
+        //Regarde si au moins un quintuplet gagnant se situe dans la case x y, si oui renvoie true sinon false
+        public boolean hasWin(int x, int y, int player_id){
+            boolean hasWin = false;
+
+            int noteQuintuplet;
+            Box[][] quintuplets = this.jeu.getGameboard().getQuintuplets(x, y);
+            for(int i = 0; i < this.jeu.getGameboard().getNbQuintuplets(x, y) ; i++ ){
+                noteQuintuplet = GameBoard.noteQuintu(quintuplets[i]) + (player_id == 1 ? 1 : 6);
+
+                //System.out.println(noteQuintuplet);
+
+                if(noteQuintuplet == 5){
+                    //System.out.println("Vous avez gagné un point");
+                    for(int j = 0; j < 5; j++){
+                        quintuplets[i][j].setUsed(Game.usedValue);
+                    }
+                    //this.jeu.updateBoard();
+                    Game.usedValue++;
+                    hasWin = true;
+                    this.scoreJ1++;
+                }
+                else if(noteQuintuplet == 30){
+                    //System.out.println("Votre adversaire à gagné un point");
+                    for(int j = 0; j < 5; j++){
+                        quintuplets[i][j].setUsed(Game.usedValue);
+                    }
+                    //this.jeu.updateBoard();
+                    Game.usedValue++;
+                    hasWin = true;
+                    this.scoreJ2++;
+                }
+            }
+
+            return hasWin;
+        }
 	
 	//Fonctions générées et non-testées---------------------------------------------------------------------
 	private boolean checkBoardFilling(int x, int y) {

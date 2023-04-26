@@ -2,18 +2,19 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package projetl3morpion;
+package tournoi_base;
 
 import fr.IooGoZ.GomokolClient.GamesManager;
 import fr.IooGoZ.GomokolClient.interfaces.Group;
 import java.util.Scanner;
+import projetl3morpion.Game;
 
 
 /**
  *
  * @author theodusehu
  */
-public class MainExt3 {
+public class MainBase {
     
     private static final int ORDER = 2;
 
@@ -32,7 +33,7 @@ public class MainExt3 {
                             fr.IooGoZ.GomokolClient.Game game = GamesManager.MANAGER.registerNewGame(game_id, this.getOrder());
 
                             //On enregistre les joueurs
-                            game.registerNewPlayer(new JoueurExt3(jeu));
+                            game.registerNewPlayer(new JoueurBase(jeu));
 
                     } catch (Exception e) {
                             //Gestion des exceptions

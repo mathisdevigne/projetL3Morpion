@@ -2,18 +2,20 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package projetl3morpion;
+package tournoi_ext3;
 
+import tournoi_ext3.JoueurExt3;
 import fr.IooGoZ.GomokolClient.GamesManager;
 import fr.IooGoZ.GomokolClient.interfaces.Group;
 import java.util.Scanner;
+import projetl3morpion.Game;
 
 
 /**
  *
  * @author theodusehu
  */
-public class MainExt31 {
+public class MainExt3 {
     
     private static final int ORDER = 2;
 
@@ -26,13 +28,13 @@ public class MainExt31 {
             public void autoGameSubscriber(int game_id) {
                     try {
                             
-                            Game1 jeu = new Game1(20, 20);
+                            Game jeu = new Game(20, 20);
                         
                             //On enregistre la partie
                             fr.IooGoZ.GomokolClient.Game game = GamesManager.MANAGER.registerNewGame(game_id, this.getOrder());
 
                             //On enregistre les joueurs
-                            game.registerNewPlayer(new JoueurExt31(jeu));
+                            game.registerNewPlayer(new JoueurExt3(jeu));
 
                     } catch (Exception e) {
                             //Gestion des exceptions
@@ -55,8 +57,6 @@ public class MainExt31 {
         Scanner sc = new Scanner(System.in);
         group_id = sc.nextInt();
         sc.close();
-        
-        System.out.println("Je suis conne");
 
         //On s'inscrit au groupe
         GamesManager.MANAGER.subscribeGroup(group_id, group);

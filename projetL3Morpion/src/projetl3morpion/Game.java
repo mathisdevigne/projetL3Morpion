@@ -35,7 +35,7 @@ public class Game {
     private int scoreJoueur = 0;
     private int scoreIA = 0;
     
-    private static int usedValue = 1;
+    public static int usedValue = 1;
     
     private final static int EMPTY_WEIGHT = 1;
     private final static int ONE_PLAYER = EMPTY_WEIGHT*2;

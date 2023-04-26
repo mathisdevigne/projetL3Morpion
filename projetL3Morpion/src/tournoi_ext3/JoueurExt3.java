@@ -2,20 +2,22 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package projetl3morpion;
+package tournoi_ext3;
 
 import fr.IooGoZ.GomokolClient.interfaces.Player;
+import projetl3morpion.Data;
+import projetl3morpion.Game;
 
 /**
  *
  * @author theodusehu
  */
-public class JoueurExt31 implements Player{
+public class JoueurExt3 implements Player{
         
-    Game1 monJeu;
+    Game monJeu;
     Data data = Data.getInstance();
 	
-    public JoueurExt31(Game1 jeu){
+    public JoueurExt3(Game jeu){
         this.monJeu = jeu;
         data.setExtension3(true);
     }
@@ -49,7 +51,7 @@ public class JoueurExt31 implements Player{
             monJeu.insertValue(false, stroke[0], stroke[1]);
         }
         monJeu.updateWeight(stroke[0], stroke[1]);
-        monJeu.getGameboard().print();
+        //monJeu.getGameboard().print();
     }
     
 }

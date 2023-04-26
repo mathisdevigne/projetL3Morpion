@@ -2,9 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package projetl3morpion;
+package tournoi_base;
 
 import fr.IooGoZ.GomokolClient.interfaces.Player;
+import projetl3morpion.Game;
 
 /**
  *
