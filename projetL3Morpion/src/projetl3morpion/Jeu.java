@@ -5,8 +5,6 @@
 package projetl3morpion;
 
 import java.io.IOException;
-import projetl3morpion.tournament.ExamplePlayer;
-
 /**
  *
  * @author theodusehu

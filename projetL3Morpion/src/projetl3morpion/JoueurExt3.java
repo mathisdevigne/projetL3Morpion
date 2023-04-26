@@ -13,9 +13,11 @@ import fr.IooGoZ.GomokolClient.interfaces.Player;
 public class JoueurExt3 implements Player{
         
     Game monJeu;
+    Data data = Data.getInstance();
 	
     public JoueurExt3(Game jeu){
         this.monJeu = jeu;
+        data.setExtension3(true);
     }
 
     private int id = -1;
@@ -40,14 +42,14 @@ public class JoueurExt3 implements Player{
 
     @Override
     public void receiveNewStroke(int player_id, int[] stroke) {
-        System.out.println("ID:" + player_id + " " + stroke[0] + "/" + stroke[1]); // A desactiver pour plus de rapidité
+        //System.out.println("ID:" + player_id + " " + stroke[0] + "/" + stroke[1]); // A desactiver pour plus de rapidité
         if(player_id == this.getId()){
             monJeu.insertValue(true, stroke[0], stroke[1]);
         }else{
             monJeu.insertValue(false, stroke[0], stroke[1]);
         }
         monJeu.updateWeight(stroke[0], stroke[1]);
-        //monJeu.getGameboard().print();
+        monJeu.getGameboard().print();
     }
     
 }

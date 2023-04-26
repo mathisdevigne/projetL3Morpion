@@ -97,11 +97,11 @@ public class MasterOwner implements GameOwner {
 	private Validation checkEnd(int player_id, int x, int y) {
 		if (checkBoardFilling(x, y)){
 			//Cas de fin par partie nulle
-                        System.out.println("DRAW");
+                        //System.out.println("DRAW");
 			return Validation.DRAW;}
 		else if (checkPlayerEnd(player_id, x, y)){
 			//Cas de victoire du joueur courant
-                        System.out.println("END"); 
+                        //System.out.println("END"); 
 			return Validation.ENDGAME;}
 		
 			//Cas classique, la partie continue normalement

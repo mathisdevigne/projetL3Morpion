@@ -6,9 +6,9 @@ import fr.IooGoZ.GomokolClient.Game;
 import fr.IooGoZ.GomokolClient.GamesManager;
 import fr.IooGoZ.GomokolClient.interfaces.Group;
 
-public class Owner {
+public class OwnerExt3 {
 	
-	private static int WIDTH = 20, HEIGHT = 20, NB_PLAYER = 2, NB_GAMES=30, ORDER=2;
+	private static int WIDTH = 20, HEIGHT = 20, NB_PLAYER = 2, NB_GAMES=10, ORDER=2;
 	
 	//Déclaration du groupe
 	private static Group group = new Group(ORDER) {
@@ -21,7 +21,7 @@ public class Owner {
 				Game game = GamesManager.MANAGER.registerNewGame(game_id, ORDER);
 				
 				//On instancie l'owner
-				MasterOwner owner = new MasterOwner(WIDTH, HEIGHT);
+				MasterOwnerExt3 owner = new MasterOwnerExt3(WIDTH, HEIGHT);
 				
 				//On lie l'owner et la partie
 				GamesManager.MANAGER.linkOwnerWithGame(owner, game);
@@ -49,7 +49,7 @@ public class Owner {
 			sc.close();
 			
 			//On créer notre première partie
-			MasterOwner owner = new MasterOwner(WIDTH, HEIGHT);
+			MasterOwnerExt3 owner = new MasterOwnerExt3(WIDTH, HEIGHT);
 			GamesManager.MANAGER.initNewGame(owner, group_id, ORDER);
 			
 		} catch (Exception e) {

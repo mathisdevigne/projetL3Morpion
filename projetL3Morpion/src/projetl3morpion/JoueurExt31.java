@@ -10,12 +10,14 @@ import fr.IooGoZ.GomokolClient.interfaces.Player;
  *
  * @author theodusehu
  */
-public class JoueurBase implements Player{
+public class JoueurExt31 implements Player{
         
-    Game monJeu;
+    Game1 monJeu;
+    Data data = Data.getInstance();
 	
-    public JoueurBase(Game jeu){
+    public JoueurExt31(Game1 jeu){
         this.monJeu = jeu;
+        data.setExtension3(true);
     }
 
     private int id = -1;
@@ -47,7 +49,7 @@ public class JoueurBase implements Player{
             monJeu.insertValue(false, stroke[0], stroke[1]);
         }
         monJeu.updateWeight(stroke[0], stroke[1]);
-        //monJeu.getGameboard().print();
+        monJeu.getGameboard().print();
     }
     
 }
