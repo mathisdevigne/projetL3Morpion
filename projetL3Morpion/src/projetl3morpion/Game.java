@@ -77,7 +77,7 @@ public class Game {
     
     public Game() throws FileNotFoundException{
         
-        this.getBoardFromTxt("image.txt");
+        this.gameboard = this.getBoardFromTxt("image.txt");
         this.updateAllWeight();
         //this.gameboard.print();
         
@@ -119,12 +119,12 @@ public class Game {
         out.close();
     }
     
-    public void getBoardFromTxt(String name) throws FileNotFoundException{
+    public GameBoard getBoardFromTxt(String name) throws FileNotFoundException{
         File f = new File(name);
         Scanner s = new Scanner(f);
         int height = s.nextInt();
         int width = s.nextInt();
-        gameboard = new ShapeBoard(height,width);
+        GameBoard gameboard = new ShapeBoard(height,width);
         for(int x = 0; x<height;x++){
             for(int y = 0; y <width;y++){
                 if(s.nextInt() == 1){
@@ -132,6 +132,8 @@ public class Game {
                 }    
             }
         }
+        
+        return gameboard;
     }
     
     public final void isAIFirst(){

@@ -10,8 +10,8 @@ import projetl3morpion.Game;
 //Il n'est pas testé et est probablement instable
 public class MasterOwnerExt4 implements GameOwner {
 
-	private static final int EMPTY = -1;
-        private static final int BLOCKED = -2;
+	private static final int EMPTY = 0; //-1
+        private static final int BLOCKED = 1; // -2
 	
 	private int width, height;
 	private int[][] board;
@@ -41,16 +41,15 @@ public class MasterOwnerExt4 implements GameOwner {
 		this.width = width;
 		this.height = height;
                 
-                /*System.out.println("Width : " + this.width + " Height : " + this.height);
+                System.out.println("Width : " + this.width + " Height : " + this.height);
                 System.out.println("1 47 : " + this.jeu.getGameboard().getBoxBoard(1, 47).getValue());
-                System.out.println("47 1 : " + this.board[47][1]);*/
+                System.out.println("47 1 : " + this.board[1][47]);
                 
                 //====================================
                 //On a une inversion, 1 47 dans Jeu est ouvert alors que 1 47 dans Board est fermé
                 //====================================
 
-                //this.print();
-                //this.print();
+                this.print();
                 this.jeu.print();
 	}
 	
