@@ -39,7 +39,7 @@ public class Main {
             Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
         }*/
         
-        Game jeu = new Game("../images/yb3.png");
+        Game jeu = new Game("../images/yb4.png");
         
         //jeu.saveImageAsTxt(bi);
         

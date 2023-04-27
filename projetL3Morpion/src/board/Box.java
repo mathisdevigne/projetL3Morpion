@@ -121,7 +121,7 @@ public class Box {
         }
         
            
-        //System.out.print(this.weight);
+        System.out.print(this.weight);
         
         switch (this.value) {
             // Case vide
@@ -132,17 +132,17 @@ public class Box {
             //Case Joueur
             case 1 -> 
             {
-                System.out.print("O");
+                //System.out.print("O");
                 this.quintuColor(true);
             }
             //Case IA
             case 6 -> 
             {
-                System.out.print("X" + ConsoleColors.RESET);
+                //System.out.print("X" + ConsoleColors.RESET);
                 this.quintuColor(false);
             }
             case 50 -> {
-                System.out.print(ConsoleColors.RED+"X"+ConsoleColors.RESET);
+                //System.out.print(ConsoleColors.RED+"X"+ConsoleColors.RESET);
                 //this.setText("X");
             }
             default -> System.out.print("N");

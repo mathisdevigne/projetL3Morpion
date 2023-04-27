@@ -1,7 +1,12 @@
 package projetl3morpion.tournament;
 
+import board.GameBoard;
+import board.ShapeBoard;
 import fr.IooGoZ.GomokolClient.interfaces.GameOwner;
 import fr.IooGoZ.GomokolClient.interfaces.Validation;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 import projetl3morpion.Game;
 
 
@@ -15,17 +20,13 @@ public class MasterOwnerExt4 implements GameOwner {
 	
 	private int width, height;
 	private int[][] board;
-        
-        Game jeu;
 	
-	public MasterOwnerExt4(int width, int height, Game jeu) {
+	public MasterOwnerExt4() throws FileNotFoundException {
             
-                this.jeu = jeu;
-                this.jeu.updateAllWeight();
+                //this.jeu.updateBoard();
 		
 		//Initialisation du plateau
-		this.board = new int[height][width];
-		for (int i = 0; i < height; i++)
+		/*for (int i = 0; i < height; i++)
 			for (int j = 0; j < width; j++){
                             
                             if(this.jeu.getGameboard().getVal(i, j) == 50){
@@ -35,17 +36,29 @@ public class MasterOwnerExt4 implements GameOwner {
                                 this.board[i][j] = EMPTY;
                             }
                             
-                        }
-		
-		//Définition des attributs
-		this.width = width;
-		this.height = height;
+                        }*/
                 
-                System.out.println("Width : " + this.width + " Height : " + this.height);
+                File f = new File("image.txt");
+                Scanner s = new Scanner(f);
+                this.height = s.nextInt();
+                this.width = s.nextInt();
+                this.board = new int[this.height][this.width];
+                for(int x = 0; x<height;x++){
+                    for(int y = 0; y <width;y++){
+                        if(s.nextInt() == 1){
+                                this.board[x][y] = BLOCKED;
+                            }
+                            else{
+                                this.board[x][y] = EMPTY;
+                            }
+                    }
+                }
+                
+                /*System.out.println("Width : " + this.width + " Height : " + this.height);
                 System.out.println("Jeu 1 47 : " + this.jeu.getGameboard().getBoxBoard(1, 47).getValue());
                 System.out.println("Board 1 47 : " + this.board[1][47]);
                 System.out.println("Jeu 47 1 : " + this.jeu.getGameboard().getBoxBoard(47, 1).getValue());
-                System.out.println("Board 47 1 : " + this.board[47][1]);
+                System.out.println("Board 47 1 : " + this.board[47][1]);*/
                 
                 //====================================
                 //On a une inversion, 1 47 dans Jeu est ouvert alors que 1 47 dans Board est fermé
@@ -82,9 +95,7 @@ public class MasterOwnerExt4 implements GameOwner {
 		int y = stroke[1];
 		
 		this.board[x][y] = player_id;
-                this.jeu.insertValue(player_id == 1, x, y);
-                this.jeu.updateWeight(x, y);
-                this.jeu.updateBoard();
+                //this.jeu.insertValue(player_id == 1, x, y);
                 //this.print();
 	}
         
@@ -132,7 +143,7 @@ public class MasterOwnerExt4 implements GameOwner {
 			return Validation.DRAW;}
 		else if (checkPlayerEnd(player_id, x, y)){
 			//Cas de victoire du joueur courant
-                        //System.out.println("END"); 
+                        //System.out.println("END")
 			return Validation.ENDGAME;}
 		
 			//Cas classique, la partie continue normalement
@@ -154,7 +165,7 @@ public class MasterOwnerExt4 implements GameOwner {
 	    
 	    // Vérification des lignes horizontales
 	    for (dx = -4; dx <= 0; dx++) {
-	        if (x + dx < 0 || x + dx + 4 >= width) {
+	        if (x + dx < 0 || x + dx + 4 >= height) {
 	            continue;
 	        }
 	        count = 0;
@@ -169,7 +180,7 @@ public class MasterOwnerExt4 implements GameOwner {
 	    }
 	    // Vérification des lignes verticales
 	    for (dy = -4; dy <= 0; dy++) {
-	        if (y + dy < 0 || y + dy + 4 >= height) {
+	        if (y + dy < 0 || y + dy + 4 >= width) {
 	            continue;
 	        }
 	        count = 0;
@@ -185,7 +196,7 @@ public class MasterOwnerExt4 implements GameOwner {
 	    // Vérification des diagonales
 	    for (dx = -4; dx <= 0; dx++) {
 	        for (dy = -4; dy <= 0; dy++) {
-	            if (x + dx < 0 || x + dx + 4 >= width || y + dy < 0 || y + dy + 4 >= height) {
+	            if (x + dx < 0 || x + dx + 4 >= height || y + dy < 0 || y + dy + 4 >= width) {
 	                continue;
 	            }
 	            count = 0;

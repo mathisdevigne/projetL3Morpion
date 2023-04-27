@@ -8,7 +8,7 @@ import fr.IooGoZ.GomokolClient.interfaces.Group;
 
 public class OwnerExt4 {
 	
-	private static int WIDTH = 100, HEIGHT = 153, NB_PLAYER = 2, NB_GAMES=100, ORDER=2;
+	private static int WIDTH = 50, HEIGHT = 77, NB_PLAYER = 2, NB_GAMES=10, ORDER=2;
 	
 	//Déclaration du groupe
 	private static Group group = new Group(ORDER) {
@@ -22,7 +22,7 @@ public class OwnerExt4 {
                                 projetl3morpion.Game jeu = new projetl3morpion.Game();
 				
 				//On instancie l'owner
-				MasterOwnerExt4 owner = new MasterOwnerExt4(WIDTH, HEIGHT, jeu);
+				MasterOwnerExt4 owner = new MasterOwnerExt4();
 				
 				//On lie l'owner et la partie
 				GamesManager.MANAGER.linkOwnerWithGame(owner, game);
@@ -52,7 +52,7 @@ public class OwnerExt4 {
                         projetl3morpion.Game jeu = new projetl3morpion.Game();
 
 			//On créer notre première partie
-			MasterOwnerExt4 owner = new MasterOwnerExt4(WIDTH, HEIGHT, jeu);
+			MasterOwnerExt4 owner = new MasterOwnerExt4();
 			GamesManager.MANAGER.initNewGame(owner, group_id, ORDER);
 			
 		} catch (Exception e) {

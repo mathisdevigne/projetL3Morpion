@@ -44,7 +44,7 @@ public class JoueurExt4 implements Player{
 
     @Override
     public void receiveNewStroke(int player_id, int[] stroke) {
-        System.out.println("ID:" + player_id + " " + stroke[0] + "/" + stroke[1]); // A desactiver pour plus de rapidité
+        //System.out.println("ID:" + player_id + " " + stroke[0] + "/" + stroke[1]); // A desactiver pour plus de rapidité
         if(player_id == this.getId()){
             monJeu.insertValue(true, stroke[0], stroke[1]);
         }else{
@@ -52,7 +52,7 @@ public class JoueurExt4 implements Player{
         }
         monJeu.updateWeight(stroke[0], stroke[1]);
         monJeu.updateBoard();
-        monJeu.getGameboard().print();
+        //monJeu.getGameboard().print();
     }
     
 }
