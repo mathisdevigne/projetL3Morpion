@@ -10,8 +10,8 @@ import projetl3morpion.Game;
 //Il n'est pas testé et est probablement instable
 public class MasterOwnerExt4 implements GameOwner {
 
-	private static final int EMPTY = 0; //-1
-        private static final int BLOCKED = 1; // -2
+	private static final int EMPTY = -1; //-1 normal, 0 pour affichage clair
+        private static final int BLOCKED = -2; // -2 normal, 1 pour affichage clair
 	
 	private int width, height;
 	private int[][] board;
@@ -42,15 +42,17 @@ public class MasterOwnerExt4 implements GameOwner {
 		this.height = height;
                 
                 System.out.println("Width : " + this.width + " Height : " + this.height);
-                System.out.println("1 47 : " + this.jeu.getGameboard().getBoxBoard(1, 47).getValue());
-                System.out.println("47 1 : " + this.board[1][47]);
+                System.out.println("Jeu 1 47 : " + this.jeu.getGameboard().getBoxBoard(1, 47).getValue());
+                System.out.println("Board 1 47 : " + this.board[1][47]);
+                System.out.println("Jeu 47 1 : " + this.jeu.getGameboard().getBoxBoard(47, 1).getValue());
+                System.out.println("Board 47 1 : " + this.board[47][1]);
                 
                 //====================================
                 //On a une inversion, 1 47 dans Jeu est ouvert alors que 1 47 dans Board est fermé
                 //====================================
 
-                this.print();
-                this.jeu.print();
+                //this.print();
+                //this.jeu.print();
 	}
 	
 	//Méthode appelée pour récupérer la validation de l'owner
@@ -83,7 +85,7 @@ public class MasterOwnerExt4 implements GameOwner {
                 this.jeu.insertValue(player_id == 1, x, y);
                 this.jeu.updateWeight(x, y);
                 this.jeu.updateBoard();
-                this.print();
+                //this.print();
 	}
         
        // Affichage du jeu (plateau) besoin d'ajustement

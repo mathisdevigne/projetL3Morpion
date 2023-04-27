@@ -17,7 +17,7 @@ public class JoueurExt4 implements Player{
 	
     public JoueurExt4(Game jeu){
         this.monJeu = jeu;
-        this.monJeu.print();
+        //this.monJeu.print();
     }
 
     private int id = -1;
