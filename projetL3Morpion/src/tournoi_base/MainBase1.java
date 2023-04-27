@@ -8,13 +8,14 @@ import fr.IooGoZ.GomokolClient.GamesManager;
 import fr.IooGoZ.GomokolClient.interfaces.Group;
 import java.util.Scanner;
 import projetl3morpion.Game;
+import projetl3morpion.Game1;
 
 
 /**
  *
  * @author theodusehu
  */
-public class MainBase {
+public class MainBase1 {
     
     private static final int ORDER = 2;
 
@@ -27,13 +28,13 @@ public class MainBase {
             public void autoGameSubscriber(int game_id) {
                     try {
                             
-                            Game jeu = new Game(20, 20);
+                            Game1 jeu = new Game1(20, 20);
                         
                             //On enregistre la partie
                             fr.IooGoZ.GomokolClient.Game game = GamesManager.MANAGER.registerNewGame(game_id, this.getOrder());
 
                             //On enregistre les joueurs
-                            game.registerNewPlayer(new JoueurBase(jeu));
+                            game.registerNewPlayer(new JoueurBase1(jeu));
 
                     } catch (Exception e) {
                             //Gestion des exceptions

@@ -6,16 +6,17 @@ package tournoi_base;
 
 import fr.IooGoZ.GomokolClient.interfaces.Player;
 import projetl3morpion.Game;
+import projetl3morpion.Game1;
 
 /**
  *
  * @author theodusehu
  */
-public class JoueurBase implements Player{
+public class JoueurBase1 implements Player{
         
-    Game monJeu;
+    Game1 monJeu;
 	
-    public JoueurBase(Game jeu){
+    public JoueurBase1(Game1 jeu){
         this.monJeu = jeu;
     }
 

@@ -5,6 +5,7 @@ import java.util.Scanner;
 import fr.IooGoZ.GomokolClient.Game;
 import fr.IooGoZ.GomokolClient.GamesManager;
 import fr.IooGoZ.GomokolClient.interfaces.Group;
+import tournoi_base.JoueurBase;
 
 public class Owner {
 	
@@ -19,10 +20,10 @@ public class Owner {
 			try {
 				//On enregistre notre partie localement
 				Game game = GamesManager.MANAGER.registerNewGame(game_id, ORDER);
-				
+				                                
 				//On instancie l'owner
 				MasterOwner owner = new MasterOwner(WIDTH, HEIGHT);
-				
+                                
 				//On lie l'owner et la partie
 				GamesManager.MANAGER.linkOwnerWithGame(owner, game);
 			} catch (Exception e) {
@@ -38,7 +39,7 @@ public class Owner {
 			
 			//Création d'un groupe de jeu
 			int group_id = GamesManager.MANAGER.initGroup(group, NB_PLAYER, NB_GAMES);
-			
+			                        
 			//On affiche l'id du group pour le transmettre aux joueurs
 			System.out.println("Le groupe est créé avec l'id : " + group_id);
 			
