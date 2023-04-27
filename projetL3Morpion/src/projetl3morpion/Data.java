@@ -5,8 +5,6 @@
 package projetl3morpion;
 
 import board.ShapeBoard;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 
 /**
  *
@@ -18,9 +16,9 @@ public class Data {
     
     private double height;
     private double width;
-    private boolean isHumanBegin;
+    /*private boolean isHumanBegin;
     private Scene menu;
-    private Stage stage;
+    private Stage stage;*/
     private boolean extension3 = false;
     private boolean extension4 = false;
     private Game game;
@@ -52,7 +50,7 @@ public class Data {
         this.width = width;
     }
     
-    public void setIsHumanBegin(boolean isHumanBegin){
+    /*public void setIsHumanBegin(boolean isHumanBegin){
         this.isHumanBegin = isHumanBegin;
     }
     
@@ -62,7 +60,7 @@ public class Data {
     
     public void setStage(Stage stage){
         this.stage = stage;
-    }
+    }*/
     
     public void setExtension3(boolean extension3){
         this.extension3 = extension3;
@@ -100,7 +98,7 @@ public class Data {
         return width;
     }
     
-    public boolean getIsHumanBegin(){
+    /*public boolean getIsHumanBegin(){
         return isHumanBegin;
     }
     
@@ -110,7 +108,7 @@ public class Data {
     
     public Stage getStage(){
         return stage;
-    }
+    }*/
     
     public boolean getExtension3(){
         return extension3;

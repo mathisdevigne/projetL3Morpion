@@ -126,16 +126,20 @@ public class MasterOwnerExt3 implements GameOwner {
                     //Cas de fin par partie nulle
                     if(this.scoreJ1 > this.scoreJ2){
                         System.out.println("Victoire joueur 1.");
+                        this.jeu.print();
                         return Validation.ENDGAME;
                     }
                     else if(this.scoreJ2 > this.scoreJ1){
                         System.out.println("Victoire joueur 2.");
+                        this.jeu.print();
                         return Validation.ENDGAME;
                     }
                     else{
                         System.out.println("DRAW");
+                        this.jeu.print();
                         return Validation.DRAW;
                     }
+                    
                         
                 }
 		

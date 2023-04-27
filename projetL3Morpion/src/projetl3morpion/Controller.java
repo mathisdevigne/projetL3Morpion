@@ -32,8 +32,8 @@ public class Controller extends Application{
     
         Menu menu = new Menu();
         Scene scene = new Scene(menu);
-        datas.setScene(scene);
-        datas.setStage(primaryStage);
+        //datas.setScene(scene);
+        //datas.setStage(primaryStage);
         menu.getButton().addEventHandler(ActionEvent.ACTION, e->
         {
             if(!datas.getExtension4()){

@@ -93,7 +93,7 @@ public class GameForIANul {
     }
     
     public final void isAIFirst(){
-        this.isHumanTurn = datas.getIsHumanBegin();
+        //this.isHumanTurn = datas.getIsHumanBegin();
         if(!isHumanTurn){
             this.iaTurn();
             this.print();

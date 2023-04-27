@@ -109,10 +109,10 @@ public class Menu extends BorderPane{
             datas.setWidth(widthSlider.getValSlider());
             
             if(tg.getSelectedToggle().equals(joueur)){
-                datas.setIsHumanBegin(true);
+                //datas.setIsHumanBegin(true);
             }
             else{
-                datas.setIsHumanBegin(false);
+                //datas.setIsHumanBegin(false);
             }
             
         });

@@ -51,7 +51,7 @@ public class JoueurExt3 implements Player{
             monJeu.insertValue(false, stroke[0], stroke[1]);
         }
         monJeu.updateWeight(stroke[0], stroke[1]);
-        //monJeu.getGameboard().print();
+        monJeu.getGameboard().print();
     }
     
 }

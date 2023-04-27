@@ -76,7 +76,7 @@ public class MenuChooseYourBoard extends ScrollPane{
                     Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 //Scene other = new Scene(root);
-                datas.getStage().setTitle("Morpion");
+                //datas.getStage().setTitle("Morpion");
                 //datas.getStage().setScene(other);
         });
         

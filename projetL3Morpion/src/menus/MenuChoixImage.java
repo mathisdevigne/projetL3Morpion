@@ -39,9 +39,9 @@ public class MenuChoixImage extends BorderPane{
         VBox header = new VBox();
         VBox title = Layout.createHeader("Choix Image");
         Layout.bindPopUp(title, "Pour rajouter une image, traiter la et mettez la dans le dossier Images");
-        Button fileChooser = new FileChooserSample(datas.getStage());
+        //Button fileChooser = new FileChooserSample(datas.getStage());
         header.setAlignment(Pos.CENTER);
-        header.getChildren().addAll(title, fileChooser);
+        //header.getChildren().addAll(title, fileChooser);
         header.setPadding(new Insets(0, 0, 10, 0));
         this.setTop(header);
         

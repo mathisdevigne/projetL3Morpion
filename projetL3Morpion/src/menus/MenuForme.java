@@ -69,8 +69,8 @@ public class MenuForme extends BorderPane{
         Button menu = new Button("Menu");
         menu.setOnAction(e->
         {
-            datas.getStage().setTitle("Menu");
-            datas.getStage().setScene(datas.getScene());
+            //datas.getStage().setTitle("Menu");
+            //datas.getStage().setScene(datas.getScene());
         });
         footer.setAlignment(Pos.CENTER);
         footer.setPadding(new Insets(10, 0, 10, 0));

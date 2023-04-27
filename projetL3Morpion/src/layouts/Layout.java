@@ -83,7 +83,7 @@ public class Layout {
                 Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
             }
             //Scene other = new Scene(root);
-            Data.getInstance().getStage().setTitle("Morpion");
+            //Data.getInstance().getStage().setTitle("Morpion");
             //Data.getInstance().getStage().setScene(other);
         });
         

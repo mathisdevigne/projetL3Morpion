@@ -10,7 +10,7 @@ import fr.IooGoZ.GomokolClient.interfaces.Group;
 
 public class OwnerExt3 {
 	
-	private static int WIDTH = 20, HEIGHT = 20, NB_PLAYER = 2, NB_GAMES=100, ORDER=2;
+	private static int WIDTH = 20, HEIGHT = 20, NB_PLAYER = 2, NB_GAMES=1, ORDER=2;
 	
 	//Déclaration du groupe
 	private static Group group = new Group(ORDER) {
@@ -37,7 +37,7 @@ public class OwnerExt3 {
 	public static void main(String[] args) {
 		try {
 			//Connexion au serveur
-			GamesManager.MANAGER.connect("127.0.0.1", 8080);
+			GamesManager.MANAGER.connect("192.168.0.6", 12472);
 			
 			//Création d'un groupe de jeu
 			int group_id = GamesManager.MANAGER.initGroup(group, NB_PLAYER, NB_GAMES);
