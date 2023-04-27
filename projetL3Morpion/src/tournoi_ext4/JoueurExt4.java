@@ -5,6 +5,8 @@
 package tournoi_ext4;
 
 import fr.IooGoZ.GomokolClient.interfaces.Player;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import projetl3morpion.Game;
 
 /**
@@ -42,14 +44,15 @@ public class JoueurExt4 implements Player{
 
     @Override
     public void receiveNewStroke(int player_id, int[] stroke) {
-        //System.out.println("ID:" + player_id + " " + stroke[0] + "/" + stroke[1]); // A desactiver pour plus de rapidité
+        System.out.println("ID:" + player_id + " " + stroke[0] + "/" + stroke[1]); // A desactiver pour plus de rapidité
         if(player_id == this.getId()){
             monJeu.insertValue(true, stroke[0], stroke[1]);
         }else{
             monJeu.insertValue(false, stroke[0], stroke[1]);
         }
         monJeu.updateWeight(stroke[0], stroke[1]);
-        //monJeu.getGameboard().print();
+        monJeu.updateBoard();
+        monJeu.getGameboard().print();
     }
     
 }

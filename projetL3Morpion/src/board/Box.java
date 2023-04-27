@@ -132,13 +132,13 @@ public class Box {
             //Case Joueur
             case 1 -> 
             {
-                //System.out.print("O");
+                System.out.print("O");
                 this.quintuColor(true);
             }
             //Case IA
             case 6 -> 
             {
-                //System.out.print("X" + ConsoleColors.RESET);
+                System.out.print("X" + ConsoleColors.RESET);
                 this.quintuColor(false);
             }
             case 50 -> {

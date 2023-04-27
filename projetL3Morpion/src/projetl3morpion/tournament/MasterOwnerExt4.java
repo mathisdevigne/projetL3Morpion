@@ -24,11 +24,11 @@ public class MasterOwnerExt4 implements GameOwner {
                 this.jeu.updateAllWeight();
 		
 		//Initialisation du plateau
-		this.board = new int[width][height];
-		for (int i = 0; i < width; i++)
-			for (int j = 0; j < height; j++){
+		this.board = new int[height][width];
+		for (int i = 0; i < height; i++)
+			for (int j = 0; j < width; j++){
                             
-                            if(this.jeu.getGameboard().getVal(j, i) == 50){
+                            if(this.jeu.getGameboard().getVal(i, j) == 50){
                                 this.board[i][j] = BLOCKED;
                             }
                             else{
@@ -64,7 +64,7 @@ public class MasterOwnerExt4 implements GameOwner {
 		int y = stroke[1];
 		
 		//On vérifie la validité du coup
-		if (x >= 0 && y >= 0 && x < width && y < height) {
+		if (x >= 0 && y >= 0 && x < height && y < width) {
 			if (this.board[x][y] == EMPTY) {
 				return checkEnd(player_id, x, y);
 			}
@@ -91,7 +91,7 @@ public class MasterOwnerExt4 implements GameOwner {
        // Affichage du jeu (plateau) besoin d'ajustement
     public void print(){
         System.out.print("  ");
-        for(int k = 0; k < this.width; k++){
+        for(int k = 0; k < this.height; k++){
             if(k <= 9){
                 System.out.print(" ");
             }         
@@ -99,24 +99,24 @@ public class MasterOwnerExt4 implements GameOwner {
         }
         System.out.println();
         System.out.print("  +");
-        for(int k = 0; k < this.width; k++){
+        for(int k = 0; k < this.height; k++){
             System.out.print( "---+");     
         }
         
         System.out.println();
-        for(int i = 0; i < this.height; i++){
+        for(int i = 0; i < this.width; i++){
             System.out.print(i);
             if(i <= 9){
                 System.out.print(" ");
             }
             System.out.print("| ");
-            for(int j = 0; j < this.width; j++){
+            for(int j = 0; j < this.height; j++){
                 System.out.print(this.board[j][i]);
                 System.out.print(" | ");
             }
             System.out.println();
             System.out.print("  +");
-            for(int k = 0; k < this.width; k++){
+            for(int k = 0; k < this.height; k++){
                 System.out.print( "---+");     
             }
             System.out.println();
@@ -142,8 +142,8 @@ public class MasterOwnerExt4 implements GameOwner {
 	
 	//Fonctions générées et non-testées---------------------------------------------------------------------
 	private boolean checkBoardFilling(int x, int y) {
-		for (int i = 0; i < width; i++)
-			for (int j = 0; j < height; j++) 
+		for (int i = 0; i < height; i++)
+			for (int j = 0; j < width; j++) 
 				if (!(i == x && j == y) && this.board[i][j] == EMPTY)
 					return false;
 		return true;
