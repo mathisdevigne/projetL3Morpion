@@ -42,80 +42,15 @@ public class Game1 {
     public static int usedValue = 1;
     
     private final static int EMPTY_WEIGHT = 1;
-    private static int ONE_PLAYER = EMPTY_WEIGHT*5;
-    private static int ONE_IA = ONE_PLAYER*6;
-    private static int TWO_PLAYER = ONE_IA*7;
-    private static int TWO_IA = TWO_PLAYER*10;
-    private static int THREE_PLAYER = TWO_IA*35;
-    private static int THREE_IA = THREE_PLAYER*25;
-    private static int FOUR_PLAYER = THREE_IA*100;
-    private static int FOUR_IA = FOUR_PLAYER*1000;
+    private static long ONE_PLAYER = EMPTY_WEIGHT*2;
+    private static long ONE_IA = ONE_PLAYER*2;
+    private static long TWO_PLAYER = ONE_IA*2;
+    private static long TWO_IA = TWO_PLAYER*2;
+    private static long THREE_PLAYER = TWO_IA*10;
+    private static long THREE_IA = THREE_PLAYER*5;
+    private static long FOUR_PLAYER = THREE_IA*10;
+    private static long FOUR_IA = FOUR_PLAYER*10;
 
-    public int getONE_PLAYER() {
-        return ONE_PLAYER;
-    }
-
-    public void setONE_PLAYER(int ONE_PLAYER) {
-        this.ONE_PLAYER = ONE_PLAYER;
-    }
-
-    public int getONE_IA() {
-        return ONE_IA;
-    }
-
-    public void setONE_IA(int ONE_IA) {
-        this.ONE_IA = ONE_IA;
-    }
-
-    public int getTWO_PLAYER() {
-        return TWO_PLAYER;
-    }
-
-    public void setTWO_PLAYER(int TWO_PLAYER) {
-        this.TWO_PLAYER = TWO_PLAYER;
-    }
-
-    public int getTWO_IA() {
-        return TWO_IA;
-    }
-
-    public void setTWO_IA(int TWO_IA) {
-        this.TWO_IA = TWO_IA;
-    }
-
-    public int getTHREE_PLAYER() {
-        return THREE_PLAYER;
-    }
-
-    public void setTHREE_PLAYER(int THREE_PLAYER) {
-        this.THREE_PLAYER = THREE_PLAYER;
-    }
-
-    public int getTHREE_IA() {
-        return THREE_IA;
-    }
-
-    public void setTHREE_IA(int THREE_IA) {
-        this.THREE_IA = THREE_IA;
-    }
-
-    public int getFOUR_PLAYER() {
-        return FOUR_PLAYER;
-    }
-
-    public void setFOUR_PLAYER(int FOUR_PLAYER) {
-        this.FOUR_PLAYER = FOUR_PLAYER;
-    }
-
-    public int getFOUR_IA() {
-        return FOUR_IA;
-    }
-
-    public void setFOUR_IA(int FOUR_IA) {
-        this.FOUR_IA = FOUR_IA;
-    }
-    
-    
     
     //Constructeur de base pour l'UI
     public Game1(int width, int height){

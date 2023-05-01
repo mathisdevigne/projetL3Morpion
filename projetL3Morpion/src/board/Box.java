@@ -13,7 +13,7 @@ import layouts.ConsoleColors;
 public class Box {
     private int id;
     private int value; //1 pour le joueur et 6 pour l'adversaire (IA)
-    private int weight;
+    private long weight;
     private boolean last;
     private int[] used;
         
@@ -46,7 +46,7 @@ public class Box {
     }
     
     //Accesseur de weight
-    public int getWeight(){
+    public long getWeight(){
         return this.weight;
     }
     
@@ -98,7 +98,7 @@ public class Box {
     }
     
     //Setter de weight
-    public void setWeight(int newWeight){
+    public void setWeight(long newWeight){
         this.weight = newWeight;
     }
     

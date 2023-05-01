@@ -72,7 +72,7 @@ public class GameBoard{
     }
     
     //Accesseur de weight
-    public int getBoxWeight(int x, int y){
+    public long getBoxWeight(int x, int y){
         return this.getBoxBoard(x,y).getWeight();
     }
     
@@ -291,7 +291,7 @@ public class GameBoard{
     }
     
     //Change le poids des cases contenu dans le quintuplet
-    public static void updateWeightQuintu(Box[] monQuintu, int newWeight){
+    public static void updateWeightQuintu(Box[] monQuintu, long newWeight){
         for(int k = 0; k < 5; k++){
             monQuintu[k].setWeight(monQuintu[k].getWeight() + newWeight);
         }

@@ -46,10 +46,10 @@ public class MainBase1 {
     public static void main(String[] args) throws Exception {
                 
         //On définit l'adresse du serveur
-        String address = "127.0.0.1"; //127.0.0.1
+        String address = "192.168.0.3"; //127.0.0.1
 		
         //On se connecte au serveur
-        GamesManager.MANAGER.connect(address, 8080);
+        GamesManager.MANAGER.connect(address, 12472);
         
         //Récupération de l'id du groupe
         System.out.print("Entrez l'id du groupe : ");

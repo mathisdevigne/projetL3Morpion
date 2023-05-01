@@ -18,6 +18,7 @@ public class JoueurBase1 implements Player{
 	
     public JoueurBase1(Game1 jeu){
         this.monJeu = jeu;
+        System.out.println("Je suis Game1 ");
     }
 
     private int id = -1;
@@ -49,7 +50,7 @@ public class JoueurBase1 implements Player{
             monJeu.insertValue(false, stroke[0], stroke[1]);
         }
         monJeu.updateWeight(stroke[0], stroke[1]);
-        monJeu.getGameboard().print();
+        //monJeu.getGameboard().print();
     }
     
 }
